@@ -6,7 +6,7 @@ Bee-Brigada's members:
 
 Manager: Grigory Bababnin 
 
-Developers: Evgeny Suvorov, Alexey Vorobev 
+Developers: Evgeny Suvorov, Alexey Vorobev, Egor Soloviev
 
 Software tester: Maxim Vasyagin 
 
