@@ -10,4 +10,4 @@ Developers: Evgeny Suvorov, Alexey Vorobev
 
 Software tester: Maxim Vasyagin 
 
-Designer: Alexander Artyushin
+Designer-developer: Alexander Artyushin
