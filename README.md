@@ -12,4 +12,4 @@ Software tester: Maxim Vasyagin
 
 Designer-developer: Alexander Artyushin
 
-![Bez_imeni-1](https://user-images.githubusercontent.com/91207832/166659284-a8768465-3953-4277-9978-9ab27fbf28a2.png)
+![Без имени-1](https://user-images.githubusercontent.com/91207832/166662670-fbf1a2bf-ed17-4b9d-85e7-0992d95423f3.png)
