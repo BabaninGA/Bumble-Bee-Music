@@ -21,7 +21,7 @@
             </Button>
             <ImageView fitHeight="94.0" fitWidth="23.0" layoutX="6.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="6.0">
                <image>
-                  <Image url="@../../../../../photos/музыка.png" />
+                  <Image url="@../../../../../photos/music.png" />
                </image>
             </ImageView>
          </children></AnchorPane>
