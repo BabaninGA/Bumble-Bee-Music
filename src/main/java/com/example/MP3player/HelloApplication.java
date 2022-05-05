@@ -1,4 +1,4 @@
-package com.example.mp32player;
+package com.example.MP3player;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
