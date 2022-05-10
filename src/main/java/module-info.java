@@ -1,8 +1,9 @@
-module com.example.mp32player {
+module com.example.mp3player {
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.media;
 
 
-    opens com.example.MP3player to javafx.fxml;
-    exports com.example.MP3player;
+    opens com.example.mp3player to javafx.fxml;
+    exports com.example.mp3player;
 }
