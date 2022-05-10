@@ -1,5 +1,7 @@
 package com.example.mp3player;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -8,15 +10,13 @@ import javafx.scene.control.Slider;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
-
+import javafx.scene.control.ScrollBar;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class HelloController {
-
-
 
     private Timer timer;
     private TimerTask task;
@@ -26,15 +26,14 @@ public class HelloController {
 
     private ArrayList<File> songs;
 
-
-
     private MediaPlayer mediaPlayer;
 
     @FXML
     private ProgressBar songProgressBar;
     @FXML
     private Label songLabel;
-
+    @FXML
+    private ScrollBar scrollBar;
     @FXML
     private void openMedia(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -101,6 +100,13 @@ public class HelloController {
                 double end = mediaPlayer.getTotalDuration().toSeconds();
                 songProgressBar.setProgress(current/end);
 
+                    volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+
+                            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                        }
+                    });
                 if (current/end == 1) {
                     cancelTimer();
                 }
