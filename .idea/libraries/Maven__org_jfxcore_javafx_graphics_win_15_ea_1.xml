@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.jfxcore:javafx-graphics:win:15-ea+1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jfxcore/javafx-graphics/15-ea+1/javafx-graphics-15-ea+1-win.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jfxcore/javafx-graphics/15-ea+1/javafx-graphics-15-ea+1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/jfxcore/javafx-graphics/15-ea+1/javafx-graphics-15-ea+1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

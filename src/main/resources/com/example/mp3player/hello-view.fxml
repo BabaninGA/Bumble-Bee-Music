@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
+    <AnchorPane prefHeight="328.0" prefWidth="141.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <Button fx:id="openMedia" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMedia" style="-fx-background-color: grey;" text="Добавить файл" textFill="WHITE">
+                <font>
+                    <Font size="16.0" />
+                </font></Button>
+        </children>
+    </AnchorPane>
+    <AnchorPane layoutY="313.0" prefHeight="74.0" prefWidth="600.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <children>
+            <Slider fx:id="volumeSlider" layoutX="483.0" layoutY="44.0" prefHeight="14.0" prefWidth="108.0" value="50.0" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="9.0" />
+            <Label fx:id="songLabel" alignment="CENTER" layoutX="78.0" layoutY="-2.0" prefHeight="25.0" prefWidth="448.0" text="SONG NAME" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="74.0">
+                <font>
+                    <Font name="Arial Black" size="14.0" />
+                </font>
+            </Label>
+            <Slider fx:id="songSlider" layoutX="15.0" layoutY="22.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="9.0" />
+            <HBox layoutX="219.0" layoutY="38.0" prefHeight="14.0" prefWidth="54.0">
+                <children>
+                    <Button fx:id="backMedia" mnemonicParsing="false" onAction="#backMedia" prefWidth="36.0">
+                        <graphic>
+                            <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0">
+                                <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                        <HBox.margin>
+                                            <Insets top="1.0" />
+                                        </HBox.margin>
+                                    </Rectangle>
+                                    <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="playMedia" mnemonicParsing="false" onAction="#playMedia" prefHeight="25.0" prefWidth="36.0">
+                        <graphic>
+                            <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" rotate="180.0" smooth="false" stroke="#5e5c5c00" strokeType="INSIDE" />
+                        </graphic>
+                    </Button>
+                    <Button fx:id="pauseMedia" mnemonicParsing="false" onAction="#pauseMedia" prefHeight="25.0" prefWidth="36.0">
+                        <graphic>
+                            <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="5.0" spacing="2.0">
+                                <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                        <HBox.margin>
+                                            <Insets top="1.0" />
+                                        </HBox.margin>
+                                    </Rectangle>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                        <HBox.margin>
+                                            <Insets top="1.0" />
+                                        </HBox.margin>
+                                    </Rectangle>
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+                    <Button fx:id="resetMedia" mnemonicParsing="false" onAction="#resetMedia" prefHeight="25.0" prefWidth="36.0">
+                        <graphic>
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="14.0" stroke="#5e5c5c" strokeType="INSIDE" width="14.0" />
+                        </graphic>
+                    </Button>
+                    <Button fx:id="forwardMedia" mnemonicParsing="false" onAction="#forwardMedia">
+                        <graphic>
+                            <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0" rotate="180.0">
+                                <children>
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                        <HBox.margin>
+                                            <Insets top="1.0" />
+                                        </HBox.margin>
+                                    </Rectangle>
+                                    <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
+                                </children>
+                            </HBox>
+                        </graphic>
+                    </Button>
+                </children>
+            </HBox>
+        </children>
+    </AnchorPane>
+    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+</AnchorPane>
