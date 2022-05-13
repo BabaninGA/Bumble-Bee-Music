@@ -38,12 +38,12 @@ public class HelloController {
     private boolean running;
     private boolean isMuted = false;
     private double volPerc;
-    private double prevVol;
+    private int prevVol;
+    private ImageView iconMute;
+    private ImageView iconVolume;
 
     @FXML
     private Button createPlaylist;
-    @FXML
-    private Button volumeOff;
     @FXML
     private Slider volumeSlider;
     @FXML
@@ -68,6 +68,8 @@ public class HelloController {
     private Label labelVolume;
     @FXML
     private Button buttonPPR;
+    @FXML
+    private Label volumeOff;
 
 
     @FXML
@@ -87,6 +89,16 @@ public class HelloController {
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
 
+        Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
+        iconMute = new ImageView(imageMute);
+        iconMute.setFitWidth(25);
+        iconMute.setFitHeight(25);
+
+        Image imageVol = new Image(new File("src/resources/volume.png").toURI().toString());
+        iconVolume = new ImageView(imageVol);
+        iconVolume.setFitWidth(25);
+        iconVolume.setFitHeight(25);
+
         if (filePath != null) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
@@ -94,6 +106,7 @@ public class HelloController {
             beginTimer();
             System.out.println(filePath);
             songLabel.setText(name);
+            volumeOff.setGraphic(iconVolume);
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
@@ -133,7 +146,6 @@ public class HelloController {
                     volPerc = volumeSlider.getValue();
                     int result = Math.toIntExact(Math.round(volPerc));
                     String res = String.valueOf(result);
-
                     labelVolume.setText(res + "%");
                 }
             });
@@ -160,11 +172,11 @@ public class HelloController {
             volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if (isMuted == false) {
-                        volumeOff();
-                    }
-                    if (isMuted == true) {
+                    if (isMuted) {
                         volumeOn();
+
+                    } else  {
+                        volumeOff();
                     }
                 }
             });
@@ -183,13 +195,20 @@ public class HelloController {
 
     @FXML
     private void volumeOff() {
+        volumeOff.setGraphic(iconMute);
+        volPerc = volumeSlider.getValue();
+        int result = Math.toIntExact(Math.round(volPerc));
+        prevVol = result;
         volumeSlider.setValue(0);
+        System.out.println("Выкл");
         isMuted = true;
     }
 
     @FXML
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
+        volumeOff.setGraphic(iconVolume);
+        System.out.println("Вкл");
         isMuted = false;
     }
 
