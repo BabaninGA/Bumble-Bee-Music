@@ -159,6 +159,8 @@ public class HelloController {
                     int result = Math.toIntExact(Math.round(volPerc));
                     String res = String.valueOf(result);
                     labelVolume.setText(res + "%");
+                    if (volPerc == 0){ volumeOff.setGraphic(iconMute);}
+                    else{volumeOff.setGraphic(iconVolume);}
                 }
             });
             songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
