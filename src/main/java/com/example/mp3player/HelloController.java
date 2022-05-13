@@ -30,11 +30,11 @@ public class HelloController{
 
     private Timer timer;
     private TimerTask task;
-    private boolean running;
     private File directory;
     private File[] files;
     private ArrayList<File> songs;
     private MediaPlayer mediaPlayer;
+    private boolean running;
 
     @FXML
     private Button createPlaylist;
@@ -61,7 +61,10 @@ public class HelloController{
     @FXML
     private Label labelTotalTime;
     @FXML
+    private Label labelVolume;
+    @FXML
     private Button buttonPPR;
+
 
 
     @FXML
@@ -79,7 +82,7 @@ public class HelloController{
         String name = f.getName();
         System.out.println(name);
         name = name.replaceAll("%20", " ");
-        name = name.replaceAll(".mp3"," ");
+        name = name.replaceAll(".mp3","");
 
         if (filePath != null) {
             Media media = new Media(filePath);
@@ -99,6 +102,7 @@ public class HelloController{
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+
                 }
             });
             songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
