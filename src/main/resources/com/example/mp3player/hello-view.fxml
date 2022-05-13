@@ -14,22 +14,27 @@
 <AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
     <AnchorPane fx:id="sideMenu" prefHeight="328.0" prefWidth="141.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Button fx:id="openMedia" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMedia" style="-fx-background-color: grey;" text="Добавить файл" textFill="WHITE">
+            <Button fx:id="openMedia" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMedia" style="-fx-background-color: grey;" text="Добавить файл" textFill="WHITE" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="14.0">
                 <font>
-                    <Font size="16.0" />
+                    <Font size="15.0" />
                 </font></Button>
+         <Button fx:id="createPlaylist" layoutX="11.0" layoutY="52.0" mnemonicParsing="false" onAction="#createPlaylist" style="-fx-background-color: grey;" text="Создать плейлист" textFill="WHITE" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="52.0">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Button>
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="600.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="600.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
             <Slider fx:id="volumeSlider" layoutX="483.0" layoutY="44.0" prefHeight="14.0" prefWidth="108.0" value="50.0" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="9.0" />
-            <Label fx:id="songLabel" alignment="CENTER" layoutX="78.0" layoutY="-2.0" prefHeight="25.0" prefWidth="448.0" text="SONG NAME" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="74.0">
+            <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="420.0">
                 <font>
-                    <Font name="Arial Black" size="14.0" />
+                    <Font name="Arial" size="12.0" />
                 </font>
             </Label>
-            <Slider fx:id="songSlider" layoutX="15.0" layoutY="22.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="38.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
-            <HBox alignment="CENTER" layoutX="219.0" layoutY="38.0" prefHeight="14.0" prefWidth="54.0">
+            <Slider fx:id="songSlider" layoutX="40.5" layoutY="20.5" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="40.5" AnchorPane.rightAnchor="40.5" />
+            <HBox alignment="BOTTOM_CENTER" layoutX="219.0" layoutY="38.0" prefHeight="14.0" prefWidth="54.0" AnchorPane.bottomAnchor="10.5">
                 <children>
                     <Button fx:id="backMedia" alignment="CENTER" mnemonicParsing="false" onAction="#backMedia" prefWidth="36.0">
                         <graphic>
@@ -89,11 +94,11 @@
                     </Button>
                 </children>
             </HBox>
-         <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="6.0" />
-         <Button fx:id="volumeOff" layoutX="453.0" layoutY="39.0" mnemonicParsing="false" onAction="#volumeOff" />
+         <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
+         <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
+         <Button fx:id="volumeOff" layoutX="453.0" layoutY="39.0" mnemonicParsing="false" onAction="#volumeOff" prefHeight="14.0" prefWidth="14.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="131.0" />
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-   <Button fx:id="buttonPPR" layoutX="292.0" layoutY="289.0" mnemonicParsing="false" />
+   <Button fx:id="buttonPPR" layoutX="292.0" layoutY="279.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 35;" AnchorPane.bottomAnchor="86.0" />
 </AnchorPane>

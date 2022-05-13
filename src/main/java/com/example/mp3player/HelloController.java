@@ -37,6 +37,8 @@ public class HelloController{
     private MediaPlayer mediaPlayer;
 
     @FXML
+    private Button createPlaylist;
+    @FXML
     private Button volumeOff;
     @FXML
     private Slider volumeSlider;
@@ -77,6 +79,7 @@ public class HelloController{
         String name = f.getName();
         System.out.println(name);
         name = name.replaceAll("%20", " ");
+        name = name.replaceAll(".mp3"," ");
 
         if (filePath != null) {
             Media media = new Media(filePath);
@@ -136,6 +139,10 @@ public class HelloController{
     }
 
     @FXML
+    private void createPlaylist(){
+    }
+
+    @FXML
     private void playMedia() {
         beginTimer();
         mediaPlayer.play();
@@ -166,6 +173,7 @@ public class HelloController{
             }
         };
     }
+
 
     public void cancelTimer() {
         running = false;
