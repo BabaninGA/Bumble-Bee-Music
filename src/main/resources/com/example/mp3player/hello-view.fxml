@@ -33,7 +33,7 @@
                     <Font name="Arial" size="12.0" />
                 </font>
             </Label>
-            <Slider fx:id="songSlider" layoutX="40.5" layoutY="20.5" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="40.5" AnchorPane.rightAnchor="40.5" />
+            <Slider fx:id="songSlider" layoutX="42.0" layoutY="13.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="42.0" />
             <HBox alignment="BOTTOM_CENTER" layoutX="303.0" layoutY="37.0" prefHeight="14.0" prefWidth="54.0" AnchorPane.bottomAnchor="12.0">
                 <children>
                     <Button fx:id="backMedia" alignment="CENTER" mnemonicParsing="false" onAction="#backMedia" prefWidth="36.0">

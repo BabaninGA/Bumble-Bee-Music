@@ -20,13 +20,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
 
-public class HelloController{
+public class HelloController {
 
     private Timer timer;
     private TimerTask task;
@@ -35,6 +36,9 @@ public class HelloController{
     private ArrayList<File> songs;
     private MediaPlayer mediaPlayer;
     private boolean running;
+    private boolean isMuted = false;
+    private double volPerc;
+    private double prevVol;
 
     @FXML
     private Button createPlaylist;
@@ -66,7 +70,6 @@ public class HelloController{
     private Button buttonPPR;
 
 
-
     @FXML
     private void openMedia(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -82,7 +85,7 @@ public class HelloController{
         String name = f.getName();
         System.out.println(name);
         name = name.replaceAll("%20", " ");
-        name = name.replaceAll(".mp3","");
+        name = name.replaceAll(".mp3", "");
 
         if (filePath != null) {
             Media media = new Media(filePath);
@@ -98,11 +101,40 @@ public class HelloController{
                     songSlider.setValue(newValue.toSeconds());
                 }
             });
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                    bindCurrentTimeLabel();
+                    if (!songSlider.isValueChanging()) {
+                        songSlider.setValue(newTime.toSeconds());
+                    }
+                    labelCurrentTime.getText();
+                    labelTotalTime.getText();
+                }
+            });
+            mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    songSlider.setMax(newDuration.toSeconds());
+                    labelTotalTime.setText(getTime(newDuration));
+
+                }
+            });
             songSlider.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
                     mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
 
+                }
+            });
+            volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                    volPerc = volumeSlider.getValue();
+                    int result = Math.toIntExact(Math.round(volPerc));
+                    String res = String.valueOf(result);
+
+                    labelVolume.setText(res + "%");
                 }
             });
             songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -125,6 +157,17 @@ public class HelloController{
                     mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
                 }
             });
+            volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (isMuted == false) {
+                        volumeOff();
+                    }
+                    if (isMuted == true) {
+                        volumeOn();
+                    }
+                }
+            });
         }
     }
 
@@ -132,6 +175,7 @@ public class HelloController{
     private void forwardMedia(ActionEvent actionEvent) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
     }
+
     @FXML
     private void backMedia(ActionEvent actionEvent) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
@@ -140,10 +184,17 @@ public class HelloController{
     @FXML
     private void volumeOff() {
         volumeSlider.setValue(0);
+        isMuted = true;
     }
 
     @FXML
-    private void createPlaylist(){
+    private void volumeOn() {
+        volumeSlider.setValue(prevVol);
+        isMuted = false;
+    }
+
+    @FXML
+    private void createPlaylist() {
     }
 
     @FXML
@@ -151,11 +202,13 @@ public class HelloController{
         beginTimer();
         mediaPlayer.play();
     }
+
     @FXML
     private void pauseMedia(ActionEvent event) {
         mediaPlayer.pause();
         cancelTimer();
     }
+
     @FXML
     private void resetMedia(ActionEvent event) {
         mediaPlayer.stop();
@@ -182,5 +235,33 @@ public class HelloController{
     public void cancelTimer() {
         running = false;
         timer.cancel();
+    }
+
+    public String getTime(Duration time) {
+
+        int hours = (int) time.toHours();
+        int minutes = (int) time.toMinutes();
+        int seconds = (int) time.toSeconds();
+
+        if (seconds > 59) seconds = seconds % 60;
+        if (minutes > 59) minutes = minutes % 60;
+        if (hours > 59) hours = hours % 60;
+
+        if (hours > 0) return String.format("%d:%02d:%02d",
+                hours,
+                minutes,
+                seconds);
+        else return String.format("%02d:%02d",
+                minutes,
+                seconds);
+    }
+
+    public void bindCurrentTimeLabel() {
+        labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return getTime(mediaPlayer.getCurrentTime());
+            }
+        }, mediaPlayer.currentTimeProperty()));
     }
 }
