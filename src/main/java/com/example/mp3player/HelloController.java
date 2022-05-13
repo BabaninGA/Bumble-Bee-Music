@@ -41,6 +41,7 @@ public class HelloController {
     private int prevVol;
     private ImageView iconMute;
     private ImageView iconVolume;
+    private ImageView iconMain;
 
     @FXML
     private Button createPlaylist;
@@ -70,6 +71,10 @@ public class HelloController {
     private Button buttonPPR;
     @FXML
     private Label volumeOff;
+    @FXML
+    private Label iconm;
+
+
 
 
     @FXML
@@ -98,6 +103,13 @@ public class HelloController {
         iconVolume = new ImageView(imageVol);
         iconVolume.setFitWidth(25);
         iconVolume.setFitHeight(25);
+        Image iconmain = new Image(new File("src/resources/MAIN.png").toURI().toString());
+        iconMain = new ImageView(iconmain);
+        iconMain.setFitWidth(150);
+        iconMain.setFitHeight(100);
+
+
+        iconm.setGraphic(iconMain);
 
         if (filePath != null) {
             Media media = new Media(filePath);

@@ -23,6 +23,7 @@
                <Font size="15.0" />
             </font>
          </Button>
+         <Label fx:id="iconm" layoutX="19.0" layoutY="343.0" prefHeight="94.0" prefWidth="108.0" />
         </children>
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
