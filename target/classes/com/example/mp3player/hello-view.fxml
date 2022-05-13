@@ -91,6 +91,7 @@
             </HBox>
          <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="37.0" AnchorPane.rightAnchor="6.0" />
          <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="6.0" />
+         <Button fx:id="volumeOff" layoutX="453.0" layoutY="39.0" mnemonicParsing="false" onAction="#volumeOff" />
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

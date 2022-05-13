@@ -37,6 +37,8 @@ public class HelloController{
     private MediaPlayer mediaPlayer;
 
     @FXML
+    private Button volumeOff;
+    @FXML
     private Slider volumeSlider;
     @FXML
     private Slider songSlider;
@@ -116,7 +118,6 @@ public class HelloController{
                     mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
                 }
             });
-
         }
     }
 
@@ -127,6 +128,11 @@ public class HelloController{
     @FXML
     private void backMedia(ActionEvent actionEvent) {
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
+    }
+
+    @FXML
+    private void volumeOff() {
+        volumeSlider.setValue(0);
     }
 
     @FXML
