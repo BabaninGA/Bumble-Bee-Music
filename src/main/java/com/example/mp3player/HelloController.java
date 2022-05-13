@@ -20,7 +20,6 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -73,8 +72,6 @@ public class HelloController {
     private Label volumeOff;
     @FXML
     private Label iconm;
-
-
 
 
     @FXML
@@ -159,8 +156,11 @@ public class HelloController {
                     int result = Math.toIntExact(Math.round(volPerc));
                     String res = String.valueOf(result);
                     labelVolume.setText(res + "%");
-                    if (volPerc == 0){ volumeOff.setGraphic(iconMute);}
-                    else{volumeOff.setGraphic(iconVolume);}
+                    if (volPerc == 0) {
+                        volumeOff.setGraphic(iconMute);
+                    } else {
+                        volumeOff.setGraphic(iconVolume);
+                    }
                 }
             });
             songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
@@ -189,7 +189,7 @@ public class HelloController {
                     if (isMuted) {
                         volumeOn();
 
-                    } else  {
+                    } else {
                         volumeOff();
                     }
                 }
@@ -199,11 +199,13 @@ public class HelloController {
 
     @FXML
     private void forwardMedia(ActionEvent actionEvent) {
+        System.out.println("+ 10 секунд");
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
     }
 
     @FXML
     private void backMedia(ActionEvent actionEvent) {
+        System.out.println("- 10 секунд");
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
     }
 
@@ -214,7 +216,7 @@ public class HelloController {
         int result = Math.toIntExact(Math.round(volPerc));
         prevVol = result;
         volumeSlider.setValue(0);
-        System.out.println("Выкл");
+        System.out.println("Выключение звука");
         isMuted = true;
     }
 
@@ -222,7 +224,7 @@ public class HelloController {
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
-        System.out.println("Вкл");
+        System.out.println("Включение звука");
         isMuted = false;
     }
 
@@ -232,18 +234,21 @@ public class HelloController {
 
     @FXML
     private void playMedia() {
+        System.out.println("Воспроизведение");
         beginTimer();
         mediaPlayer.play();
     }
 
     @FXML
     private void pauseMedia(ActionEvent event) {
+        System.out.println("Пауза");
         mediaPlayer.pause();
         cancelTimer();
     }
 
     @FXML
     private void resetMedia(ActionEvent event) {
+        System.out.println("Запуск файла с самого начала");
         mediaPlayer.stop();
         songSlider.setValue(0);
         mediaPlayer.play();
@@ -263,7 +268,6 @@ public class HelloController {
             }
         };
     }
-
 
     public void cancelTimer() {
         running = false;
