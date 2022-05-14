@@ -138,9 +138,10 @@ public class HelloController {
             System.out.println(filePath);
             songLabel.setText(name);
 
-
             bottomMenu.setVisible(true);
             scrollBar.setVisible(true);
+            createPlaylist.setVisible(true);
+
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
