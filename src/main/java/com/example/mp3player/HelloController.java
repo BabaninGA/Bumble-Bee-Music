@@ -45,6 +45,9 @@ public class HelloController {
     private ImageView iconPlay;
     private ImageView iconPause;
     private ImageView iconReset;
+    private ImageView iconNext;
+    private ImageView iconPrevious;
+
 
     @FXML
     private Button shuffleMedia;
@@ -80,6 +83,11 @@ public class HelloController {
     private Label labelButtonPPR;
     @FXML
     private HBox hboxVolume;
+    @FXML
+    private Label nextSongButton;
+    @FXML
+    private Label previousSongButton;
+
 
 
     @FXML
@@ -129,10 +137,22 @@ public class HelloController {
         iconReset.setFitWidth(25);
         iconReset.setFitHeight(25);
 
+        Image imageNext = new Image(new File("src/resources/next-btn.png").toURI().toString());
+        iconNext = new ImageView(imageNext);
+        iconNext.setFitWidth(23);
+        iconNext.setFitHeight(23);
+
+        Image imagePrevious = new Image(new File("src/resources/previous-btn.png").toURI().toString());
+        iconPrevious = new ImageView(imagePrevious);
+        iconPrevious.setFitWidth(23);
+        iconPrevious.setFitHeight(23);
+
 
         iconm.setGraphic(iconMain);
         volumeOff.setGraphic(iconVolume);
         labelButtonPPR.setGraphic(iconPause);
+        nextSongButton.setGraphic(iconNext);
+        previousSongButton.setGraphic(iconPrevious);
 
         if (filePath != null) {
             Media media = new Media(filePath);
