@@ -47,6 +47,8 @@ public class HelloController {
     private ImageView iconReset;
 
     @FXML
+    private Button shuffleMedia;
+    @FXML
     private Button createPlaylist;
     @FXML
     private Slider volumeSlider;
@@ -269,6 +271,11 @@ public class HelloController {
     @FXML
     private void createPlaylist() {
         System.out.println("Создать плейлист");
+    }
+
+    @FXML
+    private void shuffleMedia() {
+        System.out.println("Перемешать плейлист");
     }
 
     @FXML
