@@ -78,6 +78,8 @@ public class HelloController {
     private Label iconm;
     @FXML
     private Label labelButtonPPR;
+    @FXML
+    private HBox hboxVolume;
 
 
     @FXML
@@ -144,6 +146,8 @@ public class HelloController {
             scrollBar.setVisible(true);
             createPlaylist.setVisible(true);
 
+            hboxVolume.getChildren().remove(volumeSlider);
+            hboxVolume.getChildren().remove(labelVolume);
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
@@ -208,22 +212,42 @@ public class HelloController {
                 }
             });
 
-            volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                    mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-                }
-            });
-            volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-                    if (isMuted) {
-                        volumeOn();
-                    } else {
-                        volumeOff();
+                    if (hboxVolume.lookup("#volumeSlider") == null) {
+                        hboxVolume.getChildren().add(volumeSlider);
+                        hboxVolume.getChildren().add(labelVolume);
+                        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                            @Override
+                            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                            }
+                        });
+                        volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent mouseEvent) {
+                                if (isMuted) {
+                                    volumeOn();
+                                } else {
+                                    volumeOff();
+                                }
+                            }
+                        });
                     }
                 }
             });
+
+            hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+
+                    hboxVolume.getChildren().remove(volumeSlider);
+                    hboxVolume.getChildren().remove(labelVolume);
+                }
+            });
+
+
             labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
