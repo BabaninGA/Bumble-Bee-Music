@@ -44,19 +44,19 @@
                <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
                     <Button fx:id="resetMedia" alignment="CENTER" layoutX="55.0" layoutY="5.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
-                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="14.0" stroke="#5e5c5c" strokeType="INSIDE" width="14.0" />
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" height="14.0" stroke="BLACK" strokeType="INSIDE" width="14.0" />
                         </graphic>
                     </Button>
                     <Button fx:id="backMedia" alignment="TOP_LEFT" layoutX="140.0" layoutY="3.0" mnemonicParsing="false" onAction="#backMedia" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0">
                                 <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" height="15.0" stroke="BLACK" strokeType="INSIDE" width="6.0">
                                         <HBox.margin>
                                             <Insets top="1.0" />
                                         </HBox.margin>
                                     </Rectangle>
-                                    <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
+                                    <Polygon disable="true" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
                                 </children>
                             </HBox>
                         </graphic>
@@ -65,12 +65,12 @@
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0" rotate="180.0">
                                 <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
+                                    <Rectangle arcHeight="5.0" arcWidth="5.0" height="15.0" stroke="BLACK" strokeType="INSIDE" width="6.0">
                                         <HBox.margin>
                                             <Insets top="1.0" />
                                         </HBox.margin>
                                     </Rectangle>
-                                    <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
+                                    <Polygon disable="true" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" smooth="false" stroke="#5e5c5c00" strokeMiterLimit="0.0" strokeType="INSIDE" />
                                 </children>
                             </HBox>
                         </graphic>
