@@ -98,7 +98,7 @@
          <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
          <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
          <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="20%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="volumeOff" layoutX="591.0" layoutY="34.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="15.5" AnchorPane.rightAnchor="6.5" />
+         <Label fx:id="volumeOff" layoutX="591.0" layoutY="35.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="149.0" />
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

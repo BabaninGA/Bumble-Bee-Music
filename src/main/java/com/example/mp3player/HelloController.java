@@ -215,9 +215,7 @@ public class HelloController {
                     }
                 }
             });
-
-            labelButtonPPR.setGraphic(iconPlay);
-
+            
         }
     }
 
