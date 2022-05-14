@@ -35,9 +35,19 @@
                 </font>
             </Label>
             <Slider fx:id="songSlider" layoutX="42.0" layoutY="13.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="42.0" />
-            <HBox alignment="BOTTOM_CENTER" layoutX="303.0" layoutY="37.0" prefHeight="14.0" prefWidth="54.0" AnchorPane.bottomAnchor="12.0">
-                <children>
-                    <Button fx:id="backMedia" alignment="CENTER" mnemonicParsing="false" onAction="#backMedia" prefWidth="36.0">
+         <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
+         <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
+         <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="20%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
+         <Label fx:id="volumeOff" layoutX="591.0" layoutY="35.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="149.0" />
+         <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="34.0" prefWidth="360.0">
+            <children>
+               <Label fx:id="labelButtonPPR" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
+                    <Button fx:id="resetMedia" alignment="CENTER" layoutX="55.0" layoutY="5.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
+                        <graphic>
+                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="14.0" stroke="#5e5c5c" strokeType="INSIDE" width="14.0" />
+                        </graphic>
+                    </Button>
+                    <Button fx:id="backMedia" alignment="TOP_LEFT" layoutX="140.0" layoutY="3.0" mnemonicParsing="false" onAction="#backMedia" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0">
                                 <children>
@@ -51,35 +61,7 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="playMedia" alignment="CENTER" mnemonicParsing="false" onAction="#playMedia" prefHeight="25.0" prefWidth="36.0">
-                        <graphic>
-                            <Polygon disable="true" fill="#5e5c5c" points="-14.0, 71.5, 0.0, 80.0, 0.0, 63.75" rotate="180.0" smooth="false" stroke="#5e5c5c00" strokeType="INSIDE" />
-                        </graphic>
-                    </Button>
-                    <Button fx:id="pauseMedia" alignment="CENTER" mnemonicParsing="false" onAction="#pauseMedia" prefHeight="25.0" prefWidth="36.0">
-                        <graphic>
-                            <HBox alignment="TOP_CENTER" prefHeight="10.0" prefWidth="5.0" spacing="2.0">
-                                <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
-                                        <HBox.margin>
-                                            <Insets top="1.0" />
-                                        </HBox.margin>
-                                    </Rectangle>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="15.0" stroke="#5e5c5c" strokeType="INSIDE" width="6.0">
-                                        <HBox.margin>
-                                            <Insets top="1.0" />
-                                        </HBox.margin>
-                                    </Rectangle>
-                                </children>
-                            </HBox>
-                        </graphic>
-                    </Button>
-                    <Button fx:id="resetMedia" alignment="CENTER" mnemonicParsing="false" onAction="#resetMedia" prefHeight="25.0" prefWidth="36.0">
-                        <graphic>
-                            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5c5c" height="14.0" stroke="#5e5c5c" strokeType="INSIDE" width="14.0" />
-                        </graphic>
-                    </Button>
-                    <Button fx:id="forwardMedia" alignment="CENTER" mnemonicParsing="false" onAction="#forwardMedia">
+                    <Button fx:id="forwardMedia" alignment="CENTER" layoutX="231.0" layoutY="5.0" mnemonicParsing="false" onAction="#forwardMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-background-radius: 12; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0" rotate="180.0">
                                 <children>
@@ -93,15 +75,9 @@
                             </HBox>
                         </graphic>
                     </Button>
-                </children>
-            </HBox>
-         <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
-         <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="20%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="volumeOff" layoutX="591.0" layoutY="35.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="149.0" />
+            </children>
+         </AnchorPane>
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-   <Button fx:id="buttonPPR" layoutX="367.0" layoutY="402.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 35;" AnchorPane.bottomAnchor="85.0" />
-   <Label fx:id="labelButtonPPR" layoutX="428.0" layoutY="411.0" prefHeight="17.0" prefWidth="14.0" AnchorPane.bottomAnchor="94.0" />
 </AnchorPane>

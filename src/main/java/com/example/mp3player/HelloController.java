@@ -56,7 +56,7 @@ public class HelloController {
     @FXML
     private ScrollBar scrollBar;
     @FXML
-    private HBox allButtons;
+    private AnchorPane allButtons;
     @FXML
     private AnchorPane bottomMenu;
     @FXML
@@ -69,8 +69,6 @@ public class HelloController {
     private Label labelTotalTime;
     @FXML
     private Label labelVolume;
-    @FXML
-    private Button buttonPPR;
     @FXML
     private Label volumeOff;
     @FXML
@@ -215,7 +213,6 @@ public class HelloController {
                     }
                 }
             });
-            
         }
     }
 
@@ -252,20 +249,6 @@ public class HelloController {
 
     @FXML
     private void createPlaylist() {
-    }
-
-    @FXML
-    private void playMedia() {
-        System.out.println("Воспроизведение");
-        beginTimer();
-        mediaPlayer.play();
-    }
-
-    @FXML
-    private void pauseMedia(ActionEvent event) {
-        System.out.println("Пауза");
-        mediaPlayer.pause();
-        cancelTimer();
     }
 
     @FXML
