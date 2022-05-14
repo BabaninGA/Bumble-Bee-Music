@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
-    <AnchorPane fx:id="sideMenu" prefHeight="328.0" prefWidth="141.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="149.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <Button fx:id="openMedia" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMedia" style="-fx-background-color: grey;" text="Добавить файл" textFill="WHITE" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="14.0">
                 <font>
@@ -28,8 +28,8 @@
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
-            <Slider fx:id="volumeSlider" layoutX="451.0" layoutY="43.0" prefHeight="14.0" prefWidth="108.0" value="50.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="41.0" />
-            <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="9.0" AnchorPane.rightAnchor="420.0">
+            <Slider fx:id="volumeSlider" layoutX="451.0" layoutY="43.0" prefHeight="14.0" prefWidth="108.0" value="20.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="41.0" />
+            <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="420.0">
                 <font>
                     <Font name="Arial" size="12.0" />
                 </font>
@@ -97,10 +97,11 @@
             </HBox>
          <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
          <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
-         <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="50%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="volumeOff" layoutX="591.0" layoutY="34.0" prefHeight="31.0" prefWidth="28.0" />
+         <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="20%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
+         <Label fx:id="volumeOff" layoutX="591.0" layoutY="34.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="15.5" AnchorPane.rightAnchor="6.5" />
         </children>
     </AnchorPane>
-    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="73.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    <Button fx:id="buttonPPR" layoutX="367.0" layoutY="402.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 35;" AnchorPane.bottomAnchor="85.0" />
+   <Label fx:id="labelButtonPPR" layoutX="428.0" layoutY="411.0" prefHeight="17.0" prefWidth="14.0" AnchorPane.bottomAnchor="94.0" />
 </AnchorPane>

@@ -41,6 +41,9 @@ public class HelloController {
     private ImageView iconMute;
     private ImageView iconVolume;
     private ImageView iconMain;
+    private ImageView iconPlay;
+    private ImageView iconPause;
+    private ImageView iconReset;
 
     @FXML
     private Button createPlaylist;
@@ -72,6 +75,8 @@ public class HelloController {
     private Label volumeOff;
     @FXML
     private Label iconm;
+    @FXML
+    private Label labelButtonPPR;
 
 
     @FXML
@@ -100,10 +105,26 @@ public class HelloController {
         iconVolume = new ImageView(imageVol);
         iconVolume.setFitWidth(25);
         iconVolume.setFitHeight(25);
+
         Image iconmain = new Image(new File("src/resources/MAIN.png").toURI().toString());
         iconMain = new ImageView(iconmain);
         iconMain.setFitWidth(150);
         iconMain.setFitHeight(100);
+
+        Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
+        iconPlay = new ImageView(imageVol);
+        iconPlay.setFitWidth(25);
+        iconPlay.setFitHeight(25);
+
+        Image imagePause = new Image(new File("src/resources/pause-btn.png").toURI().toString());
+        iconPause = new ImageView(imageVol);
+        iconPause.setFitWidth(25);
+        iconPause.setFitHeight(25);
+
+        Image imageReset = new Image(new File("src/resources/reset-btn.png").toURI().toString());
+        iconReset = new ImageView(imageVol);
+        iconReset.setFitWidth(25);
+        iconReset.setFitHeight(25);
 
 
         iconm.setGraphic(iconMain);
@@ -134,6 +155,7 @@ public class HelloController {
                     labelTotalTime.getText();
                 }
             });
+
             mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
@@ -188,12 +210,14 @@ public class HelloController {
                 public void handle(MouseEvent mouseEvent) {
                     if (isMuted) {
                         volumeOn();
-
                     } else {
                         volumeOff();
                     }
                 }
             });
+
+            labelButtonPPR.setGraphic(iconPlay);
+
         }
     }
 
