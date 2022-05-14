@@ -26,7 +26,7 @@
          <Label fx:id="iconm" layoutX="19.0" layoutY="343.0" prefHeight="94.0" prefWidth="108.0" />
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
             <Slider fx:id="volumeSlider" layoutX="451.0" layoutY="43.0" prefHeight="14.0" prefWidth="108.0" value="20.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="41.0" />
             <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="420.0">

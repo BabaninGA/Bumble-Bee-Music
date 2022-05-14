@@ -139,6 +139,8 @@ public class HelloController {
             songLabel.setText(name);
 
 
+            bottomMenu.setVisible(true);
+
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
@@ -180,8 +182,10 @@ public class HelloController {
                     String res = String.valueOf(result);
                     labelVolume.setText(res + "%");
                     if (volPerc == 0) {
+                        isMuted = true;
                         volumeOff.setGraphic(iconMute);
                     } else {
+                        isMuted = false;
                         volumeOff.setGraphic(iconVolume);
                     }
                 }
