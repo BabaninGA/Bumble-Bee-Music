@@ -76,6 +76,8 @@ public class HelloController {
     private Label iconm;
     @FXML
     private Label labelButtonPPR;
+    @FXML
+    private HBox hboxVolume;
 
 
     @FXML
@@ -125,6 +127,9 @@ public class HelloController {
         iconReset.setFitWidth(25);
         iconReset.setFitHeight(25);
 
+        hboxVolume.getChildren().remove(volumeSlider);
+        hboxVolume.getChildren().remove(labelVolume);
+
 
         iconm.setGraphic(iconMain);
         volumeOff.setGraphic(iconVolume);
@@ -137,7 +142,6 @@ public class HelloController {
             beginTimer();
             System.out.println(filePath);
             songLabel.setText(name);
-
 
             bottomMenu.setVisible(true);
             scrollBar.setVisible(true);
@@ -202,6 +206,26 @@ public class HelloController {
                 public void run() {
                     Duration total = media.getDuration();
                     songSlider.setMax(total.toSeconds());
+                }
+            });
+
+            hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (hboxVolume.lookup("#volumeSlider") == null) {
+                        hboxVolume.getChildren().add(volumeSlider);
+                        hboxVolume.getChildren().add(labelVolume);
+                        volumeSlider.setValue(mediaPlayer.getVolume());
+                    }
+                }
+            });
+
+            hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+
+                    hboxVolume.getChildren().remove(volumeSlider);
+                    hboxVolume.getChildren().remove(labelVolume);
                 }
             });
 

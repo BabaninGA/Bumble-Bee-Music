@@ -28,7 +28,6 @@
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
-            <Slider fx:id="volumeSlider" layoutX="451.0" layoutY="43.0" prefHeight="14.0" prefWidth="108.0" value="20.0" AnchorPane.bottomAnchor="17.0" AnchorPane.rightAnchor="41.0" />
             <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="420.0">
                 <font>
                     <Font name="Arial" size="12.0" />
@@ -37,8 +36,6 @@
             <Slider fx:id="songSlider" layoutX="42.0" layoutY="13.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="42.0" />
          <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" prefHeight="17.0" prefWidth="30.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0" />
          <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0" />
-         <Label fx:id="labelVolume" layoutX="738.0" layoutY="47.0" prefHeight="17.0" prefWidth="30.0" text="20%" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="6.0" />
-         <Label fx:id="volumeOff" layoutX="591.0" layoutY="35.0" prefHeight="31.0" prefWidth="28.0" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="149.0" />
          <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="34.0" prefWidth="360.0">
             <children>
                <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
@@ -77,6 +74,13 @@
                     </Button>
             </children>
          </AnchorPane>
+         <HBox fx:id="hboxVolume" alignment="CENTER" layoutX="618.0" layoutY="31.0" prefHeight="37.0" prefWidth="192.0" AnchorPane.bottomAnchor="7.0" AnchorPane.rightAnchor="9.0">
+            <children>
+               <Label fx:id="volumeOff" prefHeight="31.0" prefWidth="28.0" />
+                  <Slider fx:id="volumeSlider" prefHeight="14.0" prefWidth="108.0" value="20.0" />
+               <Label fx:id="labelVolume" prefHeight="17.0" prefWidth="30.0" text="20%" />
+            </children>
+         </HBox>
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
