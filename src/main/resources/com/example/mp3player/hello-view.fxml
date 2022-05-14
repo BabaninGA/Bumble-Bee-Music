@@ -28,7 +28,7 @@
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
-            <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="9.5" layoutY="38.0" prefHeight="25.0" prefWidth="171.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="420.0">
+            <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="7.5" layoutY="38.0" prefHeight="25.0" prefWidth="212.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="550.0">
                 <font>
                     <Font name="Arial Bold" size="12.0" />
                 </font>
@@ -45,7 +45,7 @@
          <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="34.0" prefWidth="360.0">
             <children>
                <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
-                    <Button fx:id="resetMedia" alignment="CENTER" layoutX="55.0" layoutY="5.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
+                    <Button fx:id="resetMedia" alignment="CENTER" layoutX="73.0" layoutY="5.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <Rectangle arcHeight="5.0" arcWidth="5.0" height="14.0" stroke="BLACK" strokeType="INSIDE" width="14.0" />
                         </graphic>

@@ -268,6 +268,7 @@ public class HelloController {
 
     @FXML
     private void createPlaylist() {
+        System.out.println("Создать плейлист");
     }
 
     @FXML
