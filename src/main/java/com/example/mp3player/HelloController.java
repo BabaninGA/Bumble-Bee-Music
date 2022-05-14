@@ -36,6 +36,7 @@ public class HelloController {
     private MediaPlayer mediaPlayer;
     private boolean running;
     private boolean isMuted = false;
+    private boolean isPlaying = true;
     private double volPerc;
     private int prevVol;
     private ImageView iconMute;
@@ -110,22 +111,24 @@ public class HelloController {
         iconMain.setFitHeight(100);
 
         Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
-        iconPlay = new ImageView(imageVol);
+        iconPlay = new ImageView(imagePlay);
         iconPlay.setFitWidth(25);
         iconPlay.setFitHeight(25);
 
-        Image imagePause = new Image(new File("src/resources/pause-btn.png").toURI().toString());
-        iconPause = new ImageView(imageVol);
+        Image imagePause = new Image(new File("src/resources/stop-btn.png").toURI().toString());
+        iconPause = new ImageView(imagePause);
         iconPause.setFitWidth(25);
         iconPause.setFitHeight(25);
 
         Image imageReset = new Image(new File("src/resources/reset-btn.png").toURI().toString());
-        iconReset = new ImageView(imageVol);
+        iconReset = new ImageView(imageReset);
         iconReset.setFitWidth(25);
         iconReset.setFitHeight(25);
 
 
         iconm.setGraphic(iconMain);
+        volumeOff.setGraphic(iconVolume);
+        labelButtonPPR.setGraphic(iconPause);
 
         if (filePath != null) {
             Media media = new Media(filePath);
@@ -134,7 +137,7 @@ public class HelloController {
             beginTimer();
             System.out.println(filePath);
             songLabel.setText(name);
-            volumeOff.setGraphic(iconVolume);
+
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
@@ -213,6 +216,16 @@ public class HelloController {
                     }
                 }
             });
+            labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (isPlaying) {
+                        pauseMedia();
+                    } else {
+                        playMedia();
+                    }
+                }
+            });
         }
     }
 
@@ -257,6 +270,24 @@ public class HelloController {
         mediaPlayer.stop();
         songSlider.setValue(0);
         mediaPlayer.play();
+    }
+
+
+    private void playMedia() {
+        labelButtonPPR.setGraphic(iconPause);
+        System.out.println("Воспроизведение");
+        beginTimer();
+        mediaPlayer.play();
+        isPlaying = true;
+    }
+
+
+    private void pauseMedia() {
+        labelButtonPPR.setGraphic(iconPlay);
+        System.out.println("Пауза");
+        mediaPlayer.pause();
+        cancelTimer();
+        isPlaying = false;
     }
 
     public void beginTimer() {
