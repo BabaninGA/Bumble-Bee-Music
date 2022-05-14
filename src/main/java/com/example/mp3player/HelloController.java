@@ -140,6 +140,7 @@ public class HelloController {
 
 
             bottomMenu.setVisible(true);
+            scrollBar.setVisible(true);
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override

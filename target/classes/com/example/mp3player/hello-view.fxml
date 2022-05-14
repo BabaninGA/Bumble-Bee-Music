@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
-    <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="149.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="168.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <Button fx:id="openMedia" layoutX="6.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMedia" style="-fx-background-color: grey;" text="Добавить файл" textFill="WHITE" AnchorPane.leftAnchor="6.0" AnchorPane.topAnchor="14.0">
                 <font>
@@ -79,5 +79,5 @@
          </AnchorPane>
         </children>
     </AnchorPane>
-    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 </AnchorPane>
