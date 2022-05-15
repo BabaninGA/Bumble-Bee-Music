@@ -39,6 +39,7 @@ public class HelloController {
     private boolean isPlaying = true;
     private double volPerc;
     private int prevVol;
+
     private ImageView iconMute;
     private ImageView iconVolume;
     private ImageView iconMain;
@@ -47,7 +48,6 @@ public class HelloController {
     private ImageView iconReset;
     private ImageView iconNext;
     private ImageView iconPrevious;
-
 
     @FXML
     private Button shuffleMedia;
@@ -103,9 +103,9 @@ public class HelloController {
         subStr = filePath.split(delimiter);
         int i = subStr.length - 1;
         String name = f.getName();
-        System.out.println(name);
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
+        System.out.println(name);
 
         Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
         iconMute = new ImageView(imageMute);
@@ -119,8 +119,8 @@ public class HelloController {
 
         Image iconmain = new Image(new File("src/resources/MAIN.png").toURI().toString());
         iconMain = new ImageView(iconmain);
-        iconMain.setFitWidth(150);
-        iconMain.setFitHeight(100);
+        iconMain.setFitWidth(130);
+        iconMain.setFitHeight(130);
 
         Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
         iconPlay = new ImageView(imagePlay);
@@ -159,7 +159,7 @@ public class HelloController {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             beginTimer();
-            System.out.println(filePath);
+            //System.out.println(filePath);
             songLabel.setText(name);
 
             bottomMenu.setVisible(true);
@@ -186,7 +186,6 @@ public class HelloController {
                     labelTotalTime.getText();
                 }
             });
-
             mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
@@ -202,6 +201,20 @@ public class HelloController {
 
                 }
             });
+            songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+                }
+            });
+            mediaPlayer.setOnReady(new Runnable() {
+                @Override
+                public void run() {
+                    Duration total = media.getDuration();
+                    songSlider.setMax(total.toSeconds());
+                }
+            });
+
             volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
@@ -216,19 +229,6 @@ public class HelloController {
                         isMuted = false;
                         volumeOff.setGraphic(iconVolume);
                     }
-                }
-            });
-            songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
-                }
-            });
-            mediaPlayer.setOnReady(new Runnable() {
-                @Override
-                public void run() {
-                    Duration total = media.getDuration();
-                    songSlider.setMax(total.toSeconds());
                 }
             });
 
@@ -286,14 +286,12 @@ public class HelloController {
         System.out.println("+ 10 секунд");
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
     }
-
     @FXML
     private void backMedia(ActionEvent actionEvent) {
         System.out.println("- 10 секунд");
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
     }
 
-    @FXML
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);
         volPerc = volumeSlider.getValue();
@@ -303,8 +301,6 @@ public class HelloController {
         System.out.println("Выключение звука");
         isMuted = true;
     }
-
-    @FXML
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
@@ -338,8 +334,6 @@ public class HelloController {
         mediaPlayer.play();
         isPlaying = true;
     }
-
-
     private void pauseMedia() {
         labelButtonPPR.setGraphic(iconPlay);
         System.out.println("Пауза");
@@ -362,7 +356,6 @@ public class HelloController {
             }
         };
     }
-
     public void cancelTimer() {
         running = false;
         timer.cancel();
@@ -390,7 +383,7 @@ public class HelloController {
     public void bindCurrentTimeLabel() {
         labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
             @Override
-            public String call() throws Exception {
+            public String call() {
                 return getTime(mediaPlayer.getCurrentTime());
             }
         }, mediaPlayer.currentTimeProperty()));

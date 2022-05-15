@@ -3,6 +3,7 @@ package com.example.mp3player;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Bumble-Bee Music");
         stage.setScene(scene);
         stage.show();
-
+        stage.getIcons().add(new Image("file:src/resources/MAIN.png"));
     }
 
     public static void main(String[] args) {
