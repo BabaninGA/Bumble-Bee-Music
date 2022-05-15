@@ -64,6 +64,8 @@ public class HelloController {
     @FXML
     private Label shuffleMedia;
     @FXML
+    private Button openMedia;
+    @FXML
     private Button createPlaylist;
     @FXML
     private Slider volumeSlider;
@@ -102,7 +104,7 @@ public class HelloController {
 
 
     @FXML
-    private void openMedia(ActionEvent event) {
+    private void addMedia(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
         fileChooser.getExtensionFilters().add(filter);
@@ -120,7 +122,6 @@ public class HelloController {
         UserName = UserName.replaceAll(name2, "");
         UserName = UserName.replaceAll("(?:Downloads|Загрузки)", "");
         UserName = UserName.replaceAll("/", "");
-        System.out.println(UserName);
         String filePathToNewFiles = filePath;
         filePathToNewFiles = filePathToNewFiles.replaceAll("file:/C:","");
         filePathToNewFiles = filePathToNewFiles.replaceAll("%20"," ");
@@ -348,6 +349,11 @@ public class HelloController {
     @FXML
     private void createPlaylist() {
         System.out.println("Создать плейлист");
+    }
+
+    @FXML
+    private void openMedia() {
+        System.out.println("Открыть файл");
     }
 
     //@FXML
