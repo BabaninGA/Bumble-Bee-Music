@@ -153,6 +153,7 @@ public class HelloController {
         iconShuffle.setFitWidth(22);
         iconShuffle.setFitHeight(22);
 
+
         shuffleMedia.setGraphic(iconShuffle);
         iconm.setGraphic(iconMain);
         volumeOff.setGraphic(iconVolume);
@@ -165,7 +166,6 @@ public class HelloController {
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
             beginTimer();
-            //System.out.println(filePath);
             songLabel.setText(name);
 
             bottomMenu.setVisible(true);
@@ -319,13 +319,13 @@ public class HelloController {
         System.out.println("Создать плейлист");
     }
 
-    @FXML
-    private void resetMedia(ActionEvent event) {
-        System.out.println("Запуск файла с самого начала");
-        mediaPlayer.stop();
-        songSlider.setValue(0);
-        mediaPlayer.play();
-    }
+    //@FXML
+    //private void resetMedia(ActionEvent event) {
+        //System.out.println("Запуск файла с самого начала");
+        //mediaPlayer.stop();
+        //songSlider.setValue(0);
+        //mediaPlayer.play();
+    //}
 
 
     private void playMedia() {

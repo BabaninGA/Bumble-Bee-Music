@@ -45,11 +45,6 @@
             <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="37.0" prefWidth="397.0">
                 <children>
                     <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
-                    <Button fx:id="resetMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="35.0" layoutY="5.0" mnemonicParsing="false" onAction="#resetMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
-                        <graphic>
-                            <Rectangle arcHeight="5.0" arcWidth="5.0" height="14.0" stroke="BLACK" strokeType="INSIDE" width="14.0" />
-                        </graphic>
-                    </Button>
                     <Button fx:id="backMedia" alignment="TOP_LEFT" layoutX="140.0" layoutY="3.0" mnemonicParsing="false" onAction="#backMedia" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0">
