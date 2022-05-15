@@ -33,12 +33,12 @@
                     <Font name="Arial Bold" size="12.0" />
                 </font>
             </Label>
-            <Slider fx:id="songSlider" layoutX="42.0" layoutY="13.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="42.0" />
-            <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="6.0">
+            <Slider fx:id="songSlider" layoutX="48.0" layoutY="7.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0" />
+            <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="6.0">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font></Label>
-            <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="6.0">
+            <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="6.0">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font></Label>
@@ -78,9 +78,9 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="shuffleMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="347.0" layoutY="5.0" mnemonicParsing="false" onAction="#shuffleMedia" prefHeight="27.0" prefWidth="32.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0" />
                <Label fx:id="previousSongButton" alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="8.0" />
                <Label fx:id="nextSongButton" alignment="CENTER" layoutX="276.0" layoutY="13.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="7.0" />
+               <Label fx:id="shuffleMedia" alignment="CENTER" layoutX="345.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: black; -fx-border-radius: 12;" />
                 </children>
             </AnchorPane>
          <HBox fx:id="hboxVolume" alignment="CENTER_LEFT" layoutX="595.0" layoutY="30.0" prefHeight="40.0" prefWidth="173.0" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="5.0">

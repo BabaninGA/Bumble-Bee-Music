@@ -48,9 +48,10 @@ public class HelloController {
     private ImageView iconReset;
     private ImageView iconNext;
     private ImageView iconPrevious;
+    private ImageView iconShuffle;
 
     @FXML
-    private Button shuffleMedia;
+    private Label shuffleMedia;
     @FXML
     private Button createPlaylist;
     @FXML
@@ -147,7 +148,12 @@ public class HelloController {
         iconPrevious.setFitWidth(23);
         iconPrevious.setFitHeight(23);
 
+        Image imageShuffle = new Image(new File("src/resources/shuffle-btn.png").toURI().toString());
+        iconShuffle = new ImageView(imageShuffle);
+        iconShuffle.setFitWidth(22);
+        iconShuffle.setFitHeight(22);
 
+        shuffleMedia.setGraphic(iconShuffle);
         iconm.setGraphic(iconMain);
         volumeOff.setGraphic(iconVolume);
         labelButtonPPR.setGraphic(iconPause);
@@ -311,11 +317,6 @@ public class HelloController {
     @FXML
     private void createPlaylist() {
         System.out.println("Создать плейлист");
-    }
-
-    @FXML
-    private void shuffleMedia() {
-        System.out.println("Перемешать плейлист");
     }
 
     @FXML
