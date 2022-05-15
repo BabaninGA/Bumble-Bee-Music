@@ -20,11 +20,21 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+
+import org.apache.commons.io.FileUtils;
+
 
 public class HelloController {
 
@@ -107,6 +117,15 @@ public class HelloController {
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
         System.out.println(name);
+
+        File source = new File("/Users/Eugene/Downloads/dm 90 - Pose Flexy.mp3");
+         File dest = new File("/Users/Eugene/IdeaProjects/MP3player/audio/dm 90 - Pose Flexy.mp3");
+        try {
+            FileUtils.copyFile(source, dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
         iconMute = new ImageView(imageMute);
