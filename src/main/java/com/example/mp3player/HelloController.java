@@ -20,6 +20,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -100,7 +101,6 @@ public class HelloController {
     private Label previousSongButton;
 
 
-
     @FXML
     private void openMedia(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
@@ -109,17 +109,27 @@ public class HelloController {
         String filePath = fileChooser.showOpenDialog(null).toURI().toString();
         File f = new File(filePath);
         System.out.println(filePath);
-        String[] subStr;
-        String delimiter = "/";
-        subStr = filePath.split(delimiter);
-        int i = subStr.length - 1;
         String name = f.getName();
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
         System.out.println(name);
 
-        File source = new File("/Users/Eugene/Downloads/dm 90 - Pose Flexy.mp3");
-         File dest = new File("/Users/Eugene/IdeaProjects/MP3player/audio/dm 90 - Pose Flexy.mp3");
+        String UserName = filePath;
+        String name2 = f.getName();
+        UserName = UserName.replaceAll("file:/C:/Users/","");
+        UserName = UserName.replaceAll(name2, "");
+        UserName = UserName.replaceAll("(?:Downloads|Загрузки)", "");
+        UserName = UserName.replaceAll("/", "");
+        System.out.println(UserName);
+        String filePathToNewFiles = filePath;
+        filePathToNewFiles = filePathToNewFiles.replaceAll("file:/C:","");
+        filePathToNewFiles = filePathToNewFiles.replaceAll("%20"," ");
+        String filesDirectory = "/Users/"+UserName+"/IdeaProjects/MP3player/audio/" + name + ".mp3/";
+
+
+
+        File source = new File(filePathToNewFiles);
+        File dest = new File(filesDirectory);
         try {
             FileUtils.copyFile(source, dest);
         } catch (IOException e) {
@@ -311,6 +321,7 @@ public class HelloController {
         System.out.println("+ 10 секунд");
         mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
     }
+
     @FXML
     private void backMedia(ActionEvent actionEvent) {
         System.out.println("- 10 секунд");
@@ -326,6 +337,7 @@ public class HelloController {
         System.out.println("Выключение звука");
         isMuted = true;
     }
+
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
@@ -340,10 +352,10 @@ public class HelloController {
 
     //@FXML
     //private void resetMedia(ActionEvent event) {
-        //System.out.println("Запуск файла с самого начала");
-        //mediaPlayer.stop();
-        //songSlider.setValue(0);
-        //mediaPlayer.play();
+    //System.out.println("Запуск файла с самого начала");
+    //mediaPlayer.stop();
+    //songSlider.setValue(0);
+    //mediaPlayer.play();
     //}
 
 
@@ -354,6 +366,7 @@ public class HelloController {
         mediaPlayer.play();
         isPlaying = true;
     }
+
     private void pauseMedia() {
         labelButtonPPR.setGraphic(iconPlay);
         System.out.println("Пауза");
@@ -376,6 +389,7 @@ public class HelloController {
             }
         };
     }
+
     public void cancelTimer() {
         running = false;
         timer.cancel();
