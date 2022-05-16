@@ -204,10 +204,14 @@ public class HelloController {
         nextSongButton.setGraphic(iconNext);
         previousSongButton.setGraphic(iconPrevious);
 
+
         if (filePath != null) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
+            labelVolume.setText("10%");
+            volumeSlider.setValue(10.0);
+            mediaPlayer.setVolume(10.0 * 0.025);
             beginTimer();
             songLabel.setText(name);
 
@@ -291,7 +295,7 @@ public class HelloController {
                         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
                             @Override
                             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.025);
                             }
                         });
                         volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
