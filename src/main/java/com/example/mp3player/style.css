@@ -1,0 +1,9 @@
+.bottom_bar_color {
+    -fx-background-color: linear-gradient(from 25% 25% to 100% 100%, #0B1E3E, #4E154C);
+}
+
+.bottom_bar_color1 {
+    -fx-background-color: linear-gradient(from 5% 5% to 100% 100%, #0B1E3E, #4E154C);
+}
+
+

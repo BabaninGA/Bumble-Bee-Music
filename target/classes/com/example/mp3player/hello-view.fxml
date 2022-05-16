@@ -11,10 +11,10 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
-    <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="181.0" style="-fx-background-color: grey; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" styleClass="bottom_bar_color" stylesheets="file:/C:/Users/Sasha/IdeaProjects/MP3player/src/main/java/com/example/mp3player/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
+    <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="181.0" style="-fx-background-color: #0B1E3E; -fx-border-width: 0.5; -fx-border-color: black;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-            <Button fx:id="addMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="83.0" mnemonicParsing="false" onAction="#addMedia" prefHeight="25.0" style="-fx-background-color: grey; -fx-background-radius: 1215; -fx-border-color: white; -fx-border-radius: 1215; -fx-border-width: 0.5;" text="Добавить файл" textFill="WHITE" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="83.0">
+            <Button fx:id="addMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="83.0" mnemonicParsing="false" onAction="#addMedia" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: white; -fx-border-radius: 1215; -fx-border-width: 0.5;" text="Добавить файл" textFill="WHITE" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="83.0">
                 <font>
                     <Font size="15.0" />
                 </font></Button>
@@ -24,14 +24,14 @@
                 </font>
             </Button>
             <Label fx:id="iconm" layoutX="26.0" layoutY="307.0" prefHeight="94.0" prefWidth="108.0" />
-         <Button fx:id="openMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="33.0" mnemonicParsing="false" onAction="#openMedia" prefHeight="25.0" style="-fx-background-color: grey; -fx-background-radius: 1215; -fx-border-color: white; -fx-border-radius: 1215; -fx-border-width: 0.5;" text="Открыть файл" textFill="WHITE" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="33.0">
+         <Button fx:id="openMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="33.0" mnemonicParsing="false" onAction="#openMedia" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: white; -fx-border-radius: 1215; -fx-border-width: 0.5;" text="Открыть файл" textFill="WHITE" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="33.0">
             <font>
                <Font size="15.0" />
             </font>
          </Button>
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-border-width: 0.5;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-border-color: black; -fx-border-width: 0.5;" styleClass="bottom_bar_color1" stylesheets="file:/C:/Users/Sasha/IdeaProjects/MP3player/src/main/java/com/example/mp3player/style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
             <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="8.5" layoutY="38.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="588.0">
                 <font>
@@ -39,18 +39,18 @@
                 </font>
             </Label>
             <Slider fx:id="songSlider" layoutX="48.0" layoutY="7.0" prefHeight="14.0" prefWidth="571.0" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="48.0" AnchorPane.rightAnchor="48.0" />
-            <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="6.0">
+            <Label fx:id="labelTotalTime" layoutX="560.0" layoutY="20.0" text="00:00" textFill="WHITE" AnchorPane.bottomAnchor="52.0" AnchorPane.rightAnchor="6.0">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font></Label>
-            <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="6.0">
+            <Label fx:id="labelCurrentTime" layoutX="6.0" layoutY="20.0" text="00:00" textFill="WHITE" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="6.0">
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font></Label>
             <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="37.0" prefWidth="397.0">
                 <children>
                     <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: black;" />
-                    <Button fx:id="backMedia" alignment="TOP_LEFT" layoutX="140.0" layoutY="3.0" mnemonicParsing="false" onAction="#backMedia" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: darkgray; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
+                    <Button fx:id="backMedia" alignment="TOP_LEFT" layoutX="140.0" layoutY="3.0" mnemonicParsing="false" onAction="#backMedia" prefHeight="25.0" prefWidth="38.0" style="-fx-background-color: #4E154C; -fx-background-radius: 12; -fx-border-color: black; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0">
                                 <children>
@@ -64,7 +64,7 @@
                             </HBox>
                         </graphic>
                     </Button>
-                    <Button fx:id="forwardMedia" alignment="CENTER" layoutX="231.0" layoutY="5.0" mnemonicParsing="false" onAction="#forwardMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: darkgray; -fx-border-color: black; -fx-background-radius: 12; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
+                    <Button fx:id="forwardMedia" alignment="CENTER" layoutX="231.0" layoutY="5.0" mnemonicParsing="false" onAction="#forwardMedia" prefHeight="21.0" prefWidth="21.0" style="-fx-background-color: #4E154C; -fx-border-color: black; -fx-background-radius: 12; -fx-border-radius: 12;" AnchorPane.bottomAnchor="5.0">
                         <graphic>
                             <HBox alignment="TOP_CENTER" prefHeight="17.0" prefWidth="0.0" rotate="180.0">
                                 <children>
@@ -87,7 +87,7 @@
             <children>
                     <Label fx:id="volumeOff" alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="28.0" />
                     <Slider fx:id="volumeSlider" blockIncrement="0.0" prefHeight="14.0" prefWidth="108.0" value="50.0" />
-                    <Label fx:id="labelVolume" prefHeight="17.0" prefWidth="38.0" text="50%">
+                    <Label fx:id="labelVolume" prefHeight="17.0" prefWidth="38.0" text="50%" textFill="WHITE">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
@@ -99,7 +99,7 @@
          </HBox>
          <HBox fx:id="hboxTime" prefHeight="17.0" prefWidth="31.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="6.0">
             <children>
-               <Label fx:id="labelRemainingTime" prefHeight="66.0" prefWidth="144.0" style="-fx-background-color: darkgray;" text="00:00">
+               <Label fx:id="labelRemainingTime" prefHeight="66.0" prefWidth="144.0" style="-fx-background-color: #0B1E3E;" text="00:00" textFill="WHITE">
                   <font>
                      <Font name="System Bold" size="12.0" />
                   </font>
