@@ -334,6 +334,12 @@ public class HelloController {
                     } else {
                         playMedia();
                     }
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    double end = mediaPlayer.getTotalDuration().toSeconds();
+                    //if (current / end == 1) {
+                     //   resetMedia();
+                    //    labelButtonPPR.setGraphic(iconPause);
+                   // }
                 }
             });
         }
@@ -379,10 +385,11 @@ public class HelloController {
     }
 
     //@FXML
-    //private void resetMedia(ActionEvent event) {
+    //private void resetMedia() {
     //System.out.println("Запуск файла с самого начала");
     //mediaPlayer.stop();
     //songSlider.setValue(0);
+    //beginTimer();
     //mediaPlayer.play();
     //}
 
@@ -412,6 +419,7 @@ public class HelloController {
                 double end = mediaPlayer.getTotalDuration().toSeconds();
                 songSlider.setValue(current / end);
                 if (current / end == 1) {
+                    labelButtonPPR.setGraphic(iconReset);
                     cancelTimer();
                 }
             }
