@@ -1,11 +1,15 @@
 package com.example.mp3player;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollBar;
@@ -21,7 +25,10 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.net.URL;
+import java.time.Clock;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
@@ -111,6 +118,7 @@ public class HelloController {
 
     @FXML
     private void addMedia(ActionEvent event) {
+        System.out.println("Добавить файл");
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
         fileChooser.getExtensionFilters().add(filter);
@@ -124,15 +132,14 @@ public class HelloController {
 
         String UserName = filePath;
         String name2 = f.getName();
-        UserName = UserName.replaceAll("file:/C:/Users/","");
+        UserName = UserName.replaceAll("file:/C:/Users/", "");
         UserName = UserName.replaceAll(name2, "");
         UserName = UserName.replaceAll("(?:Downloads|Загрузки)", "");
         UserName = UserName.replaceAll("/", "");
         String filePathToNewFiles = filePath;
-        filePathToNewFiles = filePathToNewFiles.replaceAll("file:/C:","");
-        filePathToNewFiles = filePathToNewFiles.replaceAll("%20"," ");
-        String filesDirectory = "/Users/"+UserName+"/IdeaProjects/MP3player/audio/" + name + ".mp3/";
-
+        filePathToNewFiles = filePathToNewFiles.replaceAll("file:/C:", "");
+        filePathToNewFiles = filePathToNewFiles.replaceAll("%20", " ");
+        String filesDirectory = "/Users/" + UserName + "/IdeaProjects/MP3player/audio/" + name + ".mp3/";
 
 
         File source = new File(filePathToNewFiles);
@@ -314,7 +321,7 @@ public class HelloController {
                     hboxTime.getChildren().add(labelRemainingTime);
                     totalTime = mediaPlayer.getCurrentTime().toMinutes();
                     currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                    double result = - (totalTime - currentTime);
+                    double result = -(totalTime - currentTime);
                     String res = String.valueOf(result);
                     labelRemainingTime.setText(res);
                 }
@@ -337,9 +344,9 @@ public class HelloController {
                     double current = mediaPlayer.getCurrentTime().toSeconds();
                     double end = mediaPlayer.getTotalDuration().toSeconds();
                     //if (current / end == 1) {
-                     //   resetMedia();
+                    //   resetMedia();
                     //    labelButtonPPR.setGraphic(iconPause);
-                   // }
+                    // }
                 }
             });
         }
@@ -431,7 +438,7 @@ public class HelloController {
         timer.cancel();
     }
 
-       public String getTime(Duration time) {
+    public String getTime(Duration time) {
 
         int hours = (int) time.toHours();
         int minutes = (int) time.toMinutes();
