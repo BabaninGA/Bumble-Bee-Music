@@ -62,13 +62,14 @@ public class HelloController {
 
     private ImageView iconMute;
     private ImageView iconVolume;
-    private ImageView iconMain;
     private ImageView iconPlay;
     private ImageView iconPause;
     private ImageView iconReset;
     private ImageView iconNext;
     private ImageView iconPrevious;
     private ImageView iconShuffle;
+    private ImageView iconPlus;
+    private ImageView iconMinus;
 
     @FXML
     private Label shuffleMedia;
@@ -103,9 +104,11 @@ public class HelloController {
     @FXML
     private Label volumeOff;
     @FXML
-    private Label iconm;
-    @FXML
     private Label labelButtonPPR;
+    @FXML
+    private Label backMedia;
+    @FXML
+    private Label forwardMedia;
     @FXML
     private HBox hboxTime;
     @FXML
@@ -161,11 +164,6 @@ public class HelloController {
         iconVolume.setFitWidth(25);
         iconVolume.setFitHeight(25);
 
-        Image iconmain = new Image(new File("src/resources/MAIN.png").toURI().toString());
-        iconMain = new ImageView(iconmain);
-        iconMain.setFitWidth(130);
-        iconMain.setFitHeight(130);
-
         Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
         iconPlay = new ImageView(imagePlay);
         iconPlay.setFitWidth(25);
@@ -196,9 +194,19 @@ public class HelloController {
         iconShuffle.setFitWidth(22);
         iconShuffle.setFitHeight(22);
 
+        Image imagePlus = new Image(new File("src/resources/plus-btn.png").toURI().toString());
+        iconPlus = new ImageView(imagePlus);
+        iconPlus.setFitWidth(21);
+        iconPlus.setFitHeight(21);
 
+        Image imageMinus = new Image(new File("src/resources/minus-btn.png").toURI().toString());
+        iconMinus = new ImageView(imageMinus);
+        iconMinus.setFitWidth(21);
+        iconMinus.setFitHeight(21);
+
+        backMedia.setGraphic(iconMinus);
+        forwardMedia.setGraphic(iconPlus);
         shuffleMedia.setGraphic(iconShuffle);
-        iconm.setGraphic(iconMain);
         volumeOff.setGraphic(iconVolume);
         labelButtonPPR.setGraphic(iconPause);
         nextSongButton.setGraphic(iconNext);
@@ -217,7 +225,6 @@ public class HelloController {
 
             bottomMenu.setVisible(true);
             scrollBar.setVisible(true);
-            createPlaylist.setVisible(true);
 
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
@@ -266,6 +273,22 @@ public class HelloController {
                 public void run() {
                     Duration total = media.getDuration();
                     songSlider.setMax(total.toSeconds());
+                }
+            });
+
+            forwardMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("+ 10 секунд");
+                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
+                }
+            });
+
+            backMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("- 10 секунд");
+                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
                 }
             });
 
@@ -319,23 +342,23 @@ public class HelloController {
                 }
             });
 
-            hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    hboxTime.getChildren().add(labelRemainingTime);
-                    totalTime = mediaPlayer.getCurrentTime().toMinutes();
-                    currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                    double result = -(totalTime - currentTime);
-                    String res = String.valueOf(result);
-                    labelRemainingTime.setText(res);
-                }
-            });
-            hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    hboxTime.getChildren().remove(labelRemainingTime);
-                }
-            });
+            //hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                //@Override
+                //public void handle(MouseEvent mouseEvent) {
+                    //hboxTime.getChildren().add(labelRemainingTime);
+                    //totalTime = mediaPlayer.getCurrentTime().toMinutes();
+                    //currentTime = mediaPlayer.getTotalDuration().toMinutes();
+                    //double result = -(totalTime - currentTime);
+                    //String res = String.valueOf(result);
+                    //labelRemainingTime.setText(res);
+               // }
+            //});
+            //hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
+                //@Override
+                //public void handle(MouseEvent mouseEvent) {
+                    //hboxTime.getChildren().remove(labelRemainingTime);
+                //}
+            //});
 
             labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -356,17 +379,6 @@ public class HelloController {
         }
     }
 
-    @FXML
-    private void forwardMedia(ActionEvent actionEvent) {
-        System.out.println("+ 10 секунд");
-        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
-    }
-
-    @FXML
-    private void backMedia(ActionEvent actionEvent) {
-        System.out.println("- 10 секунд");
-        mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
-    }
 
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);

@@ -7,3 +7,26 @@
 }
 
 
+.scrollBar {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+.scrollBar {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-border-radius: 2em;
+}
+.scrollBar  {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0em;
+    -fx-padding: 0 0 10 0;
+}
+.scrollBar {
+    -fx-padding: -1;
+}
+.scrollBar {
+    -fx-background-color: derive( #E91DE4, 50%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
