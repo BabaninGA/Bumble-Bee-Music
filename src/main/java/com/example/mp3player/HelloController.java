@@ -50,6 +50,8 @@ public class HelloController {
     private boolean isPlaying = true;
     private double volPerc;
     private int prevVol;
+    private double totalTime;
+    private double currentTime;
 
     private ImageView iconMute;
     private ImageView iconVolume;
@@ -88,6 +90,8 @@ public class HelloController {
     @FXML
     private Label labelTotalTime;
     @FXML
+    private Label labelRemainingTime;
+    @FXML
     private Label labelVolume;
     @FXML
     private Label volumeOff;
@@ -95,6 +99,8 @@ public class HelloController {
     private Label iconm;
     @FXML
     private Label labelButtonPPR;
+    @FXML
+    private HBox hboxTime;
     @FXML
     private HBox hboxVolume;
     @FXML
@@ -202,6 +208,7 @@ public class HelloController {
             scrollBar.setVisible(true);
             createPlaylist.setVisible(true);
 
+            hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
 
@@ -293,16 +300,31 @@ public class HelloController {
                     }
                 }
             });
-
             hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
-
                     hboxVolume.getChildren().remove(volumeSlider);
                     hboxVolume.getChildren().remove(labelVolume);
                 }
             });
 
+            hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().add(labelRemainingTime);
+                    totalTime = mediaPlayer.getCurrentTime().toMinutes();
+                    currentTime = mediaPlayer.getTotalDuration().toMinutes();
+                    double result = - (totalTime - currentTime);
+                    String res = String.valueOf(result);
+                    labelRemainingTime.setText(res);
+                }
+            });
+            hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().remove(labelRemainingTime);
+                }
+            });
 
             labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -401,7 +423,7 @@ public class HelloController {
         timer.cancel();
     }
 
-    public String getTime(Duration time) {
+       public String getTime(Duration time) {
 
         int hours = (int) time.toHours();
         int minutes = (int) time.toMinutes();
