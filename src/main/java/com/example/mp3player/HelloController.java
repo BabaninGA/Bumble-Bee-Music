@@ -219,7 +219,7 @@ public class HelloController {
             mediaPlayer.play();
             labelVolume.setText("10%");
             volumeSlider.setValue(10.0);
-            mediaPlayer.setVolume(10.0 * 0.025);
+            mediaPlayer.setVolume(10.0 * 0.01);
             beginTimer();
             songLabel.setText(name);
 
@@ -318,7 +318,7 @@ public class HelloController {
                         volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
                             @Override
                             public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.025);
+                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
                             }
                         });
                         volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -372,7 +372,7 @@ public class HelloController {
                     double end = mediaPlayer.getTotalDuration().toSeconds();
                     //if (current / end == 1) {
                     //   resetMedia();
-                    //    labelButtonPPR.setGraphic(iconPause);
+                    //   labelButtonPPR.setGraphic(iconPause);
                     // }
                 }
             });
@@ -389,7 +389,6 @@ public class HelloController {
         System.out.println("Выключение звука");
         isMuted = true;
     }
-
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
@@ -424,34 +423,12 @@ public class HelloController {
         mediaPlayer.play();
         isPlaying = true;
     }
-
     private void pauseMedia() {
         labelButtonPPR.setGraphic(iconPlay);
         System.out.println("Пауза");
         mediaPlayer.pause();
         cancelTimer();
         isPlaying = false;
-    }
-
-    public void beginTimer() {
-        timer = new Timer();
-        task = new TimerTask() {
-            public void run() {
-                running = true;
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = mediaPlayer.getTotalDuration().toSeconds();
-                songSlider.setValue(current / end);
-                if (current / end == 1) {
-                    labelButtonPPR.setGraphic(iconReset);
-                    cancelTimer();
-                }
-            }
-        };
-    }
-
-    public void cancelTimer() {
-        running = false;
-        timer.cancel();
     }
 
     public String getTime(Duration time) {
@@ -472,7 +449,6 @@ public class HelloController {
                 minutes,
                 seconds);
     }
-
     public void bindCurrentTimeLabel() {
         labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
             @Override
@@ -480,5 +456,25 @@ public class HelloController {
                 return getTime(mediaPlayer.getCurrentTime());
             }
         }, mediaPlayer.currentTimeProperty()));
+    }
+
+    public void beginTimer() {
+        timer = new Timer();
+        task = new TimerTask() {
+            public void run() {
+                running = true;
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = mediaPlayer.getTotalDuration().toSeconds();
+                songSlider.setValue(current / end);
+                if (current / end == 1) {
+                    labelButtonPPR.setGraphic(iconReset);
+                    cancelTimer();
+                }
+            }
+        };
+    }
+    public void cancelTimer() {
+        running = false;
+        timer.cancel();
     }
 }

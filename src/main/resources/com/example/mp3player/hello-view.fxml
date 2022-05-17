@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" style="-fx-border-color: #E91DE4; -fx-border-width: 0.4;" styleClass="bottom_bar_color" stylesheets="file:/C:/Users/Sasha/IdeaProjects/MP3player/src/main/java/com/example/mp3player/style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
+<AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" style="-fx-border-color: #E91DE4; -fx-border-width: 0.4;" styleClass="bottom_bar_color" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
     <AnchorPane fx:id="sideMenu" prefHeight="522.0" prefWidth="181.0" style="-fx-background-color: #0B1E3E; -fx-border-width: 0.5; -fx-border-color: #E91DE4;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
             <Button fx:id="addMedia" alignment="CENTER" contentDisplay="CENTER" layoutX="17.0" layoutY="83.0" mnemonicParsing="false" onAction="#addMedia" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Добавить файл" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="83.0">
@@ -28,7 +28,7 @@
          </Button>
         </children>
     </AnchorPane>
-    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-border-color: #E91DE4; -fx-border-width: 2;" styleClass="bottom_bar_color1" stylesheets="file:/C:/Users/Sasha/IdeaProjects/MP3player/src/main/java/com/example/mp3player/style.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-border-color: #E91DE4; -fx-border-width: 2;" styleClass="bottom_bar_color1" stylesheets="@style1.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <children>
             <Label fx:id="songLabel" alignment="TOP_LEFT" layoutX="8.5" layoutY="38.0" prefHeight="25.0" prefWidth="173.0" textFill="WHITE" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="588.0">
                 <font>
@@ -79,5 +79,5 @@
          </HBox>
         </children>
     </AnchorPane>
-    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" styleClass="scrollBar" stylesheets="file:/C:/Users/Sasha/IdeaProjects/MP3player/src/main/java/com/example/mp3player/style.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+    <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" styleClass="scrollBar" stylesheets="@style1.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
 </AnchorPane>
