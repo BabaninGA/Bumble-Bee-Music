@@ -10,10 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -117,6 +114,14 @@ public class HelloController {
     private Label nextSongButton;
     @FXML
     private Label previousSongButton;
+    @FXML
+    private ListView<?> playlistList;
+    @FXML
+    private ListView<?> songList;
+    @FXML
+    private Label songName;
+    @FXML
+    private Label songAuthor;
 
 
     @FXML
