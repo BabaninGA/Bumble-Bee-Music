@@ -3,8 +3,10 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -26,6 +28,11 @@
                <Font size="15.0" />
             </font>
          </Button>
+         <ListView fx:id="playlistList" fixedCellSize="30.0" layoutY="214.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="234.0" prefWidth="181.0" style="-fx-background-color: transparent;">
+            <effect>
+               <ColorAdjust />
+            </effect>
+         </ListView>
         </children>
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-border-color: #E91DE4; -fx-border-width: 2;" styleClass="bottom_bar_color1" stylesheets="@style1.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -80,4 +87,15 @@
         </children>
     </AnchorPane>
     <ScrollBar fx:id="scrollBar" layoutX="586.0" orientation="VERTICAL" prefHeight="327.0" prefWidth="14.0" styleClass="scrollBar" stylesheets="@style1.css" visible="false" AnchorPane.bottomAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+   <ListView fx:id="songList" fixedCellSize="50.0" layoutX="181.0" layoutY="219.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="228.0" prefWidth="587.0" style="-fx-background-color: transparent;" styleClass="playlist-view" />
+   <Label fx:id="songName" layoutX="484.0" layoutY="26.0" text="Song" textFill="WHITE">
+      <font>
+         <Font name="Segoe UI Semibold" size="53.0" />
+      </font>
+   </Label>
+   <Label fx:id="songAuthor" layoutX="484.0" layoutY="95.0" text="Author" textFill="WHITE">
+      <font>
+         <Font name="Segoe UI Semibold" size="50.0" />
+      </font>
+   </Label>
 </AnchorPane>
