@@ -1,6 +1,8 @@
 package com.example.mp3player;
 
 
+import christophedelory.playlist.SpecificPlaylist;
+import christophedelory.playlist.SpecificPlaylistFactory;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -23,6 +25,7 @@ import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
+import java.io.*;
 import java.net.URL;
 import java.time.Clock;
 import java.util.ArrayList;
@@ -30,12 +33,6 @@ import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Callable;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
@@ -128,7 +125,7 @@ public class HelloController {
 
 
     @FXML
-    private void addMedia(ActionEvent event) {
+    private void addMedia(ActionEvent event) throws IOException {
         System.out.println("Добавить файл");
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
@@ -141,25 +138,17 @@ public class HelloController {
         name = name.replaceAll(".mp3", "");
         System.out.println(name);
 
-        String UserName = filePath;
-        String name2 = f.getName();
-        UserName = UserName.replaceAll("file:/C:/Users/", "");
-        UserName = UserName.replaceAll(name2, "");
-        UserName = UserName.replaceAll("(?:Downloads|Загрузки)", "");
-        UserName = UserName.replaceAll("/", "");
-        String filePathToNewFiles = filePath;
-        filePathToNewFiles = filePathToNewFiles.replaceAll("file:/C:", "");
-        filePathToNewFiles = filePathToNewFiles.replaceAll("%20", " ");
-        String filesDirectory = "/Users/" + UserName + "/IdeaProjects/MP3player/audio/" + name + ".mp3/";
+        String track = filePath.replaceAll("file:/", "");
 
+        File playlist_file = new File("a_playlist_file");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(playlist_file));
+        writer.write(track);
 
-        File source = new File(filePathToNewFiles);
-        File dest = new File(filesDirectory);
-        try {
-            FileUtils.copyFile(source, dest);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        writer.close();
+
+//        SpecificPlaylist specificPlaylist = SpecificPlaylistFactory.getInstance().readFrom(playlist_file);
+//
+//        Playlist genericPlaylist = specificPlaylist.toPlaylist();
 
 
 
@@ -180,6 +169,7 @@ public class HelloController {
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
+
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
