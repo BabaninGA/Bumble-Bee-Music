@@ -393,8 +393,8 @@ public class HelloController {
 
         Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
         iconPlay = new ImageView(imagePlay);
-        iconPlay.setFitWidth(25);
-        iconPlay.setFitHeight(25);
+        iconPlay.setFitWidth(27);
+        iconPlay.setFitHeight(27);
 
         Image imagePause = new Image(new File("src/resources/stop-btn.png").toURI().toString());
         iconPause = new ImageView(imagePause);
