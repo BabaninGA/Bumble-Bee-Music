@@ -3,6 +3,7 @@ module com.example.mp3player {
     requires javafx.fxml;
     requires javafx.media;
     requires org.apache.commons.io;
+    requires lizzy;
 
 
     opens com.example.mp3player to javafx.fxml;
