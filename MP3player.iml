@@ -40,6 +40,17 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/Загрузки/Lizzy-1.1.1.zip!/Lizzy-1.1.1" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/Загрузки/Lizzy-1.1.1.zip!/Lizzy-1.1.1/docs/javadoc" />
+        </JAVADOC>
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" exported="" name="Lizzy-1.1" level="project" />
   </component>
 </module>

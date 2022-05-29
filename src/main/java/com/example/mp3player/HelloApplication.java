@@ -16,7 +16,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Bumble-Bee Music");
         stage.setScene(scene);
         stage.show();
-        stage.getIcons().add(new Image("file:src/resources/MAIN.png"));
+        stage.getIcons().add(new Image("file:src/resources/Main.png"));
     }
 
     public static void main(String[] args) {

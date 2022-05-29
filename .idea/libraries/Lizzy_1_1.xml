@@ -1,12 +1,14 @@
 <component name="libraryTable">
   <library name="Lizzy-1.1">
     <CLASSES>
-      <root url="file://$USER_HOME$/Desktop/Lizzy-1.1.1" />
+      <root url="file://$USER_HOME$/Загрузки/Lizzy-1.1.1" />
+      <root url="jar://$USER_HOME$/Загрузки/Lizzy-1.1.1.zip!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="file://$USER_HOME$/Desktop/Lizzy-1.1.1/docs/javadoc" />
+      <root url="file://$USER_HOME$/Загрузки/Lizzy-1.1.1/docs/javadoc" />
+      <root url="jar://$USER_HOME$/Загрузки/Lizzy-1.1.1.zip!/Lizzy-1.1.1/docs/javadoc" />
     </JAVADOC>
     <SOURCES />
-    <jarDirectory url="file://$USER_HOME$/Desktop/Lizzy-1.1.1" recursive="false" />
+    <jarDirectory url="file://$USER_HOME$/Загрузки/Lizzy-1.1.1" recursive="false" />
   </library>
 </component>

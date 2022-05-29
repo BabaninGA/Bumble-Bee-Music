@@ -24,6 +24,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
 import java.io.*;
 import java.net.URL;
@@ -319,7 +320,6 @@ public class HelloController {
             });
         }
     }
-
 
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);
