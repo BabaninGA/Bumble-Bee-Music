@@ -27,6 +27,8 @@ public class Song {
 
     }
 
+    public Song() {}
+
     public String getName() {
         return name;
     }

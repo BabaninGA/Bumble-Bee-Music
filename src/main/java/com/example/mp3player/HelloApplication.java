@@ -21,5 +21,7 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+        SongTest test1 = new SongTest();
+        test1.checkAll();
     }
 }
