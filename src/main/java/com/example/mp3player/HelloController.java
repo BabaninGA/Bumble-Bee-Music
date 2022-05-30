@@ -1,8 +1,7 @@
 package com.example.mp3player;
 
 
-import christophedelory.playlist.SpecificPlaylist;
-import christophedelory.playlist.SpecificPlaylistFactory;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -37,7 +36,6 @@ import java.util.concurrent.Callable;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
-import christophedelory.playlist.Playlist;
 
 import org.apache.commons.io.FileUtils;
 
