@@ -2,7 +2,7 @@ package com.example.mp3player;
 
 public class SongTest extends Song {
     public void setNameTest() {
-        String sname = "Диалоги тет а тет";
+        String sname = "чупапи муняня";
         setName(sname);
         System.out.println(name + "\tдолжно быть: " + sname);
     }
