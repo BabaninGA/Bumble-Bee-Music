@@ -2,7 +2,7 @@ module com.example.mp3player {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.media;
-    requires org.apache.commons.io;
+    requires commons.io;
 
 
     opens com.example.mp3player to javafx.fxml;
