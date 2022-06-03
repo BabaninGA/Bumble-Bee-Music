@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -249,6 +250,7 @@ public class HelloController {
                 }
             });
 
+
             hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent mouseEvent) {
@@ -282,23 +284,24 @@ public class HelloController {
                 }
             });
 
-            //hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                //@Override
-                //public void handle(MouseEvent mouseEvent) {
-                    //hboxTime.getChildren().add(labelRemainingTime);
-                    //totalTime = mediaPlayer.getCurrentTime().toMinutes();
-                    //currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                    //double result = -(totalTime - currentTime);
-                    //String res = String.valueOf(result);
-                    //labelRemainingTime.setText(res);
-               // }
-            //});
-            //hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
-                //@Override
-                //public void handle(MouseEvent mouseEvent) {
-                    //hboxTime.getChildren().remove(labelRemainingTime);
-                //}
-            //});
+            hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().add(labelRemainingTime);
+                    totalTime = mediaPlayer.getCurrentTime().toMinutes();
+                    currentTime = mediaPlayer.getTotalDuration().toMinutes();
+                    double result = -(totalTime - currentTime);
+                    String res = String.valueOf(result);
+                    labelRemainingTime.setText(res);
+                }
+            });
+
+            hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().remove(labelRemainingTime);
+                }
+            });
 
             labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -318,6 +321,7 @@ public class HelloController {
             });
         }
     }
+
 
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);

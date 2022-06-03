@@ -51,21 +51,11 @@
                 <font>
                     <Font name="System Bold" size="12.0" />
                 </font></Label>
-            <AnchorPane fx:id="allButtons" layoutX="168.0" layoutY="31.0" prefHeight="37.0" prefWidth="397.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="168.0" AnchorPane.rightAnchor="200.20000000000005">
-                <children>
-                    <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: white;" />
-               <Label fx:id="previousSongButton" alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="8.0" />
-               <Label fx:id="nextSongButton" alignment="CENTER" layoutX="276.0" layoutY="13.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="7.0" />
-               <Label fx:id="shuffleMedia" alignment="CENTER" layoutX="345.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" />
-               <Label fx:id="backMedia" alignment="CENTER" layoutX="141.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" AnchorPane.bottomAnchor="6.0" />
-               <Label fx:id="forwardMedia" alignment="CENTER" layoutX="232.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" AnchorPane.bottomAnchor="6.0" />
-                </children>
-            </AnchorPane>
          <HBox fx:id="hboxVolume" alignment="CENTER_LEFT" layoutX="595.0" layoutY="30.0" prefHeight="40.0" prefWidth="173.0" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="5.0">
             <children>
                     <Label fx:id="volumeOff" alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="28.0" />
                     <Slider fx:id="volumeSlider" blockIncrement="0.0" prefHeight="14.0" prefWidth="108.0" value="10.0" />
-                    <Label fx:id="labelVolume" prefHeight="17.0" prefWidth="38.0" text="50%" textFill="WHITE">
+                    <Label fx:id="labelVolume" prefHeight="17.0" prefWidth="38.0" text="10%" textFill="WHITE">
                         <font>
                             <Font name="System Bold" size="12.0" />
                         </font>
@@ -82,6 +72,20 @@
                      <Font name="System Bold" size="12.0" />
                   </font>
                </Label>
+            </children>
+         </HBox>
+         <HBox alignment="CENTER" layoutX="192.0" layoutY="30.0" prefHeight="2.0" prefWidth="383.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="192.0" AnchorPane.rightAnchor="192.0">
+            <children>
+                  <AnchorPane fx:id="allButtons" prefHeight="0.0" prefWidth="383.0">
+                      <children>
+                          <Label fx:id="labelButtonPPR" alignment="CENTER" layoutX="185.0" layoutY="-3.0" prefHeight="40.0" prefWidth="40.0" style="-fx-border-radius: 40; -fx-border-color: white;" />
+                     <Label fx:id="previousSongButton" alignment="CENTER" layoutX="110.0" layoutY="10.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="8.0" />
+                     <Label fx:id="nextSongButton" alignment="CENTER" layoutX="276.0" layoutY="13.0" prefHeight="17.0" prefWidth="17.0" AnchorPane.bottomAnchor="7.0" />
+                     <Label fx:id="shuffleMedia" alignment="CENTER" layoutX="345.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" />
+                     <Label fx:id="backMedia" alignment="CENTER" layoutX="141.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" AnchorPane.bottomAnchor="6.0" />
+                     <Label fx:id="forwardMedia" alignment="CENTER" layoutX="232.0" layoutY="6.0" prefHeight="25.0" prefWidth="38.0" style="-fx-border-color: white; -fx-border-radius: 12;" AnchorPane.bottomAnchor="6.0" />
+                      </children>
+                  </AnchorPane>
             </children>
          </HBox>
         </children>
