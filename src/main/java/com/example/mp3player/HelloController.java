@@ -52,6 +52,8 @@ public class HelloController {
     private boolean running;
     private boolean isMuted = false;
     private boolean isPlaying = true;
+
+    private boolean wasPlaying = false;
     private double volPerc;
     private int prevVol;
     private double totalTime;
@@ -67,6 +69,12 @@ public class HelloController {
     private ImageView iconShuffle;
     private ImageView iconPlus;
     private ImageView iconMinus;
+
+    private Playlist current_playlist = new Playlist();
+    private ArrayList<Playlist> playlists = new ArrayList<>();
+    private ArrayList<String> playlist_names = new ArrayList<>();
+    private ArrayList<Song> current_songs = new ArrayList<>();
+    private ArrayList<String> current_song_names = new ArrayList<>();
 
     @FXML
     private Label shuffleMedia;
@@ -146,9 +154,10 @@ public class HelloController {
 
         writer.close();
 
-//        SpecificPlaylist specificPlaylist = SpecificPlaylistFactory.getInstance().readFrom(playlist_file);
-//
-//        Playlist genericPlaylist = specificPlaylist.toPlaylist();
+        if (wasPlaying == true){
+
+            mediaPlayer.stop();
+        }
 
 
 
@@ -156,12 +165,13 @@ public class HelloController {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             setIcons();
-            mediaPlayer.play();
             labelVolume.setText("10%");
             volumeSlider.setValue(10.0);
             mediaPlayer.setVolume(10.0 * 0.01);
-            beginTimer();
             songLabel.setText(name);
+            playMedia();
+            wasPlaying = true;
+
 
             bottomMenu.setVisible(true);
             scrollBar.setVisible(true);
@@ -169,7 +179,6 @@ public class HelloController {
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
-
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
@@ -181,9 +190,14 @@ public class HelloController {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
                     bindCurrentTimeLabel();
+                    songSlider.setStyle("-fx-accent: #00FF00;");
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    double end = mediaPlayer.getTotalDuration().toSeconds();
                     if (!songSlider.isValueChanging()) {
                         songSlider.setValue(newTime.toSeconds());
                     }
+                    if (current / end   > 0.999 ) {
+                        labelButtonPPR.setGraphic(iconReset);}
                     labelCurrentTime.getText();
                     labelTotalTime.getText();
                 }
@@ -313,12 +327,12 @@ public class HelloController {
                     }
                     double current = mediaPlayer.getCurrentTime().toSeconds();
                     double end = mediaPlayer.getTotalDuration().toSeconds();
-                    //if (current / end == 1) {
-                    //   resetMedia();
-                    //   labelButtonPPR.setGraphic(iconPause);
-                    // }
+                    if ((current / end )  >0.999 ) {
+                        resetMedia();
+                    }
                 }
             });
+
         }
     }
 
@@ -349,14 +363,15 @@ public class HelloController {
         System.out.println("Открыть файл");
     }
 
-    //@FXML
-    //private void resetMedia() {
-    //System.out.println("Запуск файла с самого начала");
-    //mediaPlayer.stop();
-    //songSlider.setValue(0);
-    //beginTimer();
-    //mediaPlayer.play();
-    //}
+    @FXML
+    private void resetMedia() {
+    System.out.println("Запуск файла с самого начала");
+    mediaPlayer.stop();
+    songSlider.setValue(0);
+    beginTimer();
+    mediaPlayer.seek(Duration.seconds(0));
+    playMedia();
+    }
 
 
     private void playMedia() {
