@@ -59,6 +59,16 @@ public class HelloController {
     private double totalTime;
     private double currentTime;
 
+    private ImageView iconMute;
+    private ImageView iconVolume;
+    private ImageView iconPlay;
+    private ImageView iconPause;
+    private ImageView iconReset;
+    private ImageView iconNext;
+    private ImageView iconPrevious;
+    private ImageView iconShuffle;
+    private ImageView iconPlus;
+    private ImageView iconMinus;
 
     private Playlist current_playlist = new Playlist();
     private ArrayList<Playlist> playlists = new ArrayList<>();
@@ -120,6 +130,7 @@ public class HelloController {
     private Label songName;
     @FXML
     private Label songAuthor;
+    
 
 
     @FXML
@@ -154,7 +165,7 @@ public class HelloController {
         if (filePath != null) {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
-            Icons.setIcons();
+            setIcons();
             labelVolume.setText("10%");
             volumeSlider.setValue(10.0);
             mediaPlayer.setVolume(10.0 * 0.01);
@@ -180,13 +191,14 @@ public class HelloController {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
                     bindCurrentTimeLabel();
+                    songSlider.setStyle("-fx-accent: #00FF00;");
                     double current = mediaPlayer.getCurrentTime().toSeconds();
                     double end = mediaPlayer.getTotalDuration().toSeconds();
                     if (!songSlider.isValueChanging()) {
                         songSlider.setValue(newTime.toSeconds());
                     }
                     if (current / end   > 0.999 ) {
-                        labelButtonPPR.setGraphic(Icons.setIcons(iconReset));}
+                        labelButtonPPR.setGraphic(iconReset);}
                     labelCurrentTime.getText();
                     labelTotalTime.getText();
                 }
@@ -378,6 +390,66 @@ public class HelloController {
         isPlaying = false;
     }
 
+
+    private void setIcons(){
+        Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
+        iconMute = new ImageView(imageMute);
+        iconMute.setFitWidth(25);
+        iconMute.setFitHeight(25);
+
+        Image imageVol = new Image(new File("src/resources/volume.png").toURI().toString());
+        iconVolume = new ImageView(imageVol);
+        iconVolume.setFitWidth(25);
+        iconVolume.setFitHeight(25);
+
+        Image imagePlay = new Image(new File("src/resources/play-btn.png").toURI().toString());
+        iconPlay = new ImageView(imagePlay);
+        iconPlay.setFitWidth(27);
+        iconPlay.setFitHeight(27);
+
+        Image imagePause = new Image(new File("src/resources/stop-btn.png").toURI().toString());
+        iconPause = new ImageView(imagePause);
+        iconPause.setFitWidth(25);
+        iconPause.setFitHeight(25);
+
+        Image imageReset = new Image(new File("src/resources/reset-btn.png").toURI().toString());
+        iconReset = new ImageView(imageReset);
+        iconReset.setFitWidth(25);
+        iconReset.setFitHeight(25);
+
+        Image imageNext = new Image(new File("src/resources/next-btn.png").toURI().toString());
+        iconNext = new ImageView(imageNext);
+        iconNext.setFitWidth(23);
+        iconNext.setFitHeight(23);
+
+        Image imagePrevious = new Image(new File("src/resources/previous-btn.png").toURI().toString());
+        iconPrevious = new ImageView(imagePrevious);
+        iconPrevious.setFitWidth(23);
+        iconPrevious.setFitHeight(23);
+
+        Image imageShuffle = new Image(new File("src/resources/shuffle-btn.png").toURI().toString());
+        iconShuffle = new ImageView(imageShuffle);
+        iconShuffle.setFitWidth(22);
+        iconShuffle.setFitHeight(22);
+
+        Image imagePlus = new Image(new File("src/resources/plus-btn.png").toURI().toString());
+        iconPlus = new ImageView(imagePlus);
+        iconPlus.setFitWidth(21);
+        iconPlus.setFitHeight(21);
+
+        Image imageMinus = new Image(new File("src/resources/minus-btn.png").toURI().toString());
+        iconMinus = new ImageView(imageMinus);
+        iconMinus.setFitWidth(21);
+        iconMinus.setFitHeight(21);
+
+        backMedia.setGraphic(iconMinus);
+        forwardMedia.setGraphic(iconPlus);
+        shuffleMedia.setGraphic(iconShuffle);
+        volumeOff.setGraphic(iconVolume);
+        labelButtonPPR.setGraphic(iconPause);
+        nextSongButton.setGraphic(iconNext);
+        previousSongButton.setGraphic(iconPrevious);
+    }
 
     public String getTime(Duration time) {
 
