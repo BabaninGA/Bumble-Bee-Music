@@ -302,9 +302,8 @@ public class HelloController implements Initializable {
                     hboxTime.getChildren().add(labelRemainingTime);
                     totalTime = mediaPlayer.getCurrentTime().toMinutes();
                     currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                    double result = -(totalTime - currentTime);
-                    String res = String.valueOf(result);
-                    labelRemainingTime.setText(res);
+                    String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
+                    labelRemainingTime.setText(remaining);
                 }
             });
 
@@ -614,5 +613,19 @@ public class HelloController implements Initializable {
                 }
             }
         });
+    }
+    public static String getTimeString(double millis) {
+        millis /= 1000;
+        String s = formatTime(millis % 60);
+        millis /= 60;
+        String m = formatTime(millis % 60);
+
+        return   m + ":" + s;
+    }
+
+    public static String formatTime(double time) {
+        int t = (int)time;
+        if (t > 9) { return String.valueOf(t); }
+        return "0" + t;
     }
 }
