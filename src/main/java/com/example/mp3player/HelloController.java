@@ -1,10 +1,6 @@
 package com.example.mp3player;
 
 
-
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,36 +9,26 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
-import javafx.scene.paint.Color;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
-import java.time.Clock;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
 
 
-
-import static org.apache.commons.io.FileUtils.*;
-
-
-
-public class HelloController implements Initializable{
+public class HelloController implements Initializable {
 
     private Timer timer;
     private TimerTask task;
@@ -71,14 +57,13 @@ public class HelloController implements Initializable{
     private ImageView iconPlus;
     private ImageView iconMinus;
 
+    private int flag1 = 0;
     private boolean active_track = false;
     private boolean shuffle_on = false;
     private boolean repeat_on = false;
-    private Playlist current_playlist = new Playlist();
-    private ArrayList<Playlist> playlists = new ArrayList<>();
+    private String current_playlist;
+    private ArrayList<String> playlists = new ArrayList<String>();
     private ArrayList<String> playlist_names = new ArrayList<>();
-    private ArrayList<Song> current_songs = new ArrayList<>();
-    private ArrayList<String> current_song_names = new ArrayList<>();
     private File main_directory = new File("C:\\Playlists");
 
     @FXML
@@ -137,7 +122,6 @@ public class HelloController implements Initializable{
     private Label songAuthor;
 
 
-
     @FXML
     private void addMedia(ActionEvent event) throws IOException {
         System.out.println("Добавить файл");
@@ -154,16 +138,28 @@ public class HelloController implements Initializable{
 
         String track = filePath.replaceAll("file:/", "");
         track = track.replaceAll("%20", " ");
-        FileWriter writer = new FileWriter("C:\\Playlists\\allTracks.txt", true);
-        BufferedWriter bufferWriter = new BufferedWriter(writer);
-        bufferWriter.write(track + "\n");
-        bufferWriter.close();
+        System.out.println(track);
+        flag1 =0;
+        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+        System.out.println(lines);
+        for (int i = 1; i < lines.size(); i++) {
+            if (lines.get(i) == track) {
+                flag1++;
+            } else {
+                flag1 = flag1;
+            }
+        }
+        if (flag1 == 0) {
+            FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+            BufferedWriter bufferWriter = new BufferedWriter(writer1);
+            bufferWriter.write(track + "\n");
+            bufferWriter.close();
+        }
 
-        if (wasPlaying == true){
+        if (wasPlaying == true) {
 
             mediaPlayer.stop();
         }
-
 
 
         if (filePath != null) {
@@ -201,8 +197,9 @@ public class HelloController implements Initializable{
                     if (!songSlider.isValueChanging()) {
                         songSlider.setValue(newTime.toSeconds());
                     }
-                    if (current / end   > 0.999 ) {
-                        labelButtonPPR.setGraphic(iconReset);}
+                    if (current / end > 0.999) {
+                        labelButtonPPR.setGraphic(iconReset);
+                    }
                     labelCurrentTime.getText();
                     labelTotalTime.getText();
                 }
@@ -332,7 +329,7 @@ public class HelloController implements Initializable{
                     }
                     double current = mediaPlayer.getCurrentTime().toSeconds();
                     double end = mediaPlayer.getTotalDuration().toSeconds();
-                    if ((current / end )  >0.999 ) {
+                    if ((current / end) > 0.999) {
                         resetMedia();
                     }
                 }
@@ -349,15 +346,46 @@ public class HelloController implements Initializable{
         while (Objects.requireNonNull(playlist_import_dir.listFiles()).length == 0) {
             playlist_import_dir = directoryChooser.showDialog(null);
         }
-        copyDirectoryToDirectory(playlist_import_dir, main_directory);
-        Playlist playlist = new Playlist(new File(main_directory.getPath() + "\\" + playlist_import_dir.getName()));
-
-        if (active_track) {
-            pauseMedia();
+        File dir = new File(playlist_import_dir.toURI());
+        List<File> lst = new ArrayList<>();
+        flag1 = 0;
+        String import_dir = null;
+        for (File file : dir.listFiles()) {
+            if ((file.isFile()) & (file.toString().endsWith("mp3"))) {
+                lst.add(file);
+                String trackfromplaylist = file.toString();
+                trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
+                trackfromplaylist = trackfromplaylist.replace("\\", "/");
+                List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+                for (int i = 1; i < lines.size(); i++) {
+                    if (lines.get(i) == file.toString()) {
+                        flag1++;
+                    } else {
+                        flag1 = flag1;
+                    }
+                }
+                if (flag1 == 0) {
+                    FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                    BufferedWriter bufferWriter = new BufferedWriter(writer1);
+                    bufferWriter.write((trackfromplaylist + "\n").trim());
+                    bufferWriter.close();
+                }
+                String directory = playlist_import_dir.toString().replace("\\", "/");
+                ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
+                System.out.println(array);
+                import_dir = (String) array.get(array.size() - 1);
+                File createFile = new File("C:\\Playlists\\" + import_dir + ".txt");
+                if (!createFile.exists())
+                    try {
+                        createFile.createNewFile();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+            }
         }
-        current_playlist = playlist;
+        System.out.println(lst);
+        current_playlist = import_dir;
         refreshPlaylists();
-        refreshSongs();
     }
 
 
@@ -370,6 +398,7 @@ public class HelloController implements Initializable{
         System.out.println("Выключение звука");
         isMuted = true;
     }
+
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
@@ -389,12 +418,12 @@ public class HelloController implements Initializable{
 
     @FXML
     private void resetMedia() {
-    System.out.println("Запуск файла с самого начала");
-    mediaPlayer.stop();
-    songSlider.setValue(0);
-    beginTimer();
-    mediaPlayer.seek(Duration.seconds(0));
-    playMedia();
+        System.out.println("Запуск файла с самого начала");
+        mediaPlayer.stop();
+        songSlider.setValue(0);
+        beginTimer();
+        mediaPlayer.seek(Duration.seconds(0));
+        playMedia();
     }
 
 
@@ -405,6 +434,7 @@ public class HelloController implements Initializable{
         mediaPlayer.play();
         isPlaying = true;
     }
+
     private void pauseMedia() {
         labelButtonPPR.setGraphic(iconPlay);
         System.out.println("Пауза");
@@ -414,7 +444,7 @@ public class HelloController implements Initializable{
     }
 
 
-    private void setIcons(){
+    private void setIcons() {
         Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
         iconMute = new ImageView(imageMute);
         iconMute.setFitWidth(25);
@@ -492,6 +522,7 @@ public class HelloController implements Initializable{
                 minutes,
                 seconds);
     }
+
     public void bindCurrentTimeLabel() {
         labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
             @Override
@@ -516,46 +547,57 @@ public class HelloController implements Initializable{
             }
         };
     }
+
     public void cancelTimer() {
         running = false;
         timer.cancel();
     }
+    private void changeCurrentPlaylist(String new_name) {
+        current_playlist = String.valueOf(new Playlist(new File(main_directory + "/" + new_name)));
+    }
 
-    private void refreshPlaylists() {
+        private void refreshPlaylists() {
         int playlist_amount = Objects.requireNonNull(main_directory.listFiles()).length;
         if (playlist_amount > 0) {
             playlists.clear();
             playlist_names.clear();
             playlistList.getItems().clear();
             for (File f : Objects.requireNonNull(main_directory.listFiles())) {
-                playlists.add(new Playlist(f));
-                playlist_names.add(f.getName());
+                playlists.add(f.getName());
+                playlist_names.add(f.getName().replaceAll(".txt",""));
             }
 
             playlistList.getItems().addAll(playlist_names);
         }
     }
-    private void refreshSongs() {
-        int songs_amount = current_playlist.getSongs().size();
-        if (songs_amount > 0) {
-            current_songs.clear();
-            current_song_names.clear();
-            for (Song s : current_playlist.getSongs()) {
-                current_songs.add(s);
-                current_song_names.add(s.getGeneral_name());
-            }
-            songList.getItems().clear();
-            songList.getItems().addAll(current_song_names);
-        }
+    private void refreshSongs() throws IOException {
+        ArrayList<String> lines = (ArrayList<String>) FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+    System.out.println(lines);
+    songList.getItems().addAll(lines);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         File createFile = new File("C:\\Playlists\\allTracks.txt");
         if (!createFile.exists())
-        try {
-            createFile.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            try {
+                createFile.createNewFile();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        if (!main_directory.exists()) {
+            main_directory.mkdir();
         }
+        refreshPlaylists();
+        playlistList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                changeCurrentPlaylist(newValue);
+                try {
+                    refreshSongs();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 }
