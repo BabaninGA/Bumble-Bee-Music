@@ -189,7 +189,6 @@ public class HelloController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
                     bindCurrentTimeLabel();
-                    songSlider.setStyle("-fx-accent: #00FF00;");
                     double current = mediaPlayer.getCurrentTime().toSeconds();
                     double end = mediaPlayer.getTotalDuration().toSeconds();
                     if (!songSlider.isValueChanging()) {
@@ -558,7 +557,6 @@ public class HelloController implements Initializable {
     private void changeCurrentPlaylist(String new_name) {
        current_playlist = new_name;
     }
-
         private void refreshPlaylists() {
         int playlist_amount = Objects.requireNonNull(main_directory.listFiles()).length;
         if (playlist_amount > 0) {

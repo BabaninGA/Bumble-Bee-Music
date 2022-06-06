@@ -6,26 +6,62 @@
     -fx-background-color: linear-gradient(from 5% 5% to 100% 100%, #0B1E3E, #4E154C);
 }
 
+#songList .cell{
+    -fx-padding: 0 15 0 15;
+    -fx-background-color: linear-gradient(from 20% 20% to 100% 100%, #0B1E3E, #4E154C);
+    -fx-background-radius: 5;
+    -fx-background-insets: 4 8 0 8;
+    -fx-border-radius: 5;
+    -fx-border-color: #c5b9d2;
+    -fx-border-insets: 4 8 0 8;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+}
 
-.scrollBar {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0;
+#songList .cell:selected{
+    -fx-background-color: #4E154C;
 }
-.scrollBar {
+#songList .cell:empty{
+    -fx-border-color: #FFFFFF;
     -fx-background-color: transparent;
+}
+
+#songList {
+    -fx-border-width: 0px 0px 1px 0px rgba(0,0,0,0.3);
+    -fx-border-color: #E91DE4;
+    -fx-background-color: linear-gradient(from 10% 10% to 110% 110%, #0B1E3E, #4E154C);
+}
+
+#playlistList .cell{
+    -fx-padding: 0 15 0 15;
+    -fx-background-color: #0B1E3E;
+    -fx-background-radius: 5;
+    -fx-background-insets: 4 8 0 8;
+    -fx-border-radius: 5;
+    -fx-border-color: #c5b9d2;
+    -fx-border-insets: 4 8 0 8;
+    -fx-font-size: 16;
+    -fx-text-fill: white;
+}
+
+#playlistList .cell:selected{
+    -fx-background-color: #4E154C;
+}
+#playlistList .cell:empty{
+    -fx-border-color: #FFFFFF;
+    -fx-background-color: transparent;
+}
+
+#playlistList {
+    -fx-border-width: 0px 0px 1px 0px rgba(0,0,0,0.3);
+    -fx-border-color: #E91DE4;
+    -fx-background-color: linear-gradient(from 10% 10% to 110% 110%, #0B1E3E, #4E154C);
+}
+
+#songList .scroll-bar {
     -fx-border-color: transparent;
-    -fx-background-radius: 0em;
     -fx-border-radius: 2em;
-}
-.scrollBar  {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-padding: 0 0 10 0;
-}
-.scrollBar {
     -fx-padding: -1;
-}
-.scrollBar {
     -fx-background-color: derive( #E91DE4, 50%);
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
