@@ -173,7 +173,6 @@ public class HelloController implements Initializable {
 
 
             bottomMenu.setVisible(true);
-            scrollBar.setVisible(true);
 
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
