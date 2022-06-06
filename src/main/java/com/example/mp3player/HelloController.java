@@ -32,9 +32,6 @@ public class HelloController implements Initializable {
 
     private Timer timer;
     private TimerTask task;
-    private File directory;
-    private File[] files;
-    private ArrayList<File> songs;
     private MediaPlayer mediaPlayer;
     private boolean running;
     private boolean isMuted = false;
@@ -61,7 +58,7 @@ public class HelloController implements Initializable {
     private boolean active_track = false;
     private boolean shuffle_on = false;
     private boolean repeat_on = false;
-    private String current_playlist;
+    private String current_playlist = "allTracks";
     private ArrayList<String> playlists = new ArrayList<String>();
     private ArrayList<String> playlist_names = new ArrayList<>();
     private File main_directory = new File("C:\\Playlists");
@@ -135,6 +132,7 @@ public class HelloController implements Initializable {
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
         System.out.println(name);
+        current_playlist = "allTracks";
 
         String track = filePath.replaceAll("file:/", "");
         track = track.replaceAll("%20", " ");
@@ -374,6 +372,10 @@ public class HelloController implements Initializable {
                 ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
                 System.out.println(array);
                 import_dir = (String) array.get(array.size() - 1);
+                FileWriter writer2 = new FileWriter("C:\\Playlists\\" +import_dir + ".txt", true);
+                BufferedWriter bufferWriter1 = new BufferedWriter(writer2);
+                bufferWriter1.write(trackfromplaylist + "\n");
+                bufferWriter1.close();
                 File createFile = new File("C:\\Playlists\\" + import_dir + ".txt");
                 if (!createFile.exists())
                     try {
@@ -386,6 +388,7 @@ public class HelloController implements Initializable {
         System.out.println(lst);
         current_playlist = import_dir;
         refreshPlaylists();
+        refreshSongs();
     }
 
 
@@ -553,7 +556,7 @@ public class HelloController implements Initializable {
         timer.cancel();
     }
     private void changeCurrentPlaylist(String new_name) {
-        current_playlist = String.valueOf(new Playlist(new File(main_directory + "/" + new_name)));
+       current_playlist = new_name;
     }
 
         private void refreshPlaylists() {
@@ -571,8 +574,18 @@ public class HelloController implements Initializable {
         }
     }
     private void refreshSongs() throws IOException {
-        ArrayList<String> lines = (ArrayList<String>) FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+        Scanner s = new Scanner(new File("C:\\Playlists\\" + current_playlist + ".txt"));
+        ArrayList<String> lines = new ArrayList<String>();
+        int length = 0;
+        while (s.hasNextLine()){
+            String G[] = s.nextLine().split("/");
+            int glength = G.length - 1 ;
+            lines.add(G[glength].replaceAll(".mp3", ""));
+            length++;
+        }
+        s.close();
     System.out.println(lines);
+    songList.getItems().clear();
     songList.getItems().addAll(lines);
     }
     @Override
@@ -588,6 +601,11 @@ public class HelloController implements Initializable {
             main_directory.mkdir();
         }
         refreshPlaylists();
+        try {
+            refreshSongs();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         playlistList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
