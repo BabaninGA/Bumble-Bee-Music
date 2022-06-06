@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -22,6 +23,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import javafx.scene.paint.Color;
@@ -29,19 +31,18 @@ import javafx.scene.paint.Color;
 import java.io.*;
 import java.net.URL;
 import java.time.Clock;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 import java.util.concurrent.Callable;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 
 
-import org.apache.commons.io.FileUtils;
+
+import static org.apache.commons.io.FileUtils.*;
 
 
-public class HelloController {
+
+public class HelloController implements Initializable{
 
     private Timer timer;
     private TimerTask task;
@@ -70,11 +71,15 @@ public class HelloController {
     private ImageView iconPlus;
     private ImageView iconMinus;
 
+    private boolean active_track = false;
+    private boolean shuffle_on = false;
+    private boolean repeat_on = false;
     private Playlist current_playlist = new Playlist();
     private ArrayList<Playlist> playlists = new ArrayList<>();
     private ArrayList<String> playlist_names = new ArrayList<>();
     private ArrayList<Song> current_songs = new ArrayList<>();
     private ArrayList<String> current_song_names = new ArrayList<>();
+    private File main_directory = new File("C:\\Playlists");
 
     @FXML
     private Label shuffleMedia;
@@ -123,14 +128,14 @@ public class HelloController {
     @FXML
     private Label previousSongButton;
     @FXML
-    private ListView<?> playlistList;
+    private ListView<String> playlistList;
     @FXML
-    private ListView<?> songList;
+    private ListView<String> songList;
     @FXML
     private Label songName;
     @FXML
     private Label songAuthor;
-    
+
 
 
     @FXML
@@ -148,12 +153,11 @@ public class HelloController {
         System.out.println(name);
 
         String track = filePath.replaceAll("file:/", "");
-
-        File playlist_file = new File("a_playlist_file");
-        BufferedWriter writer = new BufferedWriter(new FileWriter(playlist_file));
-        writer.write(track);
-
-        writer.close();
+        track = track.replaceAll("%20", " ");
+        FileWriter writer = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+        BufferedWriter bufferWriter = new BufferedWriter(writer);
+        bufferWriter.write(track + "\n");
+        bufferWriter.close();
 
         if (wasPlaying == true){
 
@@ -337,6 +341,25 @@ public class HelloController {
         }
     }
 
+    @FXML
+    void importPlaylist(ActionEvent event) throws IOException {
+
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File playlist_import_dir = directoryChooser.showDialog(null);
+        while (Objects.requireNonNull(playlist_import_dir.listFiles()).length == 0) {
+            playlist_import_dir = directoryChooser.showDialog(null);
+        }
+        copyDirectoryToDirectory(playlist_import_dir, main_directory);
+        Playlist playlist = new Playlist(new File(main_directory.getPath() + "\\" + playlist_import_dir.getName()));
+
+        if (active_track) {
+            pauseMedia();
+        }
+        current_playlist = playlist;
+        refreshPlaylists();
+        refreshSongs();
+    }
+
 
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);
@@ -496,5 +519,43 @@ public class HelloController {
     public void cancelTimer() {
         running = false;
         timer.cancel();
+    }
+
+    private void refreshPlaylists() {
+        int playlist_amount = Objects.requireNonNull(main_directory.listFiles()).length;
+        if (playlist_amount > 0) {
+            playlists.clear();
+            playlist_names.clear();
+            playlistList.getItems().clear();
+            for (File f : Objects.requireNonNull(main_directory.listFiles())) {
+                playlists.add(new Playlist(f));
+                playlist_names.add(f.getName());
+            }
+
+            playlistList.getItems().addAll(playlist_names);
+        }
+    }
+    private void refreshSongs() {
+        int songs_amount = current_playlist.getSongs().size();
+        if (songs_amount > 0) {
+            current_songs.clear();
+            current_song_names.clear();
+            for (Song s : current_playlist.getSongs()) {
+                current_songs.add(s);
+                current_song_names.add(s.getGeneral_name());
+            }
+            songList.getItems().clear();
+            songList.getItems().addAll(current_song_names);
+        }
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        File createFile = new File("C:\\Playlists\\allTracks.txt");
+        if (!createFile.exists())
+        try {
+            createFile.createNewFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -11,12 +11,21 @@ public class Playlist {
         this.name = "";
         this.songs=new ArrayList<Song>();
     }
+
+    public Playlist(String name, ArrayList<Song> songs){
+        this.name = name;
+        this.songs = new ArrayList<Song>();
+    }
+
     public Playlist(File dir){
+
         this.name = dir.getName();
         File[] song_files = dir.listFiles();
         this.songs = new ArrayList<>();
+        assert song_files != null;
         for (File f: song_files){
-            if(!f.isDirectory()) {
+            boolean endcheck = f.toString().endsWith("mp3");
+            if((!f.isDirectory()) &(endcheck == true)) {
                 Song s = new Song(f);
                 this.songs.add(s);
             }
@@ -36,6 +45,6 @@ public class Playlist {
     }
 
     public void setSongs(ArrayList<Song> songs) {
-       this.songs = songs;
-  }
+        this.songs = songs;
+    }
 }
