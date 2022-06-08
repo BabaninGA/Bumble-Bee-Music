@@ -145,12 +145,15 @@ public class HelloController implements Initializable {
         String name = f.getName();
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
-        String regex = "";
-        Pattern pattern = Pattern.compile(regex);
-//        if name.
-        String songparts[] = name.split("-");
-        songAuthor.setText(songparts[0]);
-        songName.setText(songparts[1]);
+        Boolean match = name.matches("^[A-Za-z0-9 ]{1,40} - [A-Za-z0-9 ]{1,40}$");
+        if (match == true) {
+            String songparts[] = name.split("-");
+            songAuthor.setText(songparts[0]);
+            songName.setText(songparts[1]);
+        } else {
+            songAuthor.setVisible(false);
+            songName.setText(name);
+        }
         System.out.println(name);
         current_playlist = "allTracks";
 
