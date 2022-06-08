@@ -27,6 +27,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Callable;
 
+import static org.apache.commons.io.FileUtils.copyDirectoryToDirectory;
+import static org.apache.commons.io.FileUtils.copyFileToDirectory;
+
 
 public class HelloController implements Initializable {
 
@@ -68,7 +71,7 @@ public class HelloController implements Initializable {
     @FXML
     private Button openMedia;
     @FXML
-    private Button createPlaylist;
+    private Button importPlaylist;
     @FXML
     private Slider volumeSlider;
     @FXML
@@ -443,13 +446,27 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    private void createPlaylist() {
-        System.out.println("Создать плейлист");
+    private void importPlaylist() throws IOException {
+        System.out.println("Импортировать плейлист");
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select playlists in .txt", "*.txt");
+        fileChooser.getExtensionFilters().add(filter);
+        String filePath = fileChooser.showOpenDialog(null).toURI().toString();
+        filePath = filePath.replaceAll("file:/", "");
+//        filePath = filePath.replaceAll("\\", "/");
+        File f = new File(filePath);
+        System.out.println(f);
+        copyFileToDirectory(f, main_directory );
+        refreshPlaylists();
+        refreshSongs();
     }
-
     @FXML
-    private void openMedia() {
-        System.out.println("Открыть файл");
+    private void exportPlaylist() throws IOException {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File playlist_export_dir = directoryChooser.showDialog(null);
+        File f = new File(main_directory+"\\"+current_playlist+".txt");
+        System.out.println(f);
+        copyFileToDirectory(f, playlist_export_dir);
     }
 
     @FXML
