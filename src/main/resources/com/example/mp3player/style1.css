@@ -9,9 +9,9 @@
 #songList .cell{
     -fx-padding: 0 15 0 15;
     -fx-background-color: linear-gradient(from 20% 20% to 100% 100%, #0B1E3E, #4E154C);
-    -fx-background-radius: 5;
+    -fx-background-radius: 10;
     -fx-background-insets: 4 8 0 8;
-    -fx-border-radius: 5;
+    -fx-border-radius: 10;
     -fx-border-color: #c5b9d2;
     -fx-border-insets: 4 8 0 8;
     -fx-font-size: 16;
@@ -35,9 +35,9 @@
 #playlistList .cell{
     -fx-padding: 0 15 0 15;
     -fx-background-color: #0B1E3E;
-    -fx-background-radius: 5;
+    -fx-background-radius: 10;
     -fx-background-insets: 4 8 0 8;
-    -fx-border-radius: 5;
+    -fx-border-radius: 10;
     -fx-border-color: #c5b9d2;
     -fx-border-insets: 4 8 0 8;
     -fx-font-size: 16;
@@ -65,4 +65,30 @@
     -fx-background-color: derive( #E91DE4, 50%);
     -fx-background-insets: 2, 0, 0;
     -fx-background-radius: 2em;
+}
+
+#songSlider .track{
+    -fx-background-color: linear-gradient(to left, cyan, magenta);
+    -fx-background-radius: 0;
+    -fx-pref-height: 3.5px;
+}
+
+#songSlider .thumb{
+    -fx-pref-height: 15px;
+    -fx-pref-width: 5px;
+    -fx-background-color: linear-gradient(to top, royalblue, aquamarine);
+    -fx-background-radius: 0;
+}
+
+#volumeSlider .track{
+    -fx-background-color: #00FFFFFF;
+    -fx-background-radius: 0;
+    -fx-pref-height: 3.5px;
+}
+
+#volumeSlider .thumb{
+    -fx-pref-height: 15px;
+    -fx-pref-width: 5px;
+    -fx-background-color: linear-gradient(to top, royalblue, aquamarine);
+    -fx-background-radius: 0;
 }

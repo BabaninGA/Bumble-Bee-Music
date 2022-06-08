@@ -164,7 +164,6 @@ public class HelloController implements Initializable {
             Media media = new Media(filePath);
             mediaPlayer = new MediaPlayer(media);
             setIcons();
-            labelVolume.setText("10%");
             volumeSlider.setValue(10.0);
             mediaPlayer.setVolume(10.0 * 0.01);
             songLabel.setText(name);
@@ -172,11 +171,13 @@ public class HelloController implements Initializable {
             wasPlaying = true;
 
 
+
             bottomMenu.setVisible(true);
 
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
+
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
@@ -362,7 +363,7 @@ public class HelloController implements Initializable {
                 if (flag1 == 0) {
                     FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
                     BufferedWriter bufferWriter = new BufferedWriter(writer1);
-                    bufferWriter.write((trackfromplaylist + "\n").trim());
+                    bufferWriter.write((trackfromplaylist + "\n"));
                     bufferWriter.close();
                 }
                 String directory = playlist_import_dir.toString().replace("\\", "/");
@@ -382,8 +383,8 @@ public class HelloController implements Initializable {
                     }
             }
         }
-        System.out.println(lst);
         current_playlist = import_dir;
+        System.out.println(current_playlist);
         refreshPlaylists();
         refreshSongs();
     }
@@ -580,7 +581,7 @@ public class HelloController implements Initializable {
             length++;
         }
         s.close();
-    System.out.println(lines);
+        System.out.println("Текущий плейлист - " + current_playlist);
     songList.getItems().clear();
     songList.getItems().addAll(lines);
     }

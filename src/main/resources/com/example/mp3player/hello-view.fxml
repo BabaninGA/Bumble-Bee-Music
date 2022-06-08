@@ -17,7 +17,7 @@
                 <font>
                     <Font size="15.0" />
                 </font></Button>
-            <Button fx:id="createPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="134.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 15; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Создать плейлист" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="134.0">
+            <Button fx:id="createPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="19.0" layoutY="134.0" mnemonicParsing="false" onAction="#createPlaylist" prefHeight="25.0" prefWidth="144.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 15; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Импорт плейлист" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="134.0">
                 <font>
                     <Font size="15.0" />
                 </font>
