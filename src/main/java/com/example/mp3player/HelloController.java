@@ -173,7 +173,7 @@ public class HelloController implements Initializable {
             volumeSlider.setValue(10.0);
             mediaPlayer.setVolume(10.0 * 0.01);
             songLabel.setText(name);
-            songAnimatedLabel.setText(name + " 1");
+            songAnimatedLabel.setText(name + " ");
             playMedia();
             wasPlaying = true;
 
@@ -223,8 +223,19 @@ public class HelloController implements Initializable {
                     if (current / end > 0.999) {
                         labelButtonPPR.setGraphic(iconReset);
                     }
+                    String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
+                    labelRemainingTime.setText(remaining);
                     labelCurrentTime.getText();
                     labelTotalTime.getText();
+                }
+            });
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                    String currentlabel = songAnimatedLabel.getText();
+                    String parts[] = currentlabel.split("");
+                    String changedlabel = currentlabel.substring(1, currentlabel.length() ) + parts[0];
+                    songAnimatedLabel.setText(changedlabel);
                 }
             });
             mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
@@ -329,8 +340,6 @@ public class HelloController implements Initializable {
                     hboxTime.getChildren().add(labelRemainingTime);
                     totalTime = mediaPlayer.getCurrentTime().toMinutes();
                     currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                    String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
-                    labelRemainingTime.setText(remaining);
                 }
             });
 
