@@ -145,7 +145,7 @@ public class HelloController implements Initializable {
         String name = f.getName();
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
-        Boolean match = name.matches("^[A-Za-z0-9 ]{1,40} - [A-Za-z0-9 ]{1,40}$");
+        Boolean match = name.matches("^[A-Za-z0-9 -]{1,40} - [A-Za-z0-9 -]{1,40}$");
         if (match == true) {
             String songparts[] = name.split("-");
             songAuthor.setText(songparts[0]);
