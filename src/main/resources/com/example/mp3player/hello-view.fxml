@@ -22,7 +22,7 @@
                     <Font size="15.0" />
                 </font>
             </Button>
-         <Button fx:id="importPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="33.0" mnemonicParsing="false" onAction="#importPlaylist" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Импорт папки" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="33.0">
+         <Button fx:id="importDirectory" alignment="CENTER" contentDisplay="CENTER" layoutX="21.0" layoutY="33.0" mnemonicParsing="false" onAction="#importDirectory" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Импорт папки" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="33.0">
             <font>
                <Font size="15.0" />
             </font>

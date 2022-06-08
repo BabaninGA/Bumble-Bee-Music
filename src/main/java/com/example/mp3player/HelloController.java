@@ -36,6 +36,8 @@ public class HelloController implements Initializable {
     private Timer timer;
     private TimerTask task;
     private MediaPlayer mediaPlayer;
+
+    private Media media;
     private boolean running;
     private boolean isMuted = false;
     private boolean isPlaying = true;
@@ -70,6 +72,8 @@ public class HelloController implements Initializable {
     private Label shuffleMedia;
     @FXML
     private Button openMedia;
+    @FXML
+    private Button importDirectory;
     @FXML
     private Button importPlaylist;
     @FXML
@@ -146,17 +150,24 @@ public class HelloController implements Initializable {
         String track = filePath.replaceAll("file:/", "");
         track = track.replaceAll("%20", " ");
         System.out.println(track);
-        flag1 =0;
+        flag1 = 0;
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-        System.out.println(lines);
-        for (int i = 1; i < lines.size(); i++) {
-            if (lines.get(i) == track) {
-                flag1++;
-            } else {
-                flag1 = flag1;
+        System.out.println(lines.size());
+        if (lines.size() != 0) {
+            for (int i = 0; i < lines.size(); i++) {
+                if (lines.get(i) == track) {
+                    flag1++;
+                } else {
+                }
+            }
+            if (flag1 == 0) {
+                FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                BufferedWriter bufferWriter = new BufferedWriter(writer1);
+                bufferWriter.write(track + "\n");
+                bufferWriter.close();
             }
         }
-        if (flag1 == 0) {
+        else{
             FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
             BufferedWriter bufferWriter = new BufferedWriter(writer1);
             bufferWriter.write(track + "\n");
@@ -181,199 +192,18 @@ public class HelloController implements Initializable {
             wasPlaying = true;
 
 
-
             bottomMenu.setVisible(true);
 
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
             animatedLabel.getChildren().remove(songAnimatedLabel);
-
-
-            animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    animatedLabel.getChildren().add(songAnimatedLabel);
-                    songHbox.getChildren().remove(songLabel);
-                }
-            });
-
-            animatedLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    animatedLabel.getChildren().remove(songAnimatedLabel);
-                    songHbox.getChildren().add(songLabel);
-                }
-            });
-
-
-
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                    songSlider.setValue(newValue.toSeconds());
-                }
-            });
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
-                    bindCurrentTimeLabel();
-                    double current = mediaPlayer.getCurrentTime().toSeconds();
-                    double end = mediaPlayer.getTotalDuration().toSeconds();
-                    if (!songSlider.isValueChanging()) {
-                        songSlider.setValue(newTime.toSeconds());
-                    }
-                    if (current / end > 0.999) {
-                        labelButtonPPR.setGraphic(iconReset);
-                    }
-                    String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
-                    labelRemainingTime.setText(remaining);
-                    labelCurrentTime.getText();
-                    labelTotalTime.getText();
-                }
-            });
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
-                    String currentlabel = songAnimatedLabel.getText();
-                    String parts[] = currentlabel.split("");
-                    String changedlabel = currentlabel.substring(1, currentlabel.length() ) + parts[0];
-                    songAnimatedLabel.setText(changedlabel);
-                }
-            });
-            mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
-                    songSlider.setMax(newDuration.toSeconds());
-                    labelTotalTime.setText(getTime(newDuration));
-
-                }
-            });
-            songSlider.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
-
-                }
-            });
-            songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
-                }
-            });
-            mediaPlayer.setOnReady(new Runnable() {
-                @Override
-                public void run() {
-                    Duration total = media.getDuration();
-                    songSlider.setMax(total.toSeconds());
-                }
-            });
-
-            forwardMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    System.out.println("+ 10 секунд");
-                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
-                }
-            });
-
-            backMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    System.out.println("- 10 секунд");
-                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
-                }
-            });
-
-            volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                @Override
-                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                    volPerc = volumeSlider.getValue();
-                    int result = Math.toIntExact(Math.round(volPerc));
-                    String res = String.valueOf(result);
-                    labelVolume.setText(res + "%");
-                    if (volPerc == 0) {
-                        isMuted = true;
-                        volumeOff.setGraphic(iconMute);
-                    } else {
-                        isMuted = false;
-                        volumeOff.setGraphic(iconVolume);
-                    }
-                }
-            });
-
-
-            hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (hboxVolume.lookup("#volumeSlider") == null) {
-                        hboxVolume.getChildren().add(volumeSlider);
-                        hboxVolume.getChildren().add(labelVolume);
-                        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                            @Override
-                            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
-                            }
-                        });
-                        volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent mouseEvent) {
-                                if (isMuted) {
-                                    volumeOn();
-                                } else {
-                                    volumeOff();
-                                }
-                            }
-                        });
-                    }
-                }
-            });
-            hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    hboxVolume.getChildren().remove(volumeSlider);
-                    hboxVolume.getChildren().remove(labelVolume);
-                }
-            });
-
-            hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    hboxTime.getChildren().add(labelRemainingTime);
-                    totalTime = mediaPlayer.getCurrentTime().toMinutes();
-                    currentTime = mediaPlayer.getTotalDuration().toMinutes();
-                }
-            });
-
-            hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    hboxTime.getChildren().remove(labelRemainingTime);
-                }
-            });
-
-            labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent mouseEvent) {
-                    if (isPlaying) {
-                        pauseMedia();
-                    } else {
-                        playMedia();
-                    }
-                    double current = mediaPlayer.getCurrentTime().toSeconds();
-                    double end = mediaPlayer.getTotalDuration().toSeconds();
-                    if ((current / end) > 0.999) {
-                        resetMedia();
-                    }
-                }
-            });
-
         }
+
     }
 
     @FXML
-    void importPlaylist(ActionEvent event) throws IOException {
+    void importDirectory(ActionEvent event) throws IOException {
 
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File playlist_import_dir = directoryChooser.showDialog(null);
@@ -406,9 +236,8 @@ public class HelloController implements Initializable {
                 }
                 String directory = playlist_import_dir.toString().replace("\\", "/");
                 ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
-                System.out.println(array);
                 import_dir = (String) array.get(array.size() - 1);
-                FileWriter writer2 = new FileWriter("C:\\Playlists\\" +import_dir + ".txt", true);
+                FileWriter writer2 = new FileWriter("C:\\Playlists\\" + import_dir + ".txt", true);
                 BufferedWriter bufferWriter1 = new BufferedWriter(writer2);
                 bufferWriter1.write(trackfromplaylist + "\n");
                 bufferWriter1.close();
@@ -456,15 +285,16 @@ public class HelloController implements Initializable {
 //        filePath = filePath.replaceAll("\\", "/");
         File f = new File(filePath);
         System.out.println(f);
-        copyFileToDirectory(f, main_directory );
+        copyFileToDirectory(f, main_directory);
         refreshPlaylists();
         refreshSongs();
     }
+
     @FXML
     private void exportPlaylist() throws IOException {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         File playlist_export_dir = directoryChooser.showDialog(null);
-        File f = new File(main_directory+"\\"+current_playlist+".txt");
+        File f = new File(main_directory + "\\" + current_playlist + ".txt");
         System.out.println(f);
         copyFileToDirectory(f, playlist_export_dir);
     }
@@ -485,6 +315,7 @@ public class HelloController implements Initializable {
         System.out.println("Воспроизведение");
         beginTimer();
         mediaPlayer.play();
+        mediaplfer();
         isPlaying = true;
     }
 
@@ -557,6 +388,59 @@ public class HelloController implements Initializable {
         previousSongButton.setGraphic(iconPrevious);
     }
 
+    public void mediaplfer() {
+        mediaPlayer.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                Duration total = media.getDuration();
+                songSlider.setMax(total.toSeconds());
+            }
+        });
+
+
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                songSlider.setValue(newValue.toSeconds());
+            }
+        });
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                bindCurrentTimeLabel();
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = mediaPlayer.getTotalDuration().toSeconds();
+                if (!songSlider.isValueChanging()) {
+                    songSlider.setValue(newTime.toSeconds());
+                }
+                if (current / end > 0.999) {
+                    labelButtonPPR.setGraphic(iconReset);
+                }
+                String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
+                labelRemainingTime.setText(remaining);
+                labelCurrentTime.getText();
+                labelTotalTime.getText();
+            }
+        });
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                String currentlabel = songAnimatedLabel.getText();
+                String parts[] = currentlabel.split("");
+                String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
+                songAnimatedLabel.setText(changedlabel);
+            }
+        });
+        mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                songSlider.setMax(newDuration.toSeconds());
+                labelTotalTime.setText(getTime(newDuration));
+
+            }
+        });
+    }
+
     public String getTime(Duration time) {
 
         int hours = (int) time.toHours();
@@ -605,10 +489,12 @@ public class HelloController implements Initializable {
         running = false;
         timer.cancel();
     }
+
     private void changeCurrentPlaylist(String new_name) {
-       current_playlist = new_name;
+        current_playlist = new_name;
     }
-        private void refreshPlaylists() {
+
+    private void refreshPlaylists() {
         int playlist_amount = Objects.requireNonNull(main_directory.listFiles()).length;
         if (playlist_amount > 0) {
             playlists.clear();
@@ -616,27 +502,46 @@ public class HelloController implements Initializable {
             playlistList.getItems().clear();
             for (File f : Objects.requireNonNull(main_directory.listFiles())) {
                 playlists.add(f.getName());
-                playlist_names.add(f.getName().replaceAll(".txt",""));
+                playlist_names.add(f.getName().replaceAll(".txt", ""));
             }
 
             playlistList.getItems().addAll(playlist_names);
         }
     }
+
     private void refreshSongs() throws IOException {
         Scanner s = new Scanner(new File("C:\\Playlists\\" + current_playlist + ".txt"));
         ArrayList<String> lines = new ArrayList<String>();
         int length = 0;
-        while (s.hasNextLine()){
+        while (s.hasNextLine()) {
             String G[] = s.nextLine().split("/");
-            int glength = G.length - 1 ;
+            int glength = G.length - 1;
             lines.add(G[glength].replaceAll(".mp3", ""));
             length++;
         }
         s.close();
         System.out.println("Текущий плейлист - " + current_playlist);
-    songList.getItems().clear();
-    songList.getItems().addAll(lines);
+        songList.getItems().clear();
+        songList.getItems().addAll(lines);
     }
+    public static String getTimeString(double millis) {
+        millis /= 1000;
+        String s = formatTime(millis % 60);
+        millis /= 60;
+        String m = formatTime(millis % 60);
+
+        return m + ":" + s;
+    }
+
+    public static String formatTime(double time) {
+        int t = (int) time;
+        if (t > 9) {
+            return String.valueOf(t);
+        }
+        return "0" + t;
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         File createFile = new File("C:\\Playlists\\allTracks.txt");
@@ -666,19 +571,136 @@ public class HelloController implements Initializable {
                 }
             }
         });
-    }
-    public static String getTimeString(double millis) {
-        millis /= 1000;
-        String s = formatTime(millis % 60);
-        millis /= 60;
-        String m = formatTime(millis % 60);
+        animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                animatedLabel.getChildren().add(songAnimatedLabel);
+                songHbox.getChildren().remove(songLabel);
+            }
+        });
 
-        return   m + ":" + s;
+        animatedLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                animatedLabel.getChildren().remove(songAnimatedLabel);
+                songHbox.getChildren().add(songLabel);
+            }
+        });
+
+        songSlider.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+
+            }
+        });
+        songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+            }
+        });
+
+        forwardMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("+ 10 секунд");
+                mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
+            }
+        });
+
+        backMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("- 10 секунд");
+                mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
+            }
+        });
+
+        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                volPerc = volumeSlider.getValue();
+                int result = Math.toIntExact(Math.round(volPerc));
+                String res = String.valueOf(result);
+                labelVolume.setText(res + "%");
+                if (volPerc == 0) {
+                    isMuted = true;
+                    volumeOff.setGraphic(iconMute);
+                } else {
+                    isMuted = false;
+                    volumeOff.setGraphic(iconVolume);
+                }
+            }
+        });
+
+
+        hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (hboxVolume.lookup("#volumeSlider") == null) {
+                    hboxVolume.getChildren().add(volumeSlider);
+                    hboxVolume.getChildren().add(labelVolume);
+                    volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                        @Override
+                        public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+                            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+                        }
+                    });
+                    volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent mouseEvent) {
+                            if (isMuted) {
+                                volumeOn();
+                            } else {
+                                volumeOff();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hboxVolume.getChildren().remove(volumeSlider);
+                hboxVolume.getChildren().remove(labelVolume);
+            }
+        });
+
+        hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hboxTime.getChildren().add(labelRemainingTime);
+                totalTime = mediaPlayer.getCurrentTime().toMinutes();
+                currentTime = mediaPlayer.getTotalDuration().toMinutes();
+            }
+        });
+
+        hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                hboxTime.getChildren().remove(labelRemainingTime);
+            }
+        });
+
+        labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (isPlaying) {
+                    pauseMedia();
+                } else {
+                    playMedia();
+                }
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = mediaPlayer.getTotalDuration().toSeconds();
+                if ((current / end) > 0.999) {
+                    resetMedia();
+                }
+            }
+        });
     }
 
-    public static String formatTime(double time) {
-        int t = (int)time;
-        if (t > 9) { return String.valueOf(t); }
-        return "0" + t;
-    }
+
+
 }
