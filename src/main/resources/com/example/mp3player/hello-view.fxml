@@ -27,12 +27,12 @@
                <Font size="15.0" />
             </font>
          </Button>
-         <ListView fx:id="playlistList" fixedCellSize="30.0" layoutX="0.5" layoutY="215.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="234.0" prefWidth="179.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="0.5" AnchorPane.topAnchor="215.0">
+         <ListView fx:id="playlistList" fixedCellSize="30.0" layoutX="2.5" layoutY="236.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="212.0" prefWidth="179.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="2.0" AnchorPane.topAnchor="236.0">
             <effect>
                <ColorAdjust />
             </effect>
          </ListView>
-         <Button fx:id="exportPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="183.0" mnemonicParsing="false" onAction="#exportPlaylist" prefHeight="33.0" prefWidth="153.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 15; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Экспорт плейлист" textFill="#e91de4">
+         <Button fx:id="exportPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="184.0" mnemonicParsing="false" onAction="#exportPlaylist" prefHeight="33.0" prefWidth="153.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 15; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Экспорт плейлист" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="184.0">
             <font>
                <Font size="15.0" />
             </font>
@@ -99,7 +99,7 @@
          <Font name="Segoe UI Semibold" size="50.0" />
       </font>
    </Label>
-   <ListView fx:id="songList" fixedCellSize="30.0" layoutX="183.4" layoutY="216.60000000000002" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="234.0" prefWidth="581.0" style="-fx-background-color: transparent;" styleClass="scrollBar" stylesheets="@style1.css" AnchorPane.bottomAnchor="73.79999999999995" AnchorPane.leftAnchor="183.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="216.60000000000002">
+   <ListView fx:id="songList" fixedCellSize="30.0" layoutX="181.4" layoutY="235.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="213.0" prefWidth="588.0" style="-fx-background-color: transparent;" styleClass="scrollBar" stylesheets="@style1.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="235.0">
       <effect>
          <ColorAdjust />
       </effect>
