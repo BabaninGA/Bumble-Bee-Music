@@ -102,9 +102,13 @@ public class HelloController implements Initializable {
     @FXML
     private Label forwardMedia;
     @FXML
+    private Label songAnimatedLabel;
+    @FXML
     private HBox hboxTime;
     @FXML
     private HBox hboxVolume;
+    @FXML
+    private HBox animatedLabel;
     @FXML
     private Label nextSongButton;
     @FXML
@@ -117,6 +121,8 @@ public class HelloController implements Initializable {
     private Label songName;
     @FXML
     private Label songAuthor;
+    @FXML
+    private HBox songHbox;
 
 
     @FXML
@@ -167,6 +173,7 @@ public class HelloController implements Initializable {
             volumeSlider.setValue(10.0);
             mediaPlayer.setVolume(10.0 * 0.01);
             songLabel.setText(name);
+            songAnimatedLabel.setText(name + " 1");
             playMedia();
             wasPlaying = true;
 
@@ -177,6 +184,25 @@ public class HelloController implements Initializable {
             hboxTime.getChildren().remove(labelRemainingTime);
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
+            animatedLabel.getChildren().remove(songAnimatedLabel);
+
+
+            animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    animatedLabel.getChildren().add(songAnimatedLabel);
+                    songHbox.getChildren().remove(songLabel);
+                }
+            });
+
+            animatedLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    animatedLabel.getChildren().remove(songAnimatedLabel);
+                    songHbox.getChildren().add(songLabel);
+                }
+            });
+
 
 
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
