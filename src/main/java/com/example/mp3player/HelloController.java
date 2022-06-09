@@ -22,13 +22,10 @@ import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Callable;
-import java.util.regex.Pattern;
 
-import static org.apache.commons.io.FileUtils.copyDirectoryToDirectory;
 import static org.apache.commons.io.FileUtils.copyFileToDirectory;
 
 
@@ -37,18 +34,15 @@ public class HelloController implements Initializable {
     private Timer timer;
     private TimerTask task;
     private MediaPlayer mediaPlayer;
-
     private Media media;
     private boolean running = true;
     private boolean isMuted = false;
     private boolean isPlaying = true;
-
     private boolean wasPlaying = false;
     private double volPerc;
     private int prevVol;
     private double totalTime;
     private double currentTime;
-
     private int flag1 = 0;
     private boolean active_track = false;
     private boolean shuffle_on = false;
@@ -265,8 +259,8 @@ public class HelloController implements Initializable {
         }
         current_playlist = import_dir;
         System.out.println(current_playlist);
-        refreshPlaylists();
         refreshSongs();
+        refreshPlaylists();
     }
 
     @FXML
@@ -280,8 +274,32 @@ public class HelloController implements Initializable {
         File f = new File(filePath);
         System.out.println(f);
         copyFileToDirectory(f, main_directory);
-        refreshPlaylists();
+        List<String> parts = FileUtils.readLines(new File(filePath), "utf-8");
+        System.out.println(parts);
+        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+        for (int i = 0; i < parts.size(); i++) {
+            String trackfromplaylist = parts.get(i);
+
+            trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
+            trackfromplaylist = trackfromplaylist.replace("\\", "/");
+            System.out.println(trackfromplaylist);
+            if (lines.size() != 0) {
+                for (int g = 0; g < lines.size(); g++) {
+                    if (lines.get(g).equals(trackfromplaylist)) {
+                        flag1++;
+                    } else {
+                    }
+                }
+                if (flag1 == 0) {
+                    FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                    BufferedWriter bufferWriter = new BufferedWriter(writerh);
+                    bufferWriter.write(trackfromplaylist + "\n");
+                    bufferWriter.close();
+                }
+            }
+        }
         refreshSongs();
+        refreshPlaylists();
     }
 
     @FXML
@@ -290,6 +308,7 @@ public class HelloController implements Initializable {
         File playlist_export_dir = directoryChooser.showDialog(null);
         File f = new File(main_directory + "\\" + current_playlist + ".txt");
         System.out.println(f);
+
         copyFileToDirectory(f, playlist_export_dir);
     }
 
@@ -337,59 +356,6 @@ public class HelloController implements Initializable {
         mediaPlayer.pause();
         cancelTimer();
         isPlaying = false;
-    }
-
-    public void mediaplfer() {
-        mediaPlayer.setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                Duration total = media.getDuration();
-                songSlider.setMax(total.toSeconds());
-            }
-        });
-
-
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                songSlider.setValue(newValue.toSeconds());
-            }
-        });
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
-                bindCurrentTimeLabel();
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = mediaPlayer.getTotalDuration().toSeconds();
-                if (!songSlider.isValueChanging()) {
-                    songSlider.setValue(newTime.toSeconds());
-                }
-                if (current / end > 0.999) {
-                    labelButtonPPR.setGraphic(iconReset);
-                }
-                String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
-                labelRemainingTime.setText(remaining);
-                labelCurrentTime.getText();
-                labelTotalTime.getText();
-            }
-        });
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                String currentlabel = songAnimatedLabel.getText();
-                String parts[] = currentlabel.split("");
-                String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
-                songAnimatedLabel.setText(changedlabel);
-            }
-        });
-        mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
-                songSlider.setMax(newDuration.toSeconds());
-                labelTotalTime.setText(getTime(newDuration));
-
-            }
-        });
     }
 
     private void changeCurrentPlaylist(String new_name) {
@@ -577,10 +543,63 @@ public class HelloController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 changeCurrentPlaylist(newValue);
                 try {
+                    refreshPlaylists();
                     refreshSongs();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        });
+    }
+    public void mediaplfer() {
+        mediaPlayer.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                Duration total = media.getDuration();
+                songSlider.setMax(total.toSeconds());
+            }
+        });
+
+
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                songSlider.setValue(newValue.toSeconds());
+            }
+        });
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                bindCurrentTimeLabel();
+                double current = mediaPlayer.getCurrentTime().toSeconds();
+                double end = mediaPlayer.getTotalDuration().toSeconds();
+                if (!songSlider.isValueChanging()) {
+                    songSlider.setValue(newTime.toSeconds());
+                }
+                if (current / end > 0.999) {
+                    labelButtonPPR.setGraphic(iconReset);
+                }
+                String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
+                labelRemainingTime.setText(remaining);
+                labelCurrentTime.getText();
+                labelTotalTime.getText();
+            }
+        });
+        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                String currentlabel = songAnimatedLabel.getText();
+                String parts[] = currentlabel.split("");
+                String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
+                songAnimatedLabel.setText(changedlabel);
+            }
+        });
+        mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+            @Override
+            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                songSlider.setMax(newDuration.toSeconds());
+                labelTotalTime.setText(getTime(newDuration));
+
             }
         });
         animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
