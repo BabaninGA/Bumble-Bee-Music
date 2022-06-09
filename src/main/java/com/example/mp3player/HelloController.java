@@ -2,6 +2,7 @@ package com.example.mp3player;
 
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
+import java.net.URI;
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -47,6 +49,7 @@ public class HelloController implements Initializable {
     private boolean active_track = false;
     private boolean shuffle_on = false;
     private boolean repeat_on = false;
+    private int songNumber;
     private String current_playlist = "allTracks";
     private ArrayList<String> playlists = new ArrayList<String>();
     private ArrayList<String> playlist_names = new ArrayList<>();
@@ -129,107 +132,170 @@ public class HelloController implements Initializable {
 
     @FXML
     private void addMedia(ActionEvent event) throws IOException {
-        System.out.println("Добавить файл");
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
-        fileChooser.getExtensionFilters().add(filter);
-        String filePath = fileChooser.showOpenDialog(null).toURI().toString();
-        File f = new File(filePath);
-        System.out.println(filePath);
-        String name = f.getName();
-        name = name.replaceAll("%20", " ");
-        name = name.replaceAll(".mp3", "");
-        Boolean match = name.matches("^[A-Za-z0-9 -!.#]{1,40} - [A-Za-z0-9 -!.#]{1,40}$");
-        if (match == true) {
-            String songparts[] = name.split("-");
-            songAuthor.setText(songparts[0]);
-            songName.setText(songparts[1]);
-        } else {
-            songAuthor.setVisible(false);
-            songName.setText(name);
-        }
-        System.out.println(name);
-        current_playlist = "allTracks";
-
-        String track = filePath.replaceAll("file:/", "");
-        track = track.replaceAll("%20", " ");
-        System.out.println(track);
-        flag1 = 0;
-        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-        System.out.println(lines.size());
-        if (lines.size() != 0) {
-            for (int i = 0; i < lines.size(); i++) {
-                if (lines.get(i).equals(track)) {
-                    flag1++;
-                } else {
-                }
+        try {
+            System.out.println("Добавить файл");
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
+            fileChooser.getExtensionFilters().add(filter);
+            String filePath = fileChooser.showOpenDialog(null).toURI().toString();
+            File f = new File(filePath);
+            System.out.println(filePath);
+            String name = f.getName();
+            name = name.replaceAll("%20", " ");
+            name = name.replaceAll(".mp3", "");
+            Boolean match = name.matches("^[A-Za-z0-9 -!.#]{1,40} - [A-Za-z0-9 -!.#]{1,40}$");
+            if (match == true) {
+                String songparts[] = name.split("-");
+                songAuthor.setText(songparts[0]);
+                songName.setText(songparts[1]);
+            } else {
+                songAuthor.setVisible(false);
+                songName.setText(name);
             }
-            if (flag1 == 0) {
+            System.out.println(name);
+            current_playlist = "allTracks";
+
+            String track = filePath.replaceAll("file:/", "");
+            track = track.replaceAll("%20", " ");
+            System.out.println(track);
+            flag1 = 0;
+            List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+            System.out.println(lines.size());
+            if (lines.size() != 0) {
+                for (int i = 0; i < lines.size(); i++) {
+                    if (lines.get(i).equals(track)) {
+                        flag1++;
+                    } else {
+                    }
+                }
+                if (flag1 == 0) {
+                    FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                    BufferedWriter bufferWriter = new BufferedWriter(writer1);
+                    bufferWriter.write(track + "\n");
+                    bufferWriter.close();
+                }
+            } else {
                 FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
                 BufferedWriter bufferWriter = new BufferedWriter(writer1);
                 bufferWriter.write(track + "\n");
                 bufferWriter.close();
             }
-        } else {
-            FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
-            BufferedWriter bufferWriter = new BufferedWriter(writer1);
-            bufferWriter.write(track + "\n");
-            bufferWriter.close();
+
+            if (wasPlaying == true) {
+
+                mediaPlayer.stop();
+            }
+
+
+            if (filePath != null) {
+                Media media = new Media(filePath);
+                mediaPlayer = new MediaPlayer(media);
+                setIcons();
+                volumeSlider.setValue(10.0);
+                mediaPlayer.setVolume(10.0 * 0.01);
+                songLabel.setText(name);
+                songAnimatedLabel.setText(name + " ");
+                playMedia();
+                wasPlaying = true;
+
+
+                bottomMenu.setVisible(true);
+
+                hboxTime.getChildren().remove(labelRemainingTime);
+                hboxVolume.getChildren().remove(volumeSlider);
+                hboxVolume.getChildren().remove(labelVolume);
+                animatedLabel.getChildren().remove(songAnimatedLabel);
+                refreshSongs();
+                refreshPlaylists();
+            }
+        } catch (RuntimeException e) {
+            System.out.println("incorrect input");
         }
-
-        if (wasPlaying == true) {
-
-            mediaPlayer.stop();
-        }
-
-
-        if (filePath != null) {
-            Media media = new Media(filePath);
-            mediaPlayer = new MediaPlayer(media);
-            setIcons();
-            volumeSlider.setValue(10.0);
-            mediaPlayer.setVolume(10.0 * 0.01);
-            songLabel.setText(name);
-            songAnimatedLabel.setText(name + " ");
-            playMedia();
-            wasPlaying = true;
-
-
-            bottomMenu.setVisible(true);
-
-            hboxTime.getChildren().remove(labelRemainingTime);
-            hboxVolume.getChildren().remove(volumeSlider);
-            hboxVolume.getChildren().remove(labelVolume);
-            animatedLabel.getChildren().remove(songAnimatedLabel);
-            refreshSongs();
-            refreshPlaylists();
-        }
-
     }
 
     @FXML
     void importDirectory(ActionEvent event) throws IOException {
-
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File playlist_import_dir = directoryChooser.showDialog(null);
-        while (Objects.requireNonNull(playlist_import_dir.listFiles()).length == 0) {
-            playlist_import_dir = directoryChooser.showDialog(null);
+        try {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File playlist_import_dir = directoryChooser.showDialog(null);
+            while (Objects.requireNonNull(playlist_import_dir.listFiles()).length == 0) {
+                playlist_import_dir = directoryChooser.showDialog(null);
+            }
+            File dir = new File(playlist_import_dir.toURI());
+            List<File> lst = new ArrayList<>();
+            flag1 = 0;
+            String import_dir = null;
+            for (File file : dir.listFiles()) {
+                if ((file.isFile()) & (file.toString().endsWith("mp3"))) {
+                    lst.add(file);
+                    String trackfromplaylist = file.toString();
+                    trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
+                    trackfromplaylist = trackfromplaylist.replace("\\", "/");
+                    List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+                    System.out.println(trackfromplaylist);
+                    if (lines.size() != 0) {
+                        for (int i = 0; i < lines.size(); i++) {
+                            if (lines.get(i).equals(trackfromplaylist)) {
+                                flag1++;
+                            } else {
+                            }
+                        }
+                        if (flag1 == 0) {
+                            FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                            BufferedWriter bufferWriter = new BufferedWriter(writerh);
+                            bufferWriter.write(trackfromplaylist + "\n");
+                            bufferWriter.close();
+                        }
+                    }
+                    String directory = playlist_import_dir.toString().replace("\\", "/");
+                    ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
+                    import_dir = (String) array.get(array.size() - 1);
+                    FileWriter writer2 = new FileWriter("C:\\Playlists\\" + import_dir + ".txt", true);
+                    BufferedWriter bufferWriter1 = new BufferedWriter(writer2);
+                    bufferWriter1.write(trackfromplaylist + "\n");
+                    bufferWriter1.close();
+                    File createFile = new File("C:\\Playlists\\" + import_dir + ".txt");
+                    if (!createFile.exists())
+                        try {
+                            createFile.createNewFile();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                }
+            }
+            current_playlist = import_dir;
+            System.out.println(current_playlist);
+            refreshSongs();
+            refreshPlaylists();
+        } catch (RuntimeException e) {
+            System.out.println("incorrect input");
         }
-        File dir = new File(playlist_import_dir.toURI());
-        List<File> lst = new ArrayList<>();
-        flag1 = 0;
-        String import_dir = null;
-        for (File file : dir.listFiles()) {
-            if ((file.isFile()) & (file.toString().endsWith("mp3"))) {
-                lst.add(file);
-                String trackfromplaylist = file.toString();
+    }
+
+    @FXML
+    private void importPlaylist() throws IOException {
+        try {
+            System.out.println("Импортировать плейлист");
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select playlists in .txt", "*.txt");
+            fileChooser.getExtensionFilters().add(filter);
+            String filePath = fileChooser.showOpenDialog(null).toURI().toString();
+            filePath = filePath.replaceAll("file:/", "");
+            File f = new File(filePath);
+            System.out.println(f);
+            copyFileToDirectory(f, main_directory);
+            List<String> parts = FileUtils.readLines(new File(filePath), "utf-8");
+            System.out.println(parts);
+            List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+            for (int i = 0; i < parts.size(); i++) {
+                String trackfromplaylist = parts.get(i);
+
                 trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
                 trackfromplaylist = trackfromplaylist.replace("\\", "/");
-                List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
                 System.out.println(trackfromplaylist);
                 if (lines.size() != 0) {
-                    for (int i = 0; i < lines.size(); i++) {
-                        if (lines.get(i).equals(trackfromplaylist)) {
+                    for (int g = 0; g < lines.size(); g++) {
+                        if (lines.get(g).equals(trackfromplaylist)) {
                             flag1++;
                         } else {
                         }
@@ -241,75 +307,26 @@ public class HelloController implements Initializable {
                         bufferWriter.close();
                     }
                 }
-                String directory = playlist_import_dir.toString().replace("\\", "/");
-                ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
-                import_dir = (String) array.get(array.size() - 1);
-                FileWriter writer2 = new FileWriter("C:\\Playlists\\" + import_dir + ".txt", true);
-                BufferedWriter bufferWriter1 = new BufferedWriter(writer2);
-                bufferWriter1.write(trackfromplaylist + "\n");
-                bufferWriter1.close();
-                File createFile = new File("C:\\Playlists\\" + import_dir + ".txt");
-                if (!createFile.exists())
-                    try {
-                        createFile.createNewFile();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
             }
+            refreshSongs();
+            refreshPlaylists();
+        } catch (RuntimeException e) {
+            System.out.println("incorrect input");
         }
-        current_playlist = import_dir;
-        System.out.println(current_playlist);
-        refreshSongs();
-        refreshPlaylists();
-    }
-
-    @FXML
-    private void importPlaylist() throws IOException {
-        System.out.println("Импортировать плейлист");
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select playlists in .txt", "*.txt");
-        fileChooser.getExtensionFilters().add(filter);
-        String filePath = fileChooser.showOpenDialog(null).toURI().toString();
-        filePath = filePath.replaceAll("file:/", "");
-        File f = new File(filePath);
-        System.out.println(f);
-        copyFileToDirectory(f, main_directory);
-        List<String> parts = FileUtils.readLines(new File(filePath), "utf-8");
-        System.out.println(parts);
-        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-        for (int i = 0; i < parts.size(); i++) {
-            String trackfromplaylist = parts.get(i);
-
-            trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
-            trackfromplaylist = trackfromplaylist.replace("\\", "/");
-            System.out.println(trackfromplaylist);
-            if (lines.size() != 0) {
-                for (int g = 0; g < lines.size(); g++) {
-                    if (lines.get(g).equals(trackfromplaylist)) {
-                        flag1++;
-                    } else {
-                    }
-                }
-                if (flag1 == 0) {
-                    FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
-                    BufferedWriter bufferWriter = new BufferedWriter(writerh);
-                    bufferWriter.write(trackfromplaylist + "\n");
-                    bufferWriter.close();
-                }
-            }
-        }
-        refreshSongs();
-        refreshPlaylists();
     }
 
     @FXML
     private void exportPlaylist() throws IOException {
-        DirectoryChooser directoryChooser = new DirectoryChooser();
-        File playlist_export_dir = directoryChooser.showDialog(null);
-        File f = new File(main_directory + "\\" + current_playlist + ".txt");
-        System.out.println(f);
+        try {
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            File playlist_export_dir = directoryChooser.showDialog(null);
+            File f = new File(main_directory + "\\" + current_playlist + ".txt");
+            System.out.println(f);
 
-        copyFileToDirectory(f, playlist_export_dir);
+            copyFileToDirectory(f, playlist_export_dir);
+        } catch (RuntimeException e) {
+            System.out.println("incorrect output");
+        }
     }
 
 
@@ -340,14 +357,45 @@ public class HelloController implements Initializable {
         playMedia();
     }
 
+    private void forwardMedia() throws IOException {
+        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+        if (songNumber < lines.size() - 1) {
+            mediaPlayer.stop();
+            mediaPlayer.seek(Duration.millis(0));
+            songNumber++;
+            playPlaylist();
+            songList.getSelectionModel().select(songNumber);
+        } else {
+            mediaPlayer.stop();
+            mediaPlayer.seek(Duration.millis(0));
+            songNumber = 0;
+            playPlaylist();
+            songList.getSelectionModel().select(songNumber);
+        }
+    }
 
-    private void playMedia() {
+    private void previousMedia() throws IOException {
+        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+        if (songNumber > 0) {
+            mediaPlayer.stop();
+            mediaPlayer.seek(Duration.millis(0));
+            songNumber--;
+            playPlaylist();
+        } else {
+            mediaPlayer.stop();
+            mediaPlayer.seek(Duration.millis(0));
+            songNumber = lines.size() - 1;
+            playPlaylist();
+        }
+    }
+
+    private void playMedia() throws NullPointerException{
         labelButtonPPR.setGraphic(iconPause);
         System.out.println("Воспроизведение");
         beginTimer();
         mediaPlayer.play();
-        mediaplfer();
         isPlaying = true;
+        mediaplfer();
     }
 
     private void pauseMedia() {
@@ -360,6 +408,39 @@ public class HelloController implements Initializable {
 
     private void changeCurrentPlaylist(String new_name) {
         current_playlist = new_name;
+    }
+
+    private void playPlaylist() throws IOException {
+        List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+        String filePath = lines.get(songNumber);
+        File f = new File(filePath);
+        String name = f.getName();
+        URI filepath = URI.create(("file:/" + filePath).replaceAll(" ", "%20"));
+        media = new Media(filepath.toString());
+        name = name.replaceAll("%20", " ");
+        name = name.replaceAll(".mp3", "");
+        Boolean match = name.matches("^[A-Za-z0-9-!.#@$]{1,40} - [A-Za-z0-9-!.#@$]{1,40}$");
+        if (match == true) {
+            String songparts[] = name.split("-");
+            songAuthor.setText(songparts[0]);
+            songName.setText(songparts[1]);
+        } else {
+            songAuthor.setVisible(false);
+            songName.setText(name);
+        }
+        mediaPlayer = new MediaPlayer(media);
+        setIcons();
+        bottomMenu.setVisible(true);
+        volumeSlider.setValue(10.0);
+        mediaPlayer.setVolume(10.0 * 0.01);
+        songLabel.setText(name);
+        songAnimatedLabel.setText(name + " ");
+        playMedia();
+        wasPlaying = true;
+        hboxTime.getChildren().remove(labelRemainingTime);
+        hboxVolume.getChildren().remove(volumeSlider);
+        hboxVolume.getChildren().remove(labelVolume);
+        animatedLabel.getChildren().remove(songAnimatedLabel);
     }
 
     private void refreshPlaylists() {
@@ -429,10 +510,6 @@ public class HelloController implements Initializable {
                 double current = mediaPlayer.getCurrentTime().toSeconds();
                 double end = mediaPlayer.getTotalDuration().toSeconds();
                 songSlider.setValue(current / end);
-                if (current / end == 1) {
-                    labelButtonPPR.setGraphic(iconReset);
-                    cancelTimer();
-                }
             }
         };
     }
@@ -542,193 +619,244 @@ public class HelloController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 changeCurrentPlaylist(newValue);
+                playlistList.getSelectionModel().getSelectedItem();
                 try {
-                    refreshPlaylists();
                     refreshSongs();
+                    refreshPlaylists();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
         });
+        nextSongButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Следующий трек");
+                List<String> lines = null;
+                try {
+                    lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+                    forwardMedia();
+                    songList.getSelectionModel().select(songNumber);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        previousSongButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                System.out.println("Предыдущий трек");
+                List<String> lines = null;
+                try {
+                    lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
+                    previousMedia();
+                    songList.getSelectionModel().select(songNumber);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        songList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() > 1) {
+                    if (wasPlaying == true) {
+                        mediaPlayer.stop();
+                    }
+                    songNumber = songList.getSelectionModel().getSelectedIndex();
+                    try {
+                        playPlaylist();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
-    public void mediaplfer() {
-        mediaPlayer.setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                Duration total = media.getDuration();
-                songSlider.setMax(total.toSeconds());
-            }
-        });
 
-
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                songSlider.setValue(newValue.toSeconds());
-            }
-        });
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
-                bindCurrentTimeLabel();
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = mediaPlayer.getTotalDuration().toSeconds();
-                if (!songSlider.isValueChanging()) {
-                    songSlider.setValue(newTime.toSeconds());
+    public void mediaplfer() throws NullPointerException {
+        if (isPlaying == true) {
+            mediaPlayer.setOnReady(new Runnable() {
+                @Override
+                public void run() {
+                    Duration total = media.getDuration();
+                    songSlider.setMax(total.toSeconds());
                 }
-                if (current / end > 0.999) {
-                    labelButtonPPR.setGraphic(iconReset);
+            });
+
+
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                    songSlider.setValue(newValue.toSeconds());
                 }
-                String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
-                labelRemainingTime.setText(remaining);
-                labelCurrentTime.getText();
-                labelTotalTime.getText();
-            }
-        });
-        mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
-                String currentlabel = songAnimatedLabel.getText();
-                String parts[] = currentlabel.split("");
-                String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
-                songAnimatedLabel.setText(changedlabel);
-            }
-        });
-        mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
-                songSlider.setMax(newDuration.toSeconds());
-                labelTotalTime.setText(getTime(newDuration));
-
-            }
-        });
-        animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                animatedLabel.getChildren().add(songAnimatedLabel);
-                songHbox.getChildren().remove(songLabel);
-            }
-        });
-
-        animatedLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                animatedLabel.getChildren().remove(songAnimatedLabel);
-                songHbox.getChildren().add(songLabel);
-            }
-        });
-
-        songSlider.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
-
-            }
-        });
-        songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
-            }
-        });
-
-        forwardMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("+ 10 секунд");
-                mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
-            }
-        });
-
-        backMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                System.out.println("- 10 секунд");
-                mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
-            }
-        });
-
-        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                volPerc = volumeSlider.getValue();
-                int result = Math.toIntExact(Math.round(volPerc));
-                String res = String.valueOf(result);
-                labelVolume.setText(res + "%");
-                if (volPerc == 0) {
-                    isMuted = true;
-                    volumeOff.setGraphic(iconMute);
-                } else {
-                    isMuted = false;
-                    volumeOff.setGraphic(iconVolume);
-                }
-            }
-        });
-
-
-        hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (hboxVolume.lookup("#volumeSlider") == null) {
-                    hboxVolume.getChildren().add(volumeSlider);
-                    hboxVolume.getChildren().add(labelVolume);
-                    volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
-                        @Override
-                        public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
-                            mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
+            });
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()  {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
+                    bindCurrentTimeLabel();
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    double end = mediaPlayer.getTotalDuration().toSeconds();
+                    if (!songSlider.isValueChanging()) {
+                        songSlider.setValue(newTime.toSeconds());
+                    }
+                    if (current / end > 0.999) {
+                        try {
+                            forwardMedia();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                    });
-                    volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent mouseEvent) {
-                            if (isMuted) {
-                                volumeOn();
-                            } else {
-                                volumeOff();
+                    }
+                    String remaining = getTimeString(mediaPlayer.getTotalDuration().toMillis() - mediaPlayer.getCurrentTime().toMillis());
+                    labelRemainingTime.setText(remaining);
+                    labelCurrentTime.getText();
+                    labelTotalTime.getText();
+                }
+            });
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
+                    String currentlabel = songAnimatedLabel.getText();
+                    String parts[] = currentlabel.split("");
+                    String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
+                    songAnimatedLabel.setText(changedlabel);
+                }
+            });
+            mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    songSlider.setMax(newDuration.toSeconds());
+                    labelTotalTime.setText(getTime(newDuration));
+
+                }
+            });
+            animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    animatedLabel.getChildren().add(songAnimatedLabel);
+                    songHbox.getChildren().remove(songLabel);
+                }
+            });
+
+            animatedLabel.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    animatedLabel.getChildren().remove(songAnimatedLabel);
+                    songHbox.getChildren().add(songLabel);
+                }
+            });
+
+            songSlider.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+
+                }
+            });
+            songSlider.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    mediaPlayer.seek(Duration.seconds(songSlider.getValue()));
+                }
+            });
+
+            forwardMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("+ 10 секунд");
+                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(+10)));
+                }
+            });
+
+            backMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    System.out.println("- 10 секунд");
+                    mediaPlayer.seek(mediaPlayer.getCurrentTime().add(Duration.seconds(-10)));
+                }
+            });
+
+            volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+                    volPerc = volumeSlider.getValue();
+                    int result = Math.toIntExact(Math.round(volPerc));
+                    String res = String.valueOf(result);
+                    labelVolume.setText(res + "%");
+                    if (volPerc == 0) {
+                        isMuted = true;
+                        volumeOff.setGraphic(iconMute);
+                    } else {
+                        isMuted = false;
+                        volumeOff.setGraphic(iconVolume);
+                    }
+                }
+            });
+
+            hboxVolume.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (hboxVolume.lookup("#volumeSlider") == null) {
+                        hboxVolume.getChildren().add(volumeSlider);
+                        hboxVolume.getChildren().add(labelVolume);
+                        volumeSlider.valueProperty().addListener(new ChangeListener<Number>() {
+                            @Override
+                            public void changed(ObservableValue<? extends Number> arg0, Number arg1, Number arg2) {
+                                mediaPlayer.setVolume(volumeSlider.getValue() * 0.01);
                             }
-                        }
-                    });
+                        });
+                        volumeOff.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent mouseEvent) {
+                                if (isMuted) {
+                                    volumeOn();
+                                } else {
+                                    volumeOff();
+                                }
+                            }
+                        });
+                    }
                 }
-            }
-        });
-        hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                hboxVolume.getChildren().remove(volumeSlider);
-                hboxVolume.getChildren().remove(labelVolume);
-            }
-        });
-
-        hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                hboxTime.getChildren().add(labelRemainingTime);
-                totalTime = mediaPlayer.getCurrentTime().toMinutes();
-                currentTime = mediaPlayer.getTotalDuration().toMinutes();
-            }
-        });
-
-        hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                hboxTime.getChildren().remove(labelRemainingTime);
-            }
-        });
-
-        labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (isPlaying) {
-                    pauseMedia();
-                } else {
-                    playMedia();
+            });
+            hboxVolume.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxVolume.getChildren().remove(volumeSlider);
+                    hboxVolume.getChildren().remove(labelVolume);
                 }
-                double current = mediaPlayer.getCurrentTime().toSeconds();
-                double end = mediaPlayer.getTotalDuration().toSeconds();
-                if ((current / end) > 0.999) {
-                    resetMedia();
+            });
+
+            hboxTime.setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().add(labelRemainingTime);
+                    totalTime = mediaPlayer.getCurrentTime().toMinutes();
+                    currentTime = mediaPlayer.getTotalDuration().toMinutes();
                 }
-            }
-        });
+            });
+
+            hboxTime.setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    hboxTime.getChildren().remove(labelRemainingTime);
+                }
+            });
+
+            labelButtonPPR.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    if (isPlaying) {
+                        pauseMedia();
+                    } else {
+                        playMedia();
+                    }
+                    double current = mediaPlayer.getCurrentTime().toSeconds();
+                    double end = mediaPlayer.getTotalDuration().toSeconds();
+                    if ((current / end) > 0.999) {
+                        resetMedia();
+                    }
+                }
+            });
+        }
     }
 }
