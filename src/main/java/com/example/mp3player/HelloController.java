@@ -2,7 +2,6 @@ package com.example.mp3player;
 
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -46,11 +45,10 @@ public class HelloController implements Initializable {
     private double totalTime;
     private double currentTime;
     private int flag1 = 0;
-    private boolean active_track = false;
     private boolean shuffle_on = false;
     private boolean repeat_on = false;
     private int songNumber;
-    private String current_playlist = "allTracks";
+    private static String current_playlist = "allTracks";
     private ArrayList<String> playlists = new ArrayList<String>();
     private ArrayList<String> playlist_names = new ArrayList<>();
     private File main_directory = new File("C:\\Playlists");
@@ -65,6 +63,7 @@ public class HelloController implements Initializable {
     private ImageView iconShuffle;
     private ImageView iconPlus;
     private ImageView iconMinus;
+    private ImageView iconActiveShuffle;
 
     @FXML
     private Label shuffleMedia;
@@ -144,7 +143,7 @@ public class HelloController implements Initializable {
             name = name.replaceAll("%20", " ");
             name = name.replaceAll(".mp3", "");
             Boolean match = name.matches("^[A-Za-z0-9 -!.#]{1,40} - [A-Za-z0-9 -!.#]{1,40}$");
-            if (match == true) {
+            if (match) {
                 String songparts[] = name.split("-");
                 songAuthor.setText(songparts[0]);
                 songName.setText(songparts[1]);
@@ -165,7 +164,6 @@ public class HelloController implements Initializable {
                 for (int i = 0; i < lines.size(); i++) {
                     if (lines.get(i).equals(track)) {
                         flag1++;
-                    } else {
                     }
                 }
                 if (flag1 == 0) {
@@ -181,7 +179,7 @@ public class HelloController implements Initializable {
                 bufferWriter.close();
             }
 
-            if (wasPlaying == true) {
+            if (wasPlaying) {
 
                 mediaPlayer.stop();
             }
@@ -237,7 +235,6 @@ public class HelloController implements Initializable {
                         for (int i = 0; i < lines.size(); i++) {
                             if (lines.get(i).equals(trackfromplaylist)) {
                                 flag1++;
-                            } else {
                             }
                         }
                         if (flag1 == 0) {
@@ -246,6 +243,12 @@ public class HelloController implements Initializable {
                             bufferWriter.write(trackfromplaylist + "\n");
                             bufferWriter.close();
                         }
+                    }
+                    else{
+                        FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                        BufferedWriter bufferWriter = new BufferedWriter(writerh);
+                        bufferWriter.write(trackfromplaylist + "\n");
+                        bufferWriter.close();
                     }
                     String directory = playlist_import_dir.toString().replace("\\", "/");
                     ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
@@ -269,6 +272,17 @@ public class HelloController implements Initializable {
             refreshPlaylists();
         } catch (RuntimeException e) {
             System.out.println("incorrect input");
+        }
+    }
+
+    @FXML
+    void activateShuffle() {
+        if (shuffle_on) {
+            shuffle_on = false;
+            shuffleMedia.setGraphic(iconShuffle);
+        } else {
+            shuffle_on = true;
+            shuffleMedia.setGraphic(iconActiveShuffle);
         }
     }
 
@@ -359,18 +373,25 @@ public class HelloController implements Initializable {
 
     private void forwardMedia() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
-        if (songNumber < lines.size() - 1) {
+        if (shuffle_on = false) {
+            if (songNumber < lines.size() - 1) {
+                mediaPlayer.stop();
+                mediaPlayer.seek(Duration.millis(0));
+                songNumber++;
+                playPlaylist();
+                songList.getSelectionModel().select(songNumber);
+            } else {
+                mediaPlayer.stop();
+                mediaPlayer.seek(Duration.millis(0));
+                songNumber = 0;
+                playPlaylist();
+                songList.getSelectionModel().select(songNumber);
+            }
+        }
+        else{
             mediaPlayer.stop();
             mediaPlayer.seek(Duration.millis(0));
-            songNumber++;
-            playPlaylist();
-            songList.getSelectionModel().select(songNumber);
-        } else {
-            mediaPlayer.stop();
-            mediaPlayer.seek(Duration.millis(0));
-            songNumber = 0;
-            playPlaylist();
-            songList.getSelectionModel().select(songNumber);
+            songNumber =  getRandom(0, lines.size()-1);
         }
     }
 
@@ -387,6 +408,10 @@ public class HelloController implements Initializable {
             songNumber = lines.size() - 1;
             playPlaylist();
         }
+    }
+    public static int getRandom(int min, int max) throws IOException {
+        int x = (int) ((Math.random()*((max-min)+1))+min);
+        return x;
     }
 
     private void playMedia() throws NullPointerException{
@@ -420,7 +445,7 @@ public class HelloController implements Initializable {
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
         Boolean match = name.matches("^[A-Za-z0-9-!.#@$]{1,40} - [A-Za-z0-9-!.#@$]{1,40}$");
-        if (match == true) {
+        if (match) {
             String songparts[] = name.split("-");
             songAuthor.setText(songparts[0]);
             songName.setText(songparts[1]);
@@ -577,6 +602,11 @@ public class HelloController implements Initializable {
         iconShuffle.setFitWidth(22);
         iconShuffle.setFitHeight(22);
 
+        Image imageActiveShuffle = new Image(new File("src/resources/active-shuffle-btn.png").toURI().toString());
+        iconActiveShuffle = new ImageView(imageShuffle);
+        iconActiveShuffle.setFitWidth(22);
+        iconActiveShuffle.setFitHeight(22);
+
         Image imagePlus = new Image(new File("src/resources/plus-btn.png").toURI().toString());
         iconPlus = new ImageView(imagePlus);
         iconPlus.setFitWidth(21);
@@ -632,9 +662,7 @@ public class HelloController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Следующий трек");
-                List<String> lines = null;
                 try {
-                    lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
                     forwardMedia();
                     songList.getSelectionModel().select(songNumber);
                 } catch (IOException e) {
@@ -646,9 +674,7 @@ public class HelloController implements Initializable {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 System.out.println("Предыдущий трек");
-                List<String> lines = null;
                 try {
-                    lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
                     previousMedia();
                     songList.getSelectionModel().select(songNumber);
                 } catch (IOException e) {
@@ -660,7 +686,7 @@ public class HelloController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 if (event.getClickCount() > 1) {
-                    if (wasPlaying == true) {
+                    if (wasPlaying) {
                         mediaPlayer.stop();
                     }
                     songNumber = songList.getSelectionModel().getSelectedIndex();
@@ -675,7 +701,7 @@ public class HelloController implements Initializable {
     }
 
     public void mediaplfer() throws NullPointerException {
-        if (isPlaying == true) {
+        if (isPlaying) {
             mediaPlayer.setOnReady(new Runnable() {
                 @Override
                 public void run() {

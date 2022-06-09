@@ -89,14 +89,14 @@
          </HBox>
         </children>
     </AnchorPane>
-   <Label fx:id="songName" layoutX="550.0" layoutY="33.0" text="Song" textFill="WHITE" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="33.0">
+   <Label fx:id="songName" layoutX="486.0" layoutY="27.0" prefHeight="47.0" prefWidth="285.0" text="Song" textFill="WHITE" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="27.0">
       <font>
-         <Font name="Segoe UI Semibold" size="53.0" />
+         <Font name="Segoe UI Semibold" size="32.0" />
       </font>
    </Label>
-   <Label fx:id="songAuthor" layoutX="550.0" layoutY="102.0" text="Author" textFill="WHITE" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="102.0">
+   <Label fx:id="songAuthor" layoutX="486.0" layoutY="74.0" prefHeight="47.0" prefWidth="285.0" text="Author" textFill="WHITE" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="74.0">
       <font>
-         <Font name="Segoe UI Semibold" size="50.0" />
+         <Font name="Segoe UI Semibold" size="32.0" />
       </font>
    </Label>
    <ListView fx:id="songList" fixedCellSize="30.0" layoutX="181.4" layoutY="235.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="213.0" prefWidth="588.0" style="-fx-background-color: transparent;" styleClass="scrollBar" stylesheets="@style1.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="235.0">
@@ -104,7 +104,7 @@
          <ColorAdjust />
       </effect>
    </ListView>
-   <HBox fx:id="songHbox" layoutX="284.0" layoutY="33.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0">
+   <HBox fx:id="songHbox" layoutX="284.0" layoutY="33.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
       <children>
             <Label fx:id="songLabel" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="173.0" textFill="WHITE">
                 <font>
@@ -113,7 +113,7 @@
             </Label>
       </children>
    </HBox>
-   <HBox fx:id="animatedLabel" layoutX="346.0" layoutY="353.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="6.0">
+   <HBox fx:id="animatedLabel" layoutX="346.0" layoutY="353.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
       <children>
          <Label fx:id="songAnimatedLabel" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="173.0" textFill="WHITE">
             <font>
