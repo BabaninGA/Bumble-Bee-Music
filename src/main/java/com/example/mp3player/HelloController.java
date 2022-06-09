@@ -145,7 +145,7 @@ public class HelloController implements Initializable {
         String name = f.getName();
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
-        Boolean match = name.matches("^[A-Za-z0-9 -]{1,40} - [A-Za-z0-9 -]{1,40}$");
+        Boolean match = name.matches("^[A-Za-z0-9 -!.#]{1,40} - [A-Za-z0-9 -!.#]{1,40}$");
         if (match == true) {
             String songparts[] = name.split("-");
             songAuthor.setText(songparts[0]);
@@ -165,7 +165,7 @@ public class HelloController implements Initializable {
         System.out.println(lines.size());
         if (lines.size() != 0) {
             for (int i = 0; i < lines.size(); i++) {
-                if (lines.get(i) == track) {
+                if (lines.get(i).equals(track)) {
                     flag1++;
                 } else {
                 }
@@ -207,6 +207,8 @@ public class HelloController implements Initializable {
             hboxVolume.getChildren().remove(volumeSlider);
             hboxVolume.getChildren().remove(labelVolume);
             animatedLabel.getChildren().remove(songAnimatedLabel);
+            refreshSongs();
+            refreshPlaylists();
         }
 
     }
@@ -230,18 +232,20 @@ public class HelloController implements Initializable {
                 trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
                 trackfromplaylist = trackfromplaylist.replace("\\", "/");
                 List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-                for (int i = 1; i < lines.size(); i++) {
-                    if (lines.get(i) == file.toString()) {
-                        flag1++;
-                    } else {
-                        flag1 = flag1;
+                System.out.println(trackfromplaylist);
+                if (lines.size() != 0) {
+                    for (int i = 0; i < lines.size(); i++) {
+                        if (lines.get(i).equals(trackfromplaylist)) {
+                            flag1++;
+                        } else {
+                        }
                     }
-                }
-                if (flag1 == 0) {
-                    FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
-                    BufferedWriter bufferWriter = new BufferedWriter(writer1);
-                    bufferWriter.write((trackfromplaylist + "\n"));
-                    bufferWriter.close();
+                    if (flag1 == 0) {
+                        FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                        BufferedWriter bufferWriter = new BufferedWriter(writerh);
+                        bufferWriter.write(trackfromplaylist + "\n");
+                        bufferWriter.close();
+                    }
                 }
                 String directory = playlist_import_dir.toString().replace("\\", "/");
                 ArrayList array = new ArrayList<String>(List.of(directory.split("/")));
@@ -708,6 +712,4 @@ public class HelloController implements Initializable {
             }
         });
     }
-
-
 }
