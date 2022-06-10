@@ -1,6 +1,7 @@
 package com.example.mp3player;
 
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -18,6 +19,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
 
@@ -40,12 +42,14 @@ public class HelloController implements Initializable {
     private boolean isMuted = false;
     private boolean isPlaying = true;
     private boolean wasPlaying = false;
-    private double volPerc;
+    private double volPerc = 10;
     private int prevVol;
+    private int savedVol = 0;
     private double totalTime;
     private double currentTime;
     private int flag1 = 0;
     private boolean shuffle_on = false;
+    private boolean prevShuff = false;
     private boolean repeat_on = false;
     private int songNumber;
     private static String current_playlist = "allTracks";
@@ -142,10 +146,13 @@ public class HelloController implements Initializable {
             String name = f.getName();
             name = name.replaceAll("%20", " ");
             name = name.replaceAll(".mp3", "");
-            Boolean match = name.matches("^[A-Za-z0-9 -!.#]{1,40} - [A-Za-z0-9 -!.#]{1,40}$");
+            Boolean match = name.matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40} - [ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}$");
             if (match) {
-                String songparts[] = name.split("-");
-                songAuthor.setText(songparts[0]);
+                String songparts[] = name.split(" - ");
+                String regex = " - " + songparts[1];
+                String sb = name.replaceAll(regex, "");
+                System.out.println(sb);
+                songAuthor.setText(sb);
                 songName.setText(songparts[1]);
             } else {
                 songAuthor.setVisible(false);
@@ -189,8 +196,6 @@ public class HelloController implements Initializable {
                 Media media = new Media(filePath);
                 mediaPlayer = new MediaPlayer(media);
                 setIcons();
-                volumeSlider.setValue(10.0);
-                mediaPlayer.setVolume(10.0 * 0.01);
                 songLabel.setText(name);
                 songAnimatedLabel.setText(name + " ");
                 playMedia();
@@ -243,8 +248,7 @@ public class HelloController implements Initializable {
                             bufferWriter.write(trackfromplaylist + "\n");
                             bufferWriter.close();
                         }
-                    }
-                    else{
+                    } else {
                         FileWriter writerh = new FileWriter("C:\\Playlists\\allTracks.txt", true);
                         BufferedWriter bufferWriter = new BufferedWriter(writerh);
                         bufferWriter.write(trackfromplaylist + "\n");
@@ -272,17 +276,6 @@ public class HelloController implements Initializable {
             refreshPlaylists();
         } catch (RuntimeException e) {
             System.out.println("incorrect input");
-        }
-    }
-
-    @FXML
-    void activateShuffle() {
-        if (shuffle_on) {
-            shuffle_on = false;
-            shuffleMedia.setGraphic(iconShuffle);
-        } else {
-            shuffle_on = true;
-            shuffleMedia.setGraphic(iconActiveShuffle);
         }
     }
 
@@ -373,7 +366,7 @@ public class HelloController implements Initializable {
 
     private void forwardMedia() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
-        if (shuffle_on = false) {
+        if (shuffle_on == false) {
             if (songNumber < lines.size() - 1) {
                 mediaPlayer.stop();
                 mediaPlayer.seek(Duration.millis(0));
@@ -387,40 +380,52 @@ public class HelloController implements Initializable {
                 playPlaylist();
                 songList.getSelectionModel().select(songNumber);
             }
-        }
-        else{
+        } else {
             mediaPlayer.stop();
             mediaPlayer.seek(Duration.millis(0));
-            songNumber =  getRandom(0, lines.size()-1);
+            songNumber = getRandom(1, lines.size() - 1);
+            songList.getSelectionModel().select(songNumber);
+            playPlaylist();
         }
     }
 
     private void previousMedia() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
-        if (songNumber > 0) {
-            mediaPlayer.stop();
-            mediaPlayer.seek(Duration.millis(0));
-            songNumber--;
-            playPlaylist();
+        if (shuffle_on == false) {
+            if (songNumber > 0) {
+                mediaPlayer.stop();
+                mediaPlayer.seek(Duration.millis(0));
+                songNumber--;
+                playPlaylist();
+            } else {
+                mediaPlayer.stop();
+                mediaPlayer.seek(Duration.millis(0));
+                songNumber = lines.size() - 1;
+                playPlaylist();
+            }
         } else {
             mediaPlayer.stop();
             mediaPlayer.seek(Duration.millis(0));
-            songNumber = lines.size() - 1;
+            songNumber = getRandom(1, lines.size() - 1);
+            songList.getSelectionModel().select(songNumber);
             playPlaylist();
         }
     }
+
     public static int getRandom(int min, int max) throws IOException {
-        int x = (int) ((Math.random()*((max-min)+1))+min);
+        int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
 
-    private void playMedia() throws NullPointerException{
+    private void playMedia() throws NullPointerException {
         labelButtonPPR.setGraphic(iconPause);
         System.out.println("Воспроизведение");
         beginTimer();
         mediaPlayer.play();
         isPlaying = true;
+        savepar();
         mediaplfer();
+        wasPlaying = true;
     }
 
     private void pauseMedia() {
@@ -435,6 +440,34 @@ public class HelloController implements Initializable {
         current_playlist = new_name;
     }
 
+    private void savepar() {
+        if (wasPlaying) {
+            shuffle_on = prevShuff;
+            volumeSlider.setValue(savedVol);
+            mediaPlayer.setVolume(savedVol * 0.01);
+            if (volPerc == 0) {
+                volumeOff.setGraphic(iconMute);
+            } else {
+                volumeOff.setGraphic(iconVolume);
+            }
+            if (shuffle_on == true) {
+                shuffleMedia.setGraphic(iconActiveShuffle);
+            } else {
+                shuffleMedia.setGraphic(iconShuffle);
+            }
+        } else {
+            shuffle_on = false;
+            volumeSlider.setValue(10.0);
+            mediaPlayer.setVolume(10.0 * 0.01);
+            savedVol = 10;
+            if (volPerc == 0) {
+                volumeOff.setGraphic(iconMute);
+            } else {
+                volumeOff.setGraphic(iconVolume);
+            }
+        }
+    }
+
     private void playPlaylist() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
         String filePath = lines.get(songNumber);
@@ -444,10 +477,13 @@ public class HelloController implements Initializable {
         media = new Media(filepath.toString());
         name = name.replaceAll("%20", " ");
         name = name.replaceAll(".mp3", "");
-        Boolean match = name.matches("^[A-Za-z0-9-!.#@$]{1,40} - [A-Za-z0-9-!.#@$]{1,40}$");
+        Boolean match = name.matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40} - [ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}$");
         if (match) {
-            String songparts[] = name.split("-");
-            songAuthor.setText(songparts[0]);
+            String songparts[] = name.split(" - ");
+            String regex = " - " + songparts[1];
+            String sb = name.replaceAll(regex, "");
+            System.out.println(sb);
+            songAuthor.setText(sb);
             songName.setText(songparts[1]);
         } else {
             songAuthor.setVisible(false);
@@ -456,12 +492,9 @@ public class HelloController implements Initializable {
         mediaPlayer = new MediaPlayer(media);
         setIcons();
         bottomMenu.setVisible(true);
-        volumeSlider.setValue(10.0);
-        mediaPlayer.setVolume(10.0 * 0.01);
         songLabel.setText(name);
         songAnimatedLabel.setText(name + " ");
         playMedia();
-        wasPlaying = true;
         hboxTime.getChildren().remove(labelRemainingTime);
         hboxVolume.getChildren().remove(volumeSlider);
         hboxVolume.getChildren().remove(labelVolume);
@@ -498,6 +531,7 @@ public class HelloController implements Initializable {
         songList.getItems().clear();
         songList.getItems().addAll(lines);
     }
+
 
     public String getTime(Duration time) {
 
@@ -603,7 +637,7 @@ public class HelloController implements Initializable {
         iconShuffle.setFitHeight(22);
 
         Image imageActiveShuffle = new Image(new File("src/resources/active-shuffle-btn.png").toURI().toString());
-        iconActiveShuffle = new ImageView(imageShuffle);
+        iconActiveShuffle = new ImageView(imageActiveShuffle);
         iconActiveShuffle.setFitWidth(22);
         iconActiveShuffle.setFitHeight(22);
 
@@ -682,6 +716,21 @@ public class HelloController implements Initializable {
                 }
             }
         });
+        shuffleMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (shuffle_on == true) {
+                    shuffle_on = false;
+                    System.out.println("Шафл выключен");
+                    shuffleMedia.setGraphic(iconShuffle);
+                } else {
+                    shuffle_on = true;
+                    System.out.println("Шафл включен");
+                    shuffleMedia.setGraphic(iconActiveShuffle);
+                }
+                prevShuff = shuffle_on;
+            }
+        });
         songList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -717,7 +766,7 @@ public class HelloController implements Initializable {
                     songSlider.setValue(newValue.toSeconds());
                 }
             });
-            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>()  {
+            mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldTime, Duration newTime) {
                     bindCurrentTimeLabel();
@@ -816,6 +865,7 @@ public class HelloController implements Initializable {
                         isMuted = false;
                         volumeOff.setGraphic(iconVolume);
                     }
+                    savedVol = result;
                 }
             });
 
