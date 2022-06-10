@@ -1,7 +1,6 @@
 package com.example.mp3player;
 
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -19,7 +18,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
-import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
 
@@ -151,22 +149,18 @@ public class HelloController implements Initializable {
                 String songparts[] = name.split(" - ");
                 String regex = " - " + songparts[1];
                 String sb = name.replaceAll(regex, "");
-                System.out.println(sb);
                 songAuthor.setText(sb);
                 songName.setText(songparts[1]);
             } else {
                 songAuthor.setVisible(false);
                 songName.setText(name);
             }
-            System.out.println(name);
             current_playlist = "allTracks";
 
             String track = filePath.replaceAll("file:/", "");
             track = track.replaceAll("%20", " ");
-            System.out.println(track);
             flag1 = 0;
             List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-            System.out.println(lines.size());
             if (lines.size() != 0) {
                 for (int i = 0; i < lines.size(); i++) {
                     if (lines.get(i).equals(track)) {
@@ -235,7 +229,6 @@ public class HelloController implements Initializable {
                     trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
                     trackfromplaylist = trackfromplaylist.replace("\\", "/");
                     List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-                    System.out.println(trackfromplaylist);
                     if (lines.size() != 0) {
                         for (int i = 0; i < lines.size(); i++) {
                             if (lines.get(i).equals(trackfromplaylist)) {
@@ -289,17 +282,14 @@ public class HelloController implements Initializable {
             String filePath = fileChooser.showOpenDialog(null).toURI().toString();
             filePath = filePath.replaceAll("file:/", "");
             File f = new File(filePath);
-            System.out.println(f);
             copyFileToDirectory(f, main_directory);
             List<String> parts = FileUtils.readLines(new File(filePath), "utf-8");
-            System.out.println(parts);
             List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
             for (int i = 0; i < parts.size(); i++) {
                 String trackfromplaylist = parts.get(i);
 
                 trackfromplaylist = trackfromplaylist.replaceAll("%20", " ");
                 trackfromplaylist = trackfromplaylist.replace("\\", "/");
-                System.out.println(trackfromplaylist);
                 if (lines.size() != 0) {
                     for (int g = 0; g < lines.size(); g++) {
                         if (lines.get(g).equals(trackfromplaylist)) {
@@ -482,7 +472,7 @@ public class HelloController implements Initializable {
             String songparts[] = name.split(" - ");
             String regex = " - " + songparts[1];
             String sb = name.replaceAll(regex, "");
-            System.out.println(sb);
+            songAuthor.setVisible(true);
             songAuthor.setText(sb);
             songName.setText(songparts[1]);
         } else {
@@ -494,11 +484,11 @@ public class HelloController implements Initializable {
         bottomMenu.setVisible(true);
         songLabel.setText(name);
         songAnimatedLabel.setText(name + " ");
-        playMedia();
         hboxTime.getChildren().remove(labelRemainingTime);
         hboxVolume.getChildren().remove(volumeSlider);
         hboxVolume.getChildren().remove(labelVolume);
         animatedLabel.getChildren().remove(songAnimatedLabel);
+        playMedia();
     }
 
     private void refreshPlaylists() {
@@ -719,7 +709,7 @@ public class HelloController implements Initializable {
         shuffleMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if (shuffle_on == true) {
+                if (shuffle_on) {
                     shuffle_on = false;
                     System.out.println("Шафл выключен");
                     shuffleMedia.setGraphic(iconShuffle);
@@ -758,8 +748,14 @@ public class HelloController implements Initializable {
                     songSlider.setMax(total.toSeconds());
                 }
             });
+            mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
+                @Override
+                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    songSlider.setMax(newDuration.toSeconds());
+                    labelTotalTime.setText(getTime(newDuration));
 
-
+                }
+            });
             mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldValue, Duration newValue) {
@@ -795,14 +791,6 @@ public class HelloController implements Initializable {
                     String parts[] = currentlabel.split("");
                     String changedlabel = currentlabel.substring(1, currentlabel.length()) + parts[0];
                     songAnimatedLabel.setText(changedlabel);
-                }
-            });
-            mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
-                @Override
-                public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
-                    songSlider.setMax(newDuration.toSeconds());
-                    labelTotalTime.setText(getTime(newDuration));
-
                 }
             });
             animatedLabel.setOnMouseEntered(new EventHandler<MouseEvent>() {
