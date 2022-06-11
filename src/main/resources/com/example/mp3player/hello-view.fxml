@@ -37,6 +37,11 @@
                <Font size="15.0" />
             </font>
          </Button>
+         <Button fx:id="switchtovideo" alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" mnemonicParsing="false" onAction="#switchtovideo" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="1" textFill="#e91de4">
+            <font>
+               <Font size="15.0" />
+            </font>
+         </Button>
         </children>
     </AnchorPane>
     <AnchorPane fx:id="bottomMenu" layoutY="313.0" prefHeight="74.0" prefWidth="662.0" style="-fx-border-color: #E91DE4; -fx-border-width: 2;" styleClass="bottom_bar_color1" stylesheets="@style1.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

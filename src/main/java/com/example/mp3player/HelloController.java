@@ -7,7 +7,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,8 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
+import javafx.stage.*;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
 
@@ -129,6 +131,8 @@ public class HelloController implements Initializable {
     private Label songAuthor;
     @FXML
     private HBox songHbox;
+    @FXML
+    private Button switchtovideo;
 
 
     @FXML
@@ -209,6 +213,7 @@ public class HelloController implements Initializable {
             System.out.println("incorrect input");
         }
     }
+    
 
     @FXML
     void importDirectory(ActionEvent event) throws IOException {
@@ -669,6 +674,7 @@ public class HelloController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
         playlistList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
