@@ -1,0 +1,69 @@
+<component name="libraryTable">
+  <library name="mshade-247-one-0.1-sources">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/mrm/repository/MSHADE-247/mshade-247-one-0.1-sources.jar" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-105/bundle/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-284_shadeTestJar/api/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-284_shadeTestJar/api/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-284_shadeTestJar/impl/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-284_shadeTestJar/impl/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-285_createTestSourcesJar/api/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-285_createTestSourcesJar/api/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-285_createTestSourcesJar/impl/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-285_createTestSourcesJar/impl/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-313_minimized-services/dependency-service/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-313_minimized-services/test/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-313_minimized-services/unused-service/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-313_minimized-services/used-service/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-316/dependency/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-316/test/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/api/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/api/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/impl/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/impl/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/uber-user/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/uber-user/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/uber/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-340_shadedTestJarArtifactAttached/uber/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-36-inject-dep-reduced-pom-in-final/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-390-sisu-index/one/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/MSHADE-390-sisu-index/two/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/component-descriptor-relocation/app/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/component-descriptor-relocation/lib/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/duplicate-classes-with-reloc/libs/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/duplicate-classes-without-reloc/libs/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/implicit-inclusion-of-project-artifact/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/mini-jar-jdk11+/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/mini-jar-package-info/jar-with-package-info/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/mini-jar-package-info/test/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/mini-jar-respect-includes/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/mini-jar/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/plugin-descriptor-relocation/app/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/plugin-descriptor-relocation/lib/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/project-with-reactors-included/one/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/project-with-reactors-included/one/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/project-with-reactors-included/two/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/project-with-reactors-included/two/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-abs-resource-path-exclude/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-abs-resource-path/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-and-mini/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-anno/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-class-from-string-pool/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/reloc-enum-ref-from-anno/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/rerun-with-reloc/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/rerun-without-reloc/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/shadePomDependency/testModule/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/shading-with-java-8-sources/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/shading-with-release-sources/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/users-shader-impl/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/it/projects/users-shader-impl/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/test/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/test/projects/test-artifact/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/test/projects/test-project/src/main/java" />
+      <root url="jar://V:/Downloads/maven-shade-plugin-3.3.0-source-release.zip!/maven-shade-plugin-3.3.0/src/test/projects/test-project/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
