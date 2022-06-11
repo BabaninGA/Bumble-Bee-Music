@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.*;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
@@ -42,6 +43,7 @@ public class HelloController implements Initializable {
     private boolean isMuted = false;
     private boolean isPlaying = true;
     private boolean wasPlaying = false;
+    private boolean videoWasPlaying = false;
     private double volPerc = 10;
     private int prevVol;
     private int savedVol = 0;
@@ -69,6 +71,8 @@ public class HelloController implements Initializable {
     private ImageView iconMinus;
     private ImageView iconActiveShuffle;
 
+    @FXML
+    private MediaView mediaView;
     @FXML
     private Label shuffleMedia;
     @FXML
@@ -140,80 +144,110 @@ public class HelloController implements Initializable {
         try {
             System.out.println("Добавить файл");
             FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3", "*.mp3");
+            FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("select mp3 or mp4", "*.mp3", "*.mp4");
             fileChooser.getExtensionFilters().add(filter);
             String filePath = fileChooser.showOpenDialog(null).toURI().toString();
             File f = new File(filePath);
-            System.out.println(filePath);
-            String name = f.getName();
-            name = name.replaceAll("%20", " ");
-            name = name.replaceAll(".mp3", "");
-            Boolean match = name.matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40} - [ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}$");
-            if (match) {
-                String songparts[] = name.split(" - ");
-                String regex = " - " + songparts[1];
-                String sb = name.replaceAll(regex, "");
-                songAuthor.setText(sb);
-                songName.setText(songparts[1]);
-            } else {
-                songAuthor.setVisible(false);
-                songName.setText(name);
-            }
-            current_playlist = "allTracks";
-
-            String track = filePath.replaceAll("file:/", "");
-            track = track.replaceAll("%20", " ");
-            flag1 = 0;
-            List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
-            if (lines.size() != 0) {
-                for (int i = 0; i < lines.size(); i++) {
-                    if (lines.get(i).equals(track)) {
-                        flag1++;
-                    }
+            if (f.getName().matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}[.mp3]$")) {
+                System.out.println(filePath);
+                String name = f.getName();
+                name = name.replaceAll("%20", " ");
+                name = name.replaceAll(".mp3", "");
+                Boolean match = name.matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40} - [ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}$");
+                if (match) {
+                    String songparts[] = name.split(" - ");
+                    String regex = " - " + songparts[1];
+                    String sb = name.replaceAll(regex, "");
+                    songAuthor.setText(sb);
+                    songName.setText(songparts[1]);
+                } else {
+                    songAuthor.setVisible(false);
+                    songName.setText(name);
                 }
-                if (flag1 == 0) {
+                current_playlist = "allTracks";
+
+                String track = filePath.replaceAll("file:/", "");
+                track = track.replaceAll("%20", " ");
+                flag1 = 0;
+                List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\allTracks.txt"), "utf-8");
+                if (lines.size() != 0) {
+                    for (int i = 0; i < lines.size(); i++) {
+                        if (lines.get(i).equals(track)) {
+                            flag1++;
+                        }
+                    }
+                    if (flag1 == 0) {
+                        FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
+                        BufferedWriter bufferWriter = new BufferedWriter(writer1);
+                        bufferWriter.write(track + "\n");
+                        bufferWriter.close();
+                    }
+                } else {
                     FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
                     BufferedWriter bufferWriter = new BufferedWriter(writer1);
                     bufferWriter.write(track + "\n");
                     bufferWriter.close();
                 }
-            } else {
-                FileWriter writer1 = new FileWriter("C:\\Playlists\\allTracks.txt", true);
-                BufferedWriter bufferWriter = new BufferedWriter(writer1);
-                bufferWriter.write(track + "\n");
-                bufferWriter.close();
+
+                if (wasPlaying) {
+
+                    mediaPlayer.stop();
+                }
+
+
+                if (filePath != null) {
+                    Media media = new Media(filePath);
+                    mediaPlayer = new MediaPlayer(media);
+                    setIcons();
+                    songLabel.setText(name);
+                    songAnimatedLabel.setText(name + " ");
+                    playMedia();
+                    wasPlaying = true;
+
+
+                    bottomMenu.setVisible(true);
+
+                    hboxTime.getChildren().remove(labelRemainingTime);
+                    hboxVolume.getChildren().remove(volumeSlider);
+                    hboxVolume.getChildren().remove(labelVolume);
+                    animatedLabel.getChildren().remove(songAnimatedLabel);
+                    refreshSongs();
+                    refreshPlaylists();
+                }
             }
+            else{
+                if (wasPlaying) {
 
-            if (wasPlaying) {
-
-                mediaPlayer.stop();
-            }
-
-
-            if (filePath != null) {
+                    mediaPlayer.stop();
+                }
                 Media media = new Media(filePath);
                 mediaPlayer = new MediaPlayer(media);
-                setIcons();
-                songLabel.setText(name);
-                songAnimatedLabel.setText(name + " ");
                 playMedia();
-                wasPlaying = true;
-
-
+                mediaView.setMediaPlayer(mediaPlayer);
+                setIcons();
+                String name = f.getName();
+                songLabel.setText(name);
+                name = name.replaceAll("%20", " ");
+                name = name.replaceAll(".mp4", "");
+                songAnimatedLabel.setText(name + " ");
                 bottomMenu.setVisible(true);
+                songList.setVisible(false);
+                songList.setDisable(true);
+                shuffleMedia.setDisable(true);
+                previousSongButton.setDisable(true);
+                nextSongButton.setDisable(true);
+                videoWasPlaying = true;
 
                 hboxTime.getChildren().remove(labelRemainingTime);
                 hboxVolume.getChildren().remove(volumeSlider);
                 hboxVolume.getChildren().remove(labelVolume);
                 animatedLabel.getChildren().remove(songAnimatedLabel);
-                refreshSongs();
-                refreshPlaylists();
             }
         } catch (RuntimeException e) {
             System.out.println("incorrect input");
         }
     }
-    
+
 
     @FXML
     void importDirectory(ActionEvent event) throws IOException {
@@ -683,6 +717,21 @@ public class HelloController implements Initializable {
                 try {
                     refreshSongs();
                     refreshPlaylists();
+                    bottomMenu.setVisible(true);
+                    songList.setVisible(true);
+                    songList.setDisable(false);
+                    shuffleMedia.setDisable(false);
+                    previousSongButton.setDisable(false);
+                    nextSongButton.setDisable(false);
+                    if (videoWasPlaying){
+                        mediaView.setVisible(false);
+                    }
+                    if (isPlaying) {
+
+                        mediaPlayer.stop();
+                    }
+                    songAuthor.setVisible(true);
+                    songName.setVisible(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

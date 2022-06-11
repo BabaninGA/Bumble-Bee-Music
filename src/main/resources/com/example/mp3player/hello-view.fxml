@@ -8,6 +8,7 @@
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="522.0" prefWidth="768.0" style="-fx-border-color: #E91DE4; -fx-border-width: 0.4;" styleClass="bottom_bar_color" stylesheets="@style1.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.mp3player.HelloController">
@@ -33,11 +34,6 @@
             </effect>
          </ListView>
          <Button fx:id="exportPlaylist" alignment="CENTER" contentDisplay="CENTER" layoutX="18.0" layoutY="184.0" mnemonicParsing="false" onAction="#exportPlaylist" prefHeight="33.0" prefWidth="153.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 15; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="Экспорт плейлист" textFill="#e91de4" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="184.0">
-            <font>
-               <Font size="15.0" />
-            </font>
-         </Button>
-         <Button fx:id="switchtovideo" alignment="CENTER" contentDisplay="CENTER" layoutX="33.0" mnemonicParsing="false" onAction="#switchtovideo" prefHeight="25.0" style="-fx-background-color: #0B1E3E; -fx-background-radius: 1215; -fx-border-color: #E91DE4; -fx-border-radius: 15; -fx-border-width: 1;" text="1" textFill="#e91de4">
             <font>
                <Font size="15.0" />
             </font>
@@ -94,12 +90,12 @@
          </HBox>
         </children>
     </AnchorPane>
-   <Label fx:id="songName" layoutX="486.0" layoutY="27.0" prefHeight="47.0" prefWidth="285.0" text="Song" textFill="WHITE" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="27.0">
+   <Label fx:id="songName" layoutX="486.0" layoutY="27.0" prefHeight="47.0" prefWidth="285.0" text="Song" textFill="WHITE" visible="false" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="27.0">
       <font>
          <Font name="Segoe UI Semibold" size="32.0" />
       </font>
    </Label>
-   <Label fx:id="songAuthor" layoutX="486.0" layoutY="74.0" prefHeight="47.0" prefWidth="285.0" text="Author" textFill="WHITE" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="74.0">
+   <Label fx:id="songAuthor" layoutX="486.0" layoutY="74.0" prefHeight="47.0" prefWidth="285.0" text="Author" textFill="WHITE" visible="false" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="74.0">
       <font>
          <Font name="Segoe UI Semibold" size="32.0" />
       </font>
@@ -127,4 +123,5 @@
          </Label>
       </children>
    </HBox>
+   <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" layoutX="375.0" layoutY="121.0" />
 </AnchorPane>
