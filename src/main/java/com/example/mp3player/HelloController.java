@@ -221,35 +221,35 @@ public class HelloController implements Initializable {
                     refreshPlaylists();
                 }
             }
-            else{
-                if (wasPlaying) {
-
-                    mediaPlayer.stop();
-                }
-                Media media = new Media(filePath);
-                mediaPlayer = new MediaPlayer(media);
-                mediaView.setMediaPlayer(mediaPlayer);
-                playMedia();
-                setIcons();
-                String name = f.getName();
-                name = name.replaceAll("%20", " ");
-                name = name.replaceAll(".mp4", "");
-                songLabel.setText(name);
-                songAnimatedLabel.setText(name + " ");
-                bottomMenu.setVisible(true);
-                songList.setVisible(false);
-                songList.setDisable(true);
-                shuffleMedia.setDisable(true);
-                previousSongButton.setDisable(true);
-                nextSongButton.setDisable(true);
-                videoWasPlaying = true;
-                mediaView.setVisible(true);
-
-                hboxTime.getChildren().remove(labelRemainingTime);
-                hboxVolume.getChildren().remove(volumeSlider);
-                hboxVolume.getChildren().remove(labelVolume);
-                animatedLabel.getChildren().remove(songAnimatedLabel);
-            }
+//            else{
+//                if (wasPlaying) {
+//
+//                    mediaPlayer.stop();
+//                }
+//                Media media = new Media(filePath);
+//                mediaPlayer = new MediaPlayer(media);
+//                mediaView.setMediaPlayer(mediaPlayer);
+//                playMedia();
+//                setIcons();
+//                String name = f.getName();
+//                name = name.replaceAll("%20", " ");
+//                name = name.replaceAll(".mp4", "");
+//                songLabel.setText(name);
+//                songAnimatedLabel.setText(name + " ");
+//                bottomMenu.setVisible(true);
+//                songList.setVisible(false);
+//                songList.setDisable(true);
+//                shuffleMedia.setDisable(true);
+//                previousSongButton.setDisable(true);
+//                nextSongButton.setDisable(true);
+//                videoWasPlaying = true;
+//                mediaView.setVisible(true);
+//
+//                hboxTime.getChildren().remove(labelRemainingTime);
+//                hboxVolume.getChildren().remove(volumeSlider);
+//                hboxVolume.getChildren().remove(labelVolume);
+//                animatedLabel.getChildren().remove(songAnimatedLabel);
+//            }
         } catch (RuntimeException e) {
             System.out.println("incorrect input");
         }
@@ -699,6 +699,9 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        if (!main_directory.exists()) {
+            main_directory.mkdir();
+        }
         File createFile = new File("C:\\Playlists\\allTracks.txt");
         if (!createFile.exists())
             try {
@@ -706,9 +709,6 @@ public class HelloController implements Initializable {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        if (!main_directory.exists()) {
-            main_directory.mkdir();
-        }
         refreshPlaylists();
         try {
             refreshSongs();

@@ -125,12 +125,12 @@
          </Label>
       </children>
    </HBox>
-   <Pane fx:id="mediaPane" layoutX="181.0" layoutY="1.0" prefHeight="446.0" prefWidth="587.0" AnchorPane.bottomAnchor="74.60000000000002" AnchorPane.leftAnchor="180.60000000000002" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
-      <children>
-         <MediaView fx:id="mediaView" fitHeight="${mediaPane.height}" fitWidth="${mediaPane.width}" layoutX="1.0">
-            <viewport>
-               <Rectangle2D />
-            </viewport></MediaView>
-      </children>
-   </Pane>
+<!--   <Pane fx:id="mediaPane" disable="true" layoutX="181.0" layoutY="1.0" prefHeight="446.0" prefWidth="587.0" visible="false" AnchorPane.bottomAnchor="74.60000000000002" AnchorPane.leftAnchor="180.60000000000002" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">-->
+<!--      <children>-->
+<!--         <MediaView fx:id="mediaView" fitHeight="${mediaPane.height}" fitWidth="${mediaPane.width}" layoutX="1.0">-->
+<!--            <viewport>-->
+<!--               <Rectangle2D />-->
+<!--            </viewport></MediaView>-->
+<!--      </children>-->
+<!--   </Pane>-->
 </AnchorPane>
