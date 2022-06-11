@@ -92,21 +92,6 @@
          </HBox>
         </children>
     </AnchorPane>
-   <Label fx:id="songName" layoutX="486.0" layoutY="27.0" prefHeight="47.0" prefWidth="285.0" text="Song" textFill="WHITE" visible="false" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="27.0">
-      <font>
-         <Font name="Segoe UI Semibold" size="32.0" />
-      </font>
-   </Label>
-   <Label fx:id="songAuthor" layoutX="486.0" layoutY="74.0" prefHeight="47.0" prefWidth="285.0" text="Author" textFill="WHITE" visible="false" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="74.0">
-      <font>
-         <Font name="Segoe UI Semibold" size="32.0" />
-      </font>
-   </Label>
-   <ListView fx:id="songList" fixedCellSize="30.0" layoutX="181.4" layoutY="235.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="213.0" prefWidth="588.0" style="-fx-background-color: transparent;" styleClass="scrollBar" stylesheets="@style1.css" AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="235.0">
-      <effect>
-         <ColorAdjust />
-      </effect>
-   </ListView>
    <HBox fx:id="songHbox" layoutX="284.0" layoutY="33.0" prefHeight="25.0" prefWidth="173.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
       <children>
             <Label fx:id="songLabel" alignment="TOP_LEFT" prefHeight="25.0" prefWidth="173.0" textFill="WHITE">
@@ -125,11 +110,27 @@
          </Label>
       </children>
    </HBox>
-   <Pane fx:id="mediaPane" layoutX="181.0" layoutY="1.0" prefHeight="446.0" prefWidth="587.0" AnchorPane.bottomAnchor="74.60000000000002" AnchorPane.leftAnchor="180.60000000000002" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="1.0">
+   <Pane fx:id="mediaPane" layoutX="181.40000000000003" layoutY="1.7999999999999998" prefHeight="446.0" prefWidth="587.0" AnchorPane.bottomAnchor="75.39999999999992" AnchorPane.leftAnchor="181.40000000000003" AnchorPane.rightAnchor="0.7999999999999545" AnchorPane.topAnchor="1.7999999999999998">
       <children>
-         <MediaView
-                 fx:id="mediaView" fitHeight="${mediaPane.height}" fitWidth="${mediaPane.width}" layoutX="1.0">
-         </MediaView>
+         <Label fx:id="songName" layoutX="10.0" layoutY="65.0" prefHeight="47.0" prefWidth="563.0" text="Song" textFill="WHITE" visible="false">
+            <font>
+               <Font name="Segoe UI Semibold" size="32.0" />
+            </font>
+         </Label>
+         <Label fx:id="songAuthor" layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="563.0" text="Author" textFill="WHITE" visible="false">
+            <font>
+               <Font name="Segoe UI Semibold" size="32.0" />
+            </font>
+         </Label>
+         <ListView fx:id="songList" fixedCellSize="30.0" layoutX="-1.0" layoutY="233.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="213.0" prefWidth="588.0" style="-fx-background-color: transparent;" styleClass="scrollBar" stylesheets="@style1.css">
+            <effect>
+               <ColorAdjust />
+            </effect>
+         </ListView>
+         <MediaView fx:id="mediaView" disable="true" fitHeight="${mediaPane.height}" fitWidth="${mediaPane.width}" layoutX="1.0" visible="false">
+            <viewport>
+               <Rectangle2D />
+            </viewport></MediaView>
       </children>
    </Pane>
 </AnchorPane>

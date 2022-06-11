@@ -243,6 +243,7 @@ public class HelloController implements Initializable {
                 previousSongButton.setDisable(true);
                 nextSongButton.setDisable(true);
                 videoWasPlaying = true;
+                mediaView.setVisible(true);
 
                 hboxTime.getChildren().remove(labelRemainingTime);
                 hboxVolume.getChildren().remove(volumeSlider);
@@ -814,6 +815,8 @@ public class HelloController implements Initializable {
             mediaPlayer.totalDurationProperty().addListener(new ChangeListener<Duration>() {
                 @Override
                 public void changed(ObservableValue<? extends Duration> observableValue, Duration oldDuration, Duration newDuration) {
+                    songAuthor.setVisible(true);
+                    songName.setVisible(true);
                     songSlider.setMax(newDuration.toSeconds());
                     labelTotalTime.setText(getTime(newDuration));
 
