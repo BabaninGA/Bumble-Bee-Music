@@ -1,7 +1,9 @@
 package com.example.mp3player;
 
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -9,6 +11,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Bounds;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -17,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -97,6 +101,8 @@ public class HelloController implements Initializable {
     private AnchorPane mainWindow;
     @FXML
     private AnchorPane sideMenu;
+    @FXML
+    private Pane mediaPane;
     @FXML
     private Label labelCurrentTime;
     @FXML
@@ -222,13 +228,13 @@ public class HelloController implements Initializable {
                 }
                 Media media = new Media(filePath);
                 mediaPlayer = new MediaPlayer(media);
-                playMedia();
                 mediaView.setMediaPlayer(mediaPlayer);
+                playMedia();
                 setIcons();
                 String name = f.getName();
-                songLabel.setText(name);
                 name = name.replaceAll("%20", " ");
                 name = name.replaceAll(".mp4", "");
+                songLabel.setText(name);
                 songAnimatedLabel.setText(name + " ");
                 bottomMenu.setVisible(true);
                 songList.setVisible(false);
@@ -793,6 +799,8 @@ public class HelloController implements Initializable {
             }
         });
     }
+
+
 
     public void mediaplfer() throws NullPointerException {
         if (isPlaying) {
