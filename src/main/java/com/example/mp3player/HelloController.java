@@ -63,6 +63,7 @@ public class HelloController implements Initializable {
     private ArrayList<String> playlist_names = new ArrayList<>();
     private File main_directory = new File("C:\\Playlists");
 
+
     private ImageView iconMute;
     private ImageView iconVolume;
     private ImageView iconPlay;
@@ -75,6 +76,7 @@ public class HelloController implements Initializable {
     private ImageView iconMinus;
     private ImageView iconActiveShuffle;
 
+    //Объявление элементов интерфеса
     @FXML
     private MediaView mediaView;
     @FXML
@@ -145,6 +147,7 @@ public class HelloController implements Initializable {
     private Button switchtovideo;
 
 
+    //Импорт отдельного файла mp3 с хранилища компьютера в плеер
     @FXML
     private void addMedia(ActionEvent event) throws IOException {
         try {
@@ -256,6 +259,7 @@ public class HelloController implements Initializable {
     }
 
 
+    //Импорто папки с файлами mp3 с хранилища компьютера в плеер
     @FXML
     void importDirectory(ActionEvent event) throws IOException {
         try {
@@ -318,6 +322,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Импорт плейлиста с хранилища компьютера в плеер
     @FXML
     private void importPlaylist() throws IOException {
         try {
@@ -358,6 +363,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Эспорт плейлиста на хранилище компьютера из плеера
     @FXML
     private void exportPlaylist() throws IOException {
         try {
@@ -373,6 +379,7 @@ public class HelloController implements Initializable {
     }
 
 
+    //Отключение звкуа
     private void volumeOff() {
         volumeOff.setGraphic(iconMute);
         volPerc = volumeSlider.getValue();
@@ -383,6 +390,7 @@ public class HelloController implements Initializable {
         isMuted = true;
     }
 
+    //Включение звука
     private void volumeOn() {
         volumeSlider.setValue(prevVol);
         volumeOff.setGraphic(iconVolume);
@@ -390,6 +398,7 @@ public class HelloController implements Initializable {
         isMuted = false;
     }
 
+    //Воспроизведение трека с начала
     @FXML
     private void resetMedia() {
         System.out.println("Запуск файла с самого начала");
@@ -400,6 +409,7 @@ public class HelloController implements Initializable {
         playMedia();
     }
 
+    //Перемотка трека на 10 секунд вперёд
     private void forwardMedia() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
         if (shuffle_on == false) {
@@ -425,6 +435,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Перемотка трека на 10 секунд назад
     private void previousMedia() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
         if (shuffle_on == false) {
@@ -448,11 +459,13 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Возврашение случайного целого числа из заданного диапазоны
     public static int getRandom(int min, int max) throws IOException {
         int x = (int) ((Math.random() * ((max - min) + 1)) + min);
         return x;
     }
 
+    //Запуск воспроизведения трека
     private void playMedia() throws NullPointerException {
         labelButtonPPR.setGraphic(iconPause);
         System.out.println("Воспроизведение");
@@ -464,6 +477,7 @@ public class HelloController implements Initializable {
         wasPlaying = true;
     }
 
+    //Остановка воспроизведения трека
     private void pauseMedia() {
         labelButtonPPR.setGraphic(iconPlay);
         System.out.println("Пауза");
@@ -472,10 +486,12 @@ public class HelloController implements Initializable {
         isPlaying = false;
     }
 
+    //Переключение между плейлистами
     private void changeCurrentPlaylist(String new_name) {
         current_playlist = new_name;
     }
 
+    //Сохранение параметров воспроизведения трека
     private void savepar() {
         if (wasPlaying) {
             shuffle_on = prevShuff;
@@ -504,6 +520,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Запуск воспроизведения плейлиста
     private void playPlaylist() throws IOException {
         List<String> lines = FileUtils.readLines(new File("C:\\Playlists\\" + current_playlist + ".txt"), "utf-8");
         String filePath = lines.get(songNumber);
@@ -537,6 +554,7 @@ public class HelloController implements Initializable {
         playMedia();
     }
 
+    //Обновление списка плейлистов
     private void refreshPlaylists() {
         int playlist_amount = Objects.requireNonNull(main_directory.listFiles()).length;
         if (playlist_amount > 0) {
@@ -552,6 +570,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    //Обновление списка треков
     private void refreshSongs() throws IOException {
         Scanner s = new Scanner(new File("C:\\Playlists\\" + current_playlist + ".txt"));
         ArrayList<String> lines = new ArrayList<String>();
@@ -569,6 +588,7 @@ public class HelloController implements Initializable {
     }
 
 
+    //Преобразование времени трека в нужный формат (1)
     public String getTime(Duration time) {
 
         int hours = (int) time.toHours();
@@ -588,6 +608,7 @@ public class HelloController implements Initializable {
                 seconds);
     }
 
+    //Получение текщуго времени трека
     public void bindCurrentTimeLabel() {
         labelCurrentTime.textProperty().bind(Bindings.createStringBinding(new Callable<String>() {
             @Override
@@ -597,6 +618,7 @@ public class HelloController implements Initializable {
         }, mediaPlayer.currentTimeProperty()));
     }
 
+    //Запуск таймера трека
     public void beginTimer() {
         timer = new Timer();
         task = new TimerTask() {
@@ -609,11 +631,13 @@ public class HelloController implements Initializable {
         };
     }
 
+    //Остановка таймера трека
     public void cancelTimer() {
         running = false;
         timer.cancel();
     }
 
+    //Преобразование времени трека в нужный формат (2)
     public static String getTimeString(double millis) {
         millis /= 1000;
         String s = formatTime(millis % 60);
@@ -623,6 +647,7 @@ public class HelloController implements Initializable {
         return m + ":" + s;
     }
 
+    //Преобразование времени трека в нужный формат (3)
     public static String formatTime(double time) {
         int t = (int) time;
         if (t > 9) {
@@ -631,6 +656,7 @@ public class HelloController implements Initializable {
         return "0" + t;
     }
 
+    //Присвоенние значений переменным типа ImageView
     private void setIcons() {
         Image imageMute = new Image(new File("src/resources/mute.png").toURI().toString());
         iconMute = new ImageView(imageMute);

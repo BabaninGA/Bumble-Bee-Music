@@ -1,5 +1,6 @@
 package com.example.mp3player;
 
+//Тестирование методов класса HelloController
 public class HelloControllerTest {
 
     @org.junit.Test

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+//Тестирование методов класса HelloApplication
 public class HelloApplicationTest {
 
     @Test

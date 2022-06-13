@@ -12,10 +12,10 @@ import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
+//Запуск приложения, завершение работы приложения и настройка параметров запуска приложения
 public class HelloApplication extends Application {
 
-
-
+    //Настройка параметров запуска приложения
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
@@ -25,6 +25,8 @@ public class HelloApplication extends Application {
         stage.show();
         stage.getIcons().add(new Image("file:src/resources/Main.png"));
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+            //Завершение работы приложения
             @Override
             public void handle(WindowEvent t) {
                 Platform.exit();
@@ -33,6 +35,7 @@ public class HelloApplication extends Application {
         });
     }
 
+    //Непосредственно запуск приложения
     public static void main(String[] args) {
         launch();
     }
