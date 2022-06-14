@@ -486,7 +486,7 @@ public class HelloController implements Initializable {
         isPlaying = false;
     }
 
-    //Переключение между плейлистами
+    //Изменение текущего плейлиста
     private void changeCurrentPlaylist(String new_name) {
         current_playlist = new_name;
     }
@@ -722,9 +722,10 @@ public class HelloController implements Initializable {
         previousSongButton.setGraphic(iconPrevious);
     }
 
-
+    //Метод, отвечающий за функциональность плейлистов
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Создание плейлиста, который включает в себя все добавленные треки
         if (!main_directory.exists()) {
             main_directory.mkdir();
         }
@@ -742,6 +743,7 @@ public class HelloController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        //Переключение между плейлистами
         playlistList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -770,6 +772,8 @@ public class HelloController implements Initializable {
                 }
             }
         });
+
+        //Переключение на следующий трек
         nextSongButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -782,6 +786,8 @@ public class HelloController implements Initializable {
                 }
             }
         });
+
+        //Переключение на предыдущий трек
         previousSongButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -794,6 +800,8 @@ public class HelloController implements Initializable {
                 }
             }
         });
+
+        //Включение и выключение функции шаффл
         shuffleMedia.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -809,6 +817,8 @@ public class HelloController implements Initializable {
                 prevShuff = shuffle_on;
             }
         });
+
+        //Запуск воспроизведение трека с помощью двойного нажатия по нему
         songList.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -826,7 +836,6 @@ public class HelloController implements Initializable {
             }
         });
     }
-
 
 
     public void mediaplfer() throws NullPointerException {
