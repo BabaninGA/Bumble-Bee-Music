@@ -157,11 +157,11 @@ public class HelloController implements Initializable {
             fileChooser.getExtensionFilters().add(filter);
             String filePath = fileChooser.showOpenDialog(null).toURI().toString();
             File f = new File(filePath);
+            String name = f.getName();
+            name = name.replaceAll("%20", " ");
+            name = name.replaceAll(".mp3", "");
             if (f.getName().matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}[.mp3]$")) {
                 System.out.println(filePath);
-                String name = f.getName();
-                name = name.replaceAll("%20", " ");
-                name = name.replaceAll(".mp3", "");
                 Boolean match = name.matches("^[ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40} - [ A-Za-z0-9а-яёйА-ЯЁЙ!/<>?*@,.#()-]{1,40}$");
                 if (match) {
                     String songparts[] = name.split(" - ");
@@ -202,27 +202,6 @@ public class HelloController implements Initializable {
 
                     mediaPlayer.stop();
                 }
-
-
-                if (filePath != null) {
-                    Media media = new Media(filePath);
-                    mediaPlayer = new MediaPlayer(media);
-                    setIcons();
-                    songLabel.setText(name);
-                    songAnimatedLabel.setText(name + " ");
-                    playMedia();
-                    wasPlaying = true;
-
-
-                    bottomMenu.setVisible(true);
-
-                    hboxTime.getChildren().remove(labelRemainingTime);
-                    hboxVolume.getChildren().remove(volumeSlider);
-                    hboxVolume.getChildren().remove(labelVolume);
-                    animatedLabel.getChildren().remove(songAnimatedLabel);
-                    refreshSongs();
-                    refreshPlaylists();
-                }
             }
 //            else{
 //                if (wasPlaying) {
@@ -253,6 +232,25 @@ public class HelloController implements Initializable {
 //                hboxVolume.getChildren().remove(labelVolume);
 //                animatedLabel.getChildren().remove(songAnimatedLabel);
 //            }
+            if (filePath != null) {
+                Media media = new Media(filePath);
+                mediaPlayer = new MediaPlayer(media);
+                setIcons();
+                songLabel.setText(name);
+                songAnimatedLabel.setText(name + " ");
+                playMedia();
+                wasPlaying = true;
+
+
+                bottomMenu.setVisible(true);
+
+                hboxTime.getChildren().remove(labelRemainingTime);
+                hboxVolume.getChildren().remove(volumeSlider);
+                hboxVolume.getChildren().remove(labelVolume);
+                animatedLabel.getChildren().remove(songAnimatedLabel);
+                refreshSongs();
+                refreshPlaylists();
+            }
         } catch (RuntimeException e) {
             System.out.println("incorrect input");
         }
